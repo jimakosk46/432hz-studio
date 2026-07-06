@@ -1,5 +1,5 @@
 // 432Hz Studio PWA — offline cache (cache-first)
-const CACHE = 'hz432-v3';
+const CACHE = 'hz432-v4';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './icon192.png', './icon512.png',
   ...[7.83, 40, 111, 136.1, 174, 285, 396, 417, 432, 528, 639, 741, 852, 963]
@@ -19,6 +19,23 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+
+  // Η σελίδα: πρώτα δίκτυο (πάντα φρέσκια έκδοση), cache μόνο offline
+  const isPage = e.request.mode === 'navigate' ||
+    new URL(e.request.url).pathname.endsWith('/index.html');
+  if (isPage) {
+    e.respondWith(
+      fetch(e.request).then(r => {
+        const copy = r.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy));
+        return r;
+      }).catch(() => caches.match(e.request, { ignoreSearch: true })
+        .then(hit => hit || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Τα υπόλοιπα (tracks, εικονίδια): cache-first για offline
   e.respondWith(
     caches.match(e.request, { ignoreSearch: true }).then(hit =>
       hit || fetch(e.request).then(r => {
