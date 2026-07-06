@@ -279,7 +279,7 @@
       <button class="chip" data-f="528">528 Hz</button>
     </div>
     <input type="range" id="chlSlider" min="200" max="1000" step="0.5" value="432" style="margin-top:10px">
-    <label class="small" data-i18n="chl_plate"></label>
+    <label class="small"><span data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
     <input type="range" id="chlPlate" min="90" max="110" step="0.1" value="100">
   </div>
 
@@ -682,6 +682,7 @@ function drawChladni() {
     }
   }
   g.putImageData(img, 0, 0);
+  document.getElementById('chlPlateVal').textContent = (+chlPlate.value).toFixed(1).replace('.0', '') + '%';
   chlStatus.textContent = (crisp > 0.6 ? T('chl_on') : T('chl_off')).replace('{f}', bf.toFixed(1));
   chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
 }
