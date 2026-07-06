@@ -7,23 +7,58 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon192.png">
 <link rel="apple-touch-icon" href="icon192.png">
-<meta name="theme-color" content="#0e1420">
+<meta name="theme-color" content="#0a0618">
 <style>
   :root {
-    --bg: #0e1420; --panel: #17202f; --panel2: #1d2941;
-    --text: #e8ecf4; --muted: #8fa0b8; --accent: #4fd1a5;
-    --accent2: #7c9bff; --danger: #ff7b7b; --border: #2a3850;
+    --bg: #0a0618; --panel: rgba(22,16,51,.78); --panel2: #221745;
+    --text: #f1ecff; --muted: #a89fc7; --accent: #ffc76b;
+    --accent2: #45d8d0; --danger: #ff7ba1; --border: #3b2a63;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: "Segoe UI", system-ui, sans-serif;
-    background: radial-gradient(1200px 600px at 70% -10%, #1a2b45 0%, var(--bg) 60%);
+    background: var(--bg);
     color: var(--text); min-height: 100vh; padding: 24px 16px 60px;
   }
+  /* κοσμικό φόντο: νεφελώματα + δύση στον ορίζοντα */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(1000px 540px at 10% -6%, rgba(61,229,199,.20), transparent 62%),
+      radial-gradient(900px 560px at 96% 4%, rgba(255,94,196,.17), transparent 62%),
+      radial-gradient(820px 520px at 88% 96%, rgba(160,107,255,.18), transparent 65%),
+      radial-gradient(700px 430px at 50% 106%, rgba(255,150,60,.20), transparent 62%),
+      radial-gradient(420px 260px at 50% 102%, rgba(255,205,110,.14), transparent 60%),
+      var(--bg);
+  }
+  /* έναστρος ουρανός */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      radial-gradient(1.2px 1.2px at 22px 34px, rgba(255,255,255,.9), transparent),
+      radial-gradient(1px 1px at 88px 12px, rgba(255,255,255,.6), transparent),
+      radial-gradient(1.6px 1.6px at 146px 68px, rgba(255,212,121,.85), transparent),
+      radial-gradient(1px 1px at 203px 122px, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.4px 1.4px at 58px 172px, rgba(170,220,255,.75), transparent),
+      radial-gradient(1px 1px at 132px 214px, rgba(255,255,255,.65), transparent),
+      radial-gradient(1.3px 1.3px at 234px 40px, rgba(255,150,214,.7), transparent);
+    background-size: 260px 260px;
+    animation: twinkle 7s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from { opacity: .55; } to { opacity: 1; } }
   .wrap { max-width: 720px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 28px; }
-  header h1 { font-size: 1.9rem; font-weight: 600; letter-spacing: .5px; }
-  header h1 span { color: var(--accent); }
+  header { text-align: center; margin-bottom: 28px; position: relative; }
+  header::before {
+    content: ''; position: absolute; left: 50%; top: -46px; transform: translateX(-50%);
+    width: 190px; height: 190px; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, rgba(255,190,90,.30), rgba(255,94,196,.12) 52%, transparent 72%);
+  }
+  header h1 { font-size: 2rem; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 22px rgba(160,107,255,.5); }
+  header h1 span {
+    background: linear-gradient(100deg, #ffd479, #ff9d5c 45%, #ff5ec4);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255,199,107,.35));
+  }
   header p { color: var(--muted); margin-top: 6px; font-size: .95rem; }
   .langs { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
   .langs .chip { font-size: .8rem; padding: 5px 12px; }
@@ -34,11 +69,14 @@
     background: var(--panel); color: var(--muted); font-size: .9rem;
     cursor: pointer; transition: all .15s;
   }
-  .tab.active { background: var(--panel2); color: var(--text); border-color: var(--accent); }
+  .tab.active {
+    background: linear-gradient(180deg, #2c1d58, #221745); color: #ffe6bd;
+    border-color: var(--accent); box-shadow: 0 0 16px rgba(255,199,107,.22);
+  }
 
   .card {
     background: var(--panel); border: 1px solid var(--border);
-    border-radius: 16px; padding: 22px;
+    border-radius: 16px; padding: 22px; box-shadow: 0 10px 34px rgba(0,0,0,.45);
   }
   .hidden { display: none; }
   label.small { display: block; color: var(--muted); font-size: .85rem; margin: 16px 0 6px; }
@@ -47,11 +85,11 @@
     border: 2px dashed var(--border); border-radius: 12px; padding: 30px 16px;
     text-align: center; color: var(--muted); cursor: pointer; transition: all .15s;
   }
-  #drop:hover { border-color: var(--accent); color: var(--text); background: #1a2536; }
+  #drop:hover { border-color: var(--accent); color: var(--text); background: #1d1440; }
   #drop .big { font-size: 2rem; display: block; margin-bottom: 8px; }
   #fileName { color: var(--accent); font-weight: 600; margin-top: 10px; word-break: break-all; }
   .note {
-    margin-top: 14px; padding: 12px; border-radius: 10px; background: #1a2233;
+    margin-top: 14px; padding: 12px; border-radius: 10px; background: #1b1338;
     color: var(--muted); font-size: .82rem; line-height: 1.5;
   }
   #liveAudio { width: 100%; margin-top: 14px; }
@@ -65,13 +103,13 @@
     padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border);
     background: var(--panel2); color: var(--muted); cursor: pointer; font-size: .9rem;
   }
-  .chip.sel { border-color: var(--accent); color: var(--accent); }
+  .chip.sel { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 10px rgba(255,199,107,.2); }
 
   .btn {
     display: block; width: 100%; margin-top: 20px; padding: 14px;
     border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 600;
-    background: linear-gradient(135deg, var(--accent), #38a1878a); color: #06251c;
-    cursor: pointer; transition: filter .15s;
+    background: linear-gradient(135deg, #ffd479, #ff9455); color: #331803;
+    cursor: pointer; transition: filter .15s; box-shadow: 0 4px 18px rgba(255,157,70,.25);
   }
   .btn:hover { filter: brightness(1.1); }
 
@@ -90,9 +128,9 @@
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .playbtns { display: flex; gap: 10px; margin-top: 20px; }
   .playbtns .btn { margin-top: 0; }
-  .btn.stop { background: linear-gradient(135deg, #ff8f8f, #c257578a); color: #2a0808; }
+  .btn.stop { background: linear-gradient(135deg, #ff7ba1, #d8447c); color: #33051a; }
   .btn.ghost { background: var(--panel2); color: var(--text); border: 1px solid var(--border); }
-  footer { text-align: center; color: #55647d; font-size: .8rem; margin-top: 26px; line-height: 1.5; }
+  footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px; line-height: 1.5; }
 
   .tones { display: grid; gap: 12px; }
   .tonecard {
@@ -101,7 +139,7 @@
   }
   .tonecard .freq {
     min-width: 86px; text-align: center; font-weight: 700; font-size: 1.05rem;
-    color: var(--accent); background: #14322a55; border: 1px solid #2b5c4b;
+    color: var(--accent); background: rgba(255,199,107,.08); border: 1px solid #6b5527;
     border-radius: 10px; padding: 10px 6px;
   }
   .tonecard .freq small { display: block; font-weight: 400; color: var(--muted); font-size: .7rem; }
@@ -120,9 +158,9 @@
     text-decoration: none; display: block;
   }
   .tonecard .pl { background: var(--panel); color: var(--accent); }
-  .tonecard .pl.on { background: #3a1c1c; border-color: #7a3a3a; color: var(--danger); }
-  .tonecard .mus { background: #14233a; color: var(--accent2); border-color: #33527e; }
-  .tonecard .mus.on { background: #1d3b6b; color: #cdddff; border-color: var(--accent2); }
+  .tonecard .pl.on { background: #3a1c2e; border-color: #7a3a5c; color: var(--danger); }
+  .tonecard .mus { background: #0e2e35; color: var(--accent2); border-color: #2a5e63; }
+  .tonecard .mus.on { background: #12474d; color: #c9fff4; border-color: var(--accent2); }
   .tonecard .yt { background: #2a1518; color: #ff9d8a; border-color: #5c2f2f; font-size: .78rem; padding: 7px 10px; }
   @media (max-width: 620px) {
     .tonecard { flex-wrap: wrap; }
@@ -136,7 +174,7 @@
   <header>
     <h1>🎵 <span>432Hz</span> Studio</h1>
     <p data-i18n="subtitle"></p>
-    <p style="color:#55647d;font-size:.82rem;margin-top:3px" data-i18n="credit"></p>
+    <p style="color:#8f83b8;font-size:.82rem;margin-top:3px" data-i18n="credit"></p>
     <div class="langs">
       <button class="chip" data-l="el">Ελληνικά</button>
       <button class="chip" data-l="de">Deutsch</button>
