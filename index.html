@@ -136,7 +136,7 @@
   <header>
     <h1>🎵 <span>432Hz</span> Studio</h1>
     <p data-i18n="subtitle"></p>
-    <p style="color:#55647d;font-size:.82rem;margin-top:3px;letter-spacing:.4px">by Dimitri Katsavos</p>
+    <p style="color:#55647d;font-size:.82rem;margin-top:3px" data-i18n="credit"></p>
     <div class="langs">
       <button class="chip" data-l="el">Ελληνικά</button>
       <button class="chip" data-l="de">Deutsch</button>
@@ -225,7 +225,7 @@
     <div class="tones" id="tonelist"></div>
   </div>
 
-  <footer>432Hz Studio · by Dimitri Katsavos<br><span data-i18n="install_hint"></span></footer>
+  <footer>432Hz Studio · <span data-i18n="credit"></span><br><span data-i18n="install_hint"></span></footer>
 </div>
 
 <script>
@@ -245,6 +245,7 @@ const I18N = {
     music_btn: '🎵 Μουσική {f}Hz', music_stop: '■ Στοπ {f}Hz',
     need_phones: '🎧 Απαραίτητα ακουστικά — ο παλμός δημιουργείται από τη διαφορά των δύο αυτιών',
     install_hint: 'Συμβουλή: μενού browser → «Προσθήκη στην αρχική οθόνη» για να γίνει κανονικό app (δουλεύει και χωρίς internet).',
+    credit: 'από τον Δημήτρη Κατσαβό',
   },
   de: {
     subtitle: 'Heilfrequenzen & Tongenerator',
@@ -260,6 +261,7 @@ const I18N = {
     music_btn: '🎵 Musik {f}Hz', music_stop: '■ Stopp {f}Hz',
     need_phones: '🎧 Kopfhörer erforderlich — der Puls entsteht aus der Differenz der beiden Ohren',
     install_hint: 'Tipp: Browser-Menü → „Zum Startbildschirm hinzufügen" — dann funktioniert es wie eine App (auch offline).',
+    credit: 'von Dimitri Katsavos',
   },
   en: {
     subtitle: 'Healing frequencies & tone generator',
@@ -275,6 +277,7 @@ const I18N = {
     music_btn: '🎵 Music {f}Hz', music_stop: '■ Stop {f}Hz',
     need_phones: '🎧 Headphones required — the pulse is created by the difference between the two ears',
     install_hint: 'Tip: browser menu → "Add to Home screen" to use it like a real app (works offline too).',
+    credit: 'by Dimitri Katsavos',
   },
 };
 let LANG = localStorage.getItem('lang432') || 'el';
