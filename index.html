@@ -63,9 +63,9 @@
   .langs { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
   .langs .chip { font-size: .8rem; padding: 5px 12px; }
 
-  .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
   .tab {
-    flex: 1; padding: 12px 6px; border: 1px solid var(--border); border-radius: 12px;
+    flex: 1 1 150px; padding: 12px 6px; border: 1px solid var(--border); border-radius: 12px;
     background: var(--panel); color: var(--muted); font-size: .9rem;
     cursor: pointer; transition: all .15s;
   }
@@ -186,6 +186,7 @@
     <button class="tab active" data-tab="conv" data-i18n="tab_conv"></button>
     <button class="tab" data-tab="tone" data-i18n="tab_tone"></button>
     <button class="tab" data-tab="heal" data-i18n="tab_heal"></button>
+    <button class="tab" data-tab="chladni" data-i18n="tab_chl"></button>
   </div>
 
   <!-- ===================== LIVE 432Hz PLAYER ===================== -->
@@ -263,6 +264,25 @@
     <div class="tones" id="tonelist"></div>
   </div>
 
+  <!-- ===================== CHLADNI PATTERNS ===================== -->
+  <div class="card hidden" id="panel-chladni">
+    <div class="note" data-i18n="chl_note"></div>
+    <div style="text-align:center;margin-top:14px">
+      <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
+    </div>
+    <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
+    <label class="small" data-i18n="chl_freq"></label>
+    <div class="freq-row">
+      <input type="number" id="chlFreq" value="432" min="200" max="1000" step="0.1">
+      <button class="chip sel" data-f="432">432 Hz</button>
+      <button class="chip" data-f="440">440 Hz</button>
+      <button class="chip" data-f="528">528 Hz</button>
+    </div>
+    <input type="range" id="chlSlider" min="200" max="1000" step="0.5" value="432" style="margin-top:10px">
+    <label class="small" data-i18n="chl_plate"></label>
+    <input type="range" id="chlPlate" min="90" max="110" step="0.1" value="100">
+  </div>
+
   <footer>432Hz Studio · <span data-i18n="credit"></span><br><span data-i18n="install_hint"></span></footer>
 </div>
 
@@ -284,6 +304,12 @@ const I18N = {
     need_phones: '🎧 Απαραίτητα ακουστικά — ο παλμός δημιουργείται από τη διαφορά των δύο αυτιών',
     install_hint: 'Συμβουλή: μενού browser → «Προσθήκη στην αρχική οθόνη» για να γίνει κανονικό app (δουλεύει και χωρίς internet).',
     credit: 'από τον Δημήτρη Κατσαβό',
+    tab_chl: 'Σχήματα ήχου',
+    chl_note: 'Προσομοίωση πλάκας Chladni: η «άμμος» μαζεύεται εκεί όπου η πλάκα δεν δονείται. Καθαρό, συμμετρικό σχήμα βγαίνει όταν η συχνότητα πετυχαίνει συντονισμό της πλάκας. Δοκίμασε 432 και 440 — και μετά άλλαξε λίγο το «μέγεθος πλάκας»: κάθε συχνότητα έχει την πλάκα που τη βγάζει πανέμορφη.',
+    chl_freq: 'Συχνότητα (Hz)',
+    chl_plate: 'Μέγεθος πλάκας',
+    chl_on: '✨ Συντονισμός στα {f}Hz — καθαρό, συμμετρικό σχήμα!',
+    chl_off: 'Εκτός συντονισμού — θολό σχήμα. Κοντινότερος συντονισμός: {f}Hz',
   },
   de: {
     subtitle: 'Heilfrequenzen & Tongenerator',
@@ -300,6 +326,12 @@ const I18N = {
     need_phones: '🎧 Kopfhörer erforderlich — der Puls entsteht aus der Differenz der beiden Ohren',
     install_hint: 'Tipp: Browser-Menü → „Zum Startbildschirm hinzufügen" — dann funktioniert es wie eine App (auch offline).',
     credit: 'von Dimitri Katsavos',
+    tab_chl: 'Klangmuster',
+    chl_note: 'Chladni-Platten-Simulation: Der „Sand" sammelt sich dort, wo die Platte nicht schwingt. Ein klares, symmetrisches Muster entsteht, wenn die Frequenz eine Resonanz der Platte trifft. Probiere 432 und 440 — und ändere dann leicht die Plattengröße: Jede Frequenz hat eine Platte, auf der sie wunderschön aussieht.',
+    chl_freq: 'Frequenz (Hz)',
+    chl_plate: 'Plattengröße',
+    chl_on: '✨ Resonanz bei {f}Hz — klares, symmetrisches Muster!',
+    chl_off: 'Außerhalb der Resonanz — verschwommenes Muster. Nächste Resonanz: {f}Hz',
   },
   en: {
     subtitle: 'Healing frequencies & tone generator',
@@ -316,6 +348,12 @@ const I18N = {
     need_phones: '🎧 Headphones required — the pulse is created by the difference between the two ears',
     install_hint: 'Tip: browser menu → "Add to Home screen" to use it like a real app (works offline too).',
     credit: 'by Dimitri Katsavos',
+    tab_chl: 'Sound patterns',
+    chl_note: 'Chladni plate simulation: the "sand" gathers where the plate does not vibrate. A clear, symmetric pattern appears when the frequency hits a resonance of the plate. Try 432 and 440 — then slightly change the plate size: every frequency has a plate that makes it beautiful.',
+    chl_freq: 'Frequency (Hz)',
+    chl_plate: 'Plate size',
+    chl_on: '✨ Resonance at {f}Hz — clear symmetric pattern!',
+    chl_off: 'Off resonance — blurred pattern. Nearest resonance: {f}Hz',
   },
 };
 let LANG = localStorage.getItem('lang432') || 'el';
@@ -325,7 +363,7 @@ const T = k => (I18N[LANG] && I18N[LANG][k]) || I18N.el[k] || k;
 // ---------- tabs ----------
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
-  ['conv', 'tone', 'heal'].forEach(name =>
+  ['conv', 'tone', 'heal', 'chladni'].forEach(name =>
     document.getElementById('panel-' + name).classList.toggle('hidden', t.dataset.tab !== name));
 });
 
@@ -608,6 +646,54 @@ document.getElementById('wavdl').onclick = () => {
   setTimeout(() => URL.revokeObjectURL(a.href), 5000);
 };
 
+// ---------- Chladni patterns ----------
+const chlCanvas = document.getElementById('chl');
+const chlFreq = document.getElementById('chlFreq');
+const chlSlider = document.getElementById('chlSlider');
+const chlPlate = document.getElementById('chlPlate');
+const chlStatus = document.getElementById('chlStatus');
+const CHL_MODES = [];
+for (let m = 1; m <= 9; m++) for (let n = m + 1; n <= 10; n++) CHL_MODES.push([m, n, m * m + n * n]);
+
+function drawChladni() {
+  const f = Math.min(1000, Math.max(200, +chlFreq.value || 432));
+  const k = (432 / 34) * (+chlPlate.value / 100); // πλάκα 100% → το 432 πέφτει ακριβώς σε συντονισμό
+  let bm = 3, bn = 5, bf = 0, bd = 1e9;
+  for (const [m, n, s] of CHL_MODES) {
+    const fr = k * s, d = Math.abs(f - fr);
+    if (d < bd) { bd = d; bm = m; bn = n; bf = fr; }
+  }
+  const crisp = Math.exp(-Math.pow(bd / (f * 0.012), 2)); // 1 = τέλειος συντονισμός
+  const W = chlCanvas.width, H = chlCanvas.height;
+  const g = chlCanvas.getContext('2d');
+  const img = g.createImageData(W, H);
+  const sigma = 0.06 + (1 - crisp) * 0.5; // εκτός συντονισμού → θολές γραμμές
+  for (let y = 0; y < H; y++) {
+    const v = y / (H - 1);
+    const cmv = Math.cos(bm * Math.PI * v), cnv = Math.cos(bn * Math.PI * v);
+    for (let x = 0; x < W; x++) {
+      const u = x / (W - 1);
+      const a = Math.cos(bn * Math.PI * u) * cmv - Math.cos(bm * Math.PI * u) * cnv;
+      let s = Math.exp(-(a * a) / (sigma * sigma)) * (0.25 + 0.75 * crisp);
+      if (crisp < 0.85) s = s * crisp + (1 - crisp) * Math.random() * 0.25; // σκόρπια άμμος
+      const i = (y * W + x) * 4;
+      img.data[i] = 24 + 231 * s; img.data[i + 1] = 16 + 183 * s; img.data[i + 2] = 48 + 59 * s;
+      img.data[i + 3] = 255;
+    }
+  }
+  g.putImageData(img, 0, 0);
+  chlStatus.textContent = (crisp > 0.6 ? T('chl_on') : T('chl_off')).replace('{f}', bf.toFixed(1));
+  chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
+}
+chlSlider.oninput = () => { chlFreq.value = chlSlider.value; drawChladni(); };
+chlFreq.oninput = () => { chlSlider.value = chlFreq.value; drawChladni(); };
+chlPlate.oninput = drawChladni;
+document.querySelectorAll('#panel-chladni .chip').forEach(c => c.onclick = () => {
+  chlFreq.value = c.dataset.f; chlSlider.value = c.dataset.f;
+  document.querySelectorAll('#panel-chladni .chip').forEach(x => x.classList.toggle('sel', x === c));
+  drawChladni();
+});
+
 // ---------- language switch ----------
 function applyLang(l) {
   LANG = I18N[l] ? l : 'el';
@@ -616,6 +702,7 @@ function applyLang(l) {
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
   document.querySelectorAll('.langs .chip').forEach(c => c.classList.toggle('sel', c.dataset.l === LANG));
   renderTones();
+  drawChladni();
 }
 document.querySelectorAll('.langs .chip').forEach(c => c.onclick = () => applyLang(c.dataset.l));
 applyLang(LANG);
