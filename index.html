@@ -744,15 +744,27 @@ function cryRand(seed) { // ντετερμινιστικό: ίδια συχνό�
 
 function cryParams(f) {
   const rnd = cryRand(Math.round(f * 100));
-  const P = { L: 105 + rnd() * 25, w: 2.2 + rnd() * 1.4, hex: 9 + rnd() * 13, side: [] };
-  const n = 3 + Math.floor(rnd() * 4);
+  const type = Math.floor(rnd() * 3); // 0 δεντρίτης, 1 πλάκα με ακτίνες, 2 αστέρι με πλακίδια
+  const P = { type, L: 100 + rnd() * 30, w: 2 + rnd() * 1.6, hex: 8 + rnd() * 12, side: [] };
+  const n = type === 1 ? 2 + Math.floor(rnd() * 2) : 3 + Math.floor(rnd() * 4);
   for (let i = 0; i < n; i++) P.side.push({
-    pos: 0.2 + (i + 0.2 + rnd() * 0.6) * (0.72 / n),
-    len: Math.max(.12, .55 - i * .07 + (rnd() - .5) * .3),
-    ang: (48 + rnd() * 24) * Math.PI / 180,
-    sub: rnd() < .6,
+    pos: 0.18 + (i + 0.2 + rnd() * 0.6) * (0.74 / n),
+    len: Math.max(.1, (type === 1 ? .3 : .58) - i * .07 + (rnd() - .5) * .34),
+    ang: (36 + rnd() * 38) * Math.PI / 180,
+    sub: rnd() < .7,
+    plate: rnd() < .35,
   });
+  P.tipHex = type === 2 ? 7 + rnd() * 9 : (rnd() < .35 ? 4 + rnd() * 6 : 0);
+  P.ring = rnd() < .55 ? .3 + rnd() * .35 : 0;
+  P.bigHex = type === 1 ? .42 + rnd() * .22 : 0;
   return P;
+}
+
+function cryHex(g, x, y, r, rot, fill) {
+  g.beginPath();
+  for (let k = 0; k <= 6; k++) { const a = k * Math.PI / 3 + rot; g[k ? 'lineTo' : 'moveTo'](x + Math.cos(a) * r, y + Math.sin(a) * r); }
+  if (fill) { g.fillStyle = fill; g.fill(); }
+  g.stroke();
 }
 
 function crySeg(g, x1, y1, x2, y2, k) {
@@ -773,6 +785,14 @@ function drawCrystal(t) {
   const ease = 1 - Math.pow(1 - t, 3);
   g.save(); g.translate(cx, cy);
   g.lineCap = 'round'; g.shadowColor = '#7fe7ff';
+  if (P.bigHex) { // κεντρική εξαγωνική πλάκα (sectored plate)
+    g.shadowBlur = 8; g.strokeStyle = '#bfe6f7'; g.lineWidth = P.w * .7;
+    cryHex(g, 0, 0, P.L * P.bigHex * ease, 0, 'rgba(140,200,255,.08)');
+  }
+  if (P.ring && ease > .3) { // εσωτερικό εξαγωνικό δαχτυλίδι
+    g.shadowBlur = 5; g.strokeStyle = 'rgba(185,225,250,.55)'; g.lineWidth = P.w * .45;
+    cryHex(g, 0, 0, P.L * P.ring * Math.min(1, (ease - .3) / .5), 0);
+  }
   for (let k = 0; k < 6; k++) {
     g.save(); g.rotate(k * Math.PI / 3);
     const gl = P.L * ease;
@@ -794,7 +814,17 @@ function drawCrystal(t) {
           crySeg(g, mx, my, mx + Math.cos(sa) * ssl, my + Math.sin(sa) * ssl, (sk - .55) / .45);
           g.lineWidth = P.w * .65;
         }
+        if (s.plate && sk >= 1) { // πλακίδιο στην άκρη του κλαδιού
+          g.lineWidth = P.w * .4;
+          cryHex(g, ex, ey, 4.5, 0, 'rgba(160,215,255,.12)');
+          g.lineWidth = P.w * .65;
+        }
       }
+    }
+    if (P.tipHex && ease > .85) { // εξαγωνικό πλακίδιο στην κορυφή
+      g.lineWidth = P.w * .55; g.strokeStyle = '#cfeeff';
+      cryHex(g, P.L, 0, P.tipHex * Math.min(1, (ease - .85) / .13), Math.PI / 6, 'rgba(160,215,255,.12)');
+      g.strokeStyle = '#a9e2f5';
     }
     if (ease > .96) { // χρυσή σπίθα στην άκρη
       g.shadowBlur = 12; g.shadowColor = '#ffd479'; g.fillStyle = '#ffd479';
@@ -805,9 +835,7 @@ function drawCrystal(t) {
   }
   const hr = P.hex * Math.min(1, t * 2.5); // εξάγωνο στον πυρήνα
   g.shadowBlur = 8; g.strokeStyle = '#cfeeff'; g.lineWidth = P.w * .8;
-  g.beginPath();
-  for (let k = 0; k <= 6; k++) { const a = k * Math.PI / 3 + Math.PI / 6; g[k ? 'lineTo' : 'moveTo'](Math.cos(a) * hr, Math.sin(a) * hr); }
-  g.stroke();
+  cryHex(g, 0, 0, hr, Math.PI / 6);
   g.restore();
   cryTitle.textContent = T('cry_title').replace('{f}', f);
 }
