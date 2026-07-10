@@ -802,7 +802,7 @@ function drawDrop(pulsePhase) {
   g.strokeStyle = '#ffe6bd'; g.lineWidth = 2.2;
   g.stroke();
   g.restore();
-  document.getElementById('chlPlateVal').textContent = (+chlPlate.value).toFixed(1).replace('.0', '') + '%';
+  document.getElementById('chlPlateVal').textContent = (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
   chlStatus.textContent = (crisp > 0.6 ? T('chl_drop_on') : T('chl_drop_off')).replace('{f}', fr.toFixed(1)).replace('{n}', n);
   chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
 }
