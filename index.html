@@ -236,7 +236,7 @@ fileInp.onchange = () => {
 targetInp.oninput = applyLiveRate;
 document.querySelectorAll('#panel-conv .chip').forEach(c => c.onclick = () => {
   targetInp.value = c.dataset.f;
-  document.querySelectorAll('#panel-conv .chip').forEach(x => x.classList.toggle('sel', x === c));
+  selectChip('#panel-conv .chip', c);
   applyLiveRate();
 });
 

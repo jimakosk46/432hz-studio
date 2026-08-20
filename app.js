@@ -139,6 +139,11 @@ const T = k => {
   return k;
 };
 
+// Ένα chip «σελ»: το πατημένο παίρνει την κλάση, τα υπόλοιπα της ίδιας ομάδας τη χάνουν.
+function selectChip(groupSelector, clicked) {
+  document.querySelectorAll(groupSelector).forEach(x => x.classList.toggle('sel', x === clicked));
+}
+
 const tfreq = document.getElementById('tfreq'), tslider = document.getElementById('tslider');
 const volInp = document.getElementById('vol'), waveSel = document.getElementById('wave');
 let ctx = null, osc = null, gain = null;
@@ -335,24 +340,46 @@ function toggleMusic(f, btn) {
   btn.classList.add('on'); btn.textContent = T('music_stop').replace('{f}', f);
 }
 
+// ---------- συντονισμός: κοινός για την πλάκα και τη σταγόνα ----------
+// «Καθαρό» θεωρείται το σχήμα όταν η συχνότητα πέφτει μέσα σε ±1.2% από έναν
+// φυσικό τρόπο ταλάντωσης· όσο απομακρύνεται, το crisp πέφτει ομαλά προς το 0.
+const RESONANCE_TOLERANCE = 0.012;
+
+/**
+ * Ποιον τρόπο ταλάντωσης πετυχαίνει η συχνότητα f και πόσο καθαρά.
+ * @param modes λίστα { mode, freq } — το `mode` είναι ό,τι θέλει ο καλών (n, ή [m,n])
+ * @returns { mode, fr, crisp }  crisp: 1 = τέλειος συντονισμός, 0 = εκτός
+ */
+function nearestMode(modes, f) {
+  let best = modes[0], bd = Infinity;
+  for (const cand of modes) {
+    const d = Math.abs(f - cand.freq);
+    if (d < bd) { bd = d; best = cand; }
+  }
+  return { mode: best.mode, fr: best.freq, crisp: Math.exp(-Math.pow(bd / (f * RESONANCE_TOLERANCE), 2)) };
+}
+
 // ---------- Chladni patterns ----------
 const chlCanvas = document.getElementById('chl');
 const chlFreq = document.getElementById('chlFreq');
 const chlSlider = document.getElementById('chlSlider');
 const chlPlate = document.getElementById('chlPlate');
 const chlStatus = document.getElementById('chlStatus');
+// Τρόποι ταλάντωσης τετράγωνης πλάκας (m,n) με το άθροισμα m²+n² που ορίζει τη συχνότητα.
 const CHL_MODES = [];
 for (let m = 1; m <= 9; m++) for (let n = m + 1; n <= 10; n++) CHL_MODES.push([m, n, m * m + n * n]);
+// Στο 100% η πλάκα είναι κουρδισμένη ώστε τα 432Hz να πέφτουν ακριβώς στον τρόπο
+// (3,5) — γι' αυτό ο διαιρέτης είναι 34 = 3² + 5².
+const PLATE_REF_FREQ = 432, PLATE_REF_MODE_SUM = 3 * 3 + 5 * 5;
+
+function findPlateResonance(f, pct) {
+  const k = (PLATE_REF_FREQ / PLATE_REF_MODE_SUM) * (pct / 100);
+  return nearestMode(CHL_MODES.map(([m, n, s]) => ({ mode: [m, n], freq: k * s })), f);
+}
 
 function drawChladni() {
   const f = Math.min(1000, Math.max(200, +chlFreq.value || 432));
-  const k = (432 / 34) * (+chlPlate.value / 100); // πλάκα 100% → το 432 πέφτει ακριβώς σε συντονισμό
-  let bm = 3, bn = 5, bf = 0, bd = 1e9;
-  for (const [m, n, s] of CHL_MODES) {
-    const fr = k * s, d = Math.abs(f - fr);
-    if (d < bd) { bd = d; bm = m; bn = n; bf = fr; }
-  }
-  const crisp = Math.exp(-Math.pow(bd / (f * 0.012), 2)); // 1 = τέλειος συντονισμός
+  const { mode: [bm, bn], fr: bf, crisp } = findPlateResonance(f, +chlPlate.value);
   const W = chlCanvas.width, H = chlCanvas.height;
   const g = chlCanvas.getContext('2d');
   const img = g.createImageData(W, H);
@@ -382,6 +409,11 @@ const DROP_SIGMA = 0.072, DROP_RHO = 1000; // επιφανειακή τάση (N
 // ακτίνα σταγόνας (m) στο 100%: λυμένη από τον τύπο Rayleigh ώστε n=5 -> ακριβώς 432.0Hz
 const DROP_R0 = 0.00111014;
 const DROP_N_MIN = 2, DROP_N_MAX = 10;
+// Πόσο μπορεί να αλλάξει το μέγεθος. Η σταγόνα θέλει φαρδύτερο εύρος από την πλάκα:
+// f ∝ R^(−3/2) και οι τρόποι ταλάντωσής της απέχουν πολύ χαμηλά, οπότε με 90–110%
+// υπήρχαν συχνότητες (≈237–266Hz και ≈366–371Hz) που ΔΕΝ έβγαζαν ποτέ καθαρό αστέρι.
+// Με 85–120% κάθε συχνότητα 200–1000Hz έχει το μέγεθος που τη βγάζει καθαρή.
+const PLATE_SIZE_RANGE = [90, 110], DROP_SIZE_RANGE = [85, 120];
 
 function dropFn(n, R) {
   return (1 / (2 * Math.PI)) * Math.sqrt(n * (n - 1) * (n + 2) * DROP_SIGMA / (DROP_RHO * Math.pow(R, 3)));
@@ -389,13 +421,10 @@ function dropFn(n, R) {
 
 function findDropResonance(f, pct) {
   const R = DROP_R0 * (pct / 100);
-  let bn = 5, bf = 0, bd = 1e9;
-  for (let n = DROP_N_MIN; n <= DROP_N_MAX; n++) {
-    const fr = dropFn(n, R), d = Math.abs(f - fr);
-    if (d < bd) { bd = d; bn = n; bf = fr; }
-  }
-  const crisp = Math.exp(-Math.pow(bd / (f * 0.012), 2));
-  return { n: bn, fr: bf, crisp };
+  const modes = [];
+  for (let n = DROP_N_MIN; n <= DROP_N_MAX; n++) modes.push({ mode: n, freq: dropFn(n, R) });
+  const { mode: n, fr, crisp } = nearestMode(modes, f);
+  return { n, fr, crisp };     // n = πόσες αιχμές έχει το αστέρι
 }
 
 let chlShape = 'plate'; // 'plate' | 'drop'
@@ -449,6 +478,10 @@ function setChlShape(shape) {
   document.getElementById('chlShapeDrop').classList.toggle('sel', shape === 'drop');
   document.getElementById('chlNote').textContent = T(shape === 'drop' ? 'chl_note_drop' : 'chl_note');
   document.getElementById('chlPlateLabel').textContent = T(shape === 'drop' ? 'chl_drop_size' : 'chl_plate');
+  const [lo, hi] = shape === 'drop' ? DROP_SIZE_RANGE : PLATE_SIZE_RANGE;
+  chlPlate.min = lo;
+  chlPlate.max = hi;
+  chlPlate.value = Math.min(hi, Math.max(lo, +chlPlate.value));   // αν γυρίσουμε σε στενότερο εύρος
   if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (shape === 'drop') animateDrop(); else drawChladni();
 }
@@ -607,7 +640,7 @@ function wire() {
   tfreq.oninput = () => { const f = +tfreq.value; if (f >= 20 && f <= 2000) tslider.value = freqToSlider(f); applyFreq(); };
   document.querySelectorAll('#panel-tone .chip').forEach(c => c.onclick = () => {
     tfreq.value = c.dataset.f; tslider.value = freqToSlider(+c.dataset.f);
-    document.querySelectorAll('#panel-tone .chip').forEach(x => x.classList.toggle('sel', x === c));
+    selectChip('#panel-tone .chip', c);
     applyFreq();
   });
   volInp.oninput = () => { if (gain) gain.gain.setTargetAtTime(vol(), ctx.currentTime, .02); };
@@ -651,7 +684,7 @@ function wire() {
   chlPlate.oninput = refreshChl;
   document.querySelectorAll('#panel-chladni .freq-row .chip[data-f]').forEach(c => c.onclick = () => {
     chlFreq.value = c.dataset.f; chlSlider.value = c.dataset.f;
-    document.querySelectorAll('#panel-chladni .freq-row .chip[data-f]').forEach(x => x.classList.toggle('sel', x === c));
+    selectChip('#panel-chladni .freq-row .chip[data-f]', c);
     refreshChl();
   });
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
@@ -660,7 +693,7 @@ function wire() {
   document.getElementById('cryAgain').onclick = growCrystal;
   document.querySelectorAll('#panel-crystal .chip').forEach(c => c.onclick = () => {
     cryFreq.value = c.dataset.f;
-    document.querySelectorAll('#panel-crystal .chip').forEach(x => x.classList.toggle('sel', x === c));
+    selectChip('#panel-crystal .chip', c);
     growCrystal();
   });
   document.querySelectorAll('.langs .chip').forEach(c => c.onclick = () => applyLang(c.dataset.l));
