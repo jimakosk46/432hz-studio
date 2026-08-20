@@ -1,7 +1,8 @@
 // 432Hz Studio PWA — offline cache (cache-first)
-const CACHE = 'hz432-v10';
+const CACHE = 'hz432-v15';
 const ASSETS = [
-  './', './index.html', './manifest.webmanifest', './icon192.png', './icon512.png',
+  './', './index.html', './app.css', './app.js',
+  './manifest.webmanifest', './icon192.png', './icon512.png',
   ...[7.83, 40, 111, 136.1, 174, 285, 396, 417, 432, 528, 639, 741, 852, 963]
     .map(f => './tracks/' + f + '.mp3'),
 ];
@@ -20,9 +21,12 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
 
-  // Η σελίδα: πρώτα δίκτυο (πάντα φρέσκια έκδοση), cache μόνο offline
+  // Η σελίδα ΚΑΙ ο κώδικάς της: πρώτα δίκτυο (πάντα φρέσκια έκδοση), cache μόνο offline.
+  // Ο κώδικας πρέπει να ακολουθεί τη σελίδα — αλλιώς φρέσκο index.html μπορεί να
+  // ζευγαρώσει με μπαγιάτικο app.js από την cache και να σπάσει η εφαρμογή.
+  const path = new URL(e.request.url).pathname;
   const isPage = e.request.mode === 'navigate' ||
-    new URL(e.request.url).pathname.endsWith('/index.html');
+    path.endsWith('/index.html') || path.endsWith('/app.js') || path.endsWith('/app.css');
   if (isPage) {
     e.respondWith(
       fetch(e.request).then(r => {
