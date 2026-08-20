@@ -359,6 +359,55 @@ function nearestMode(modes, f) {
   return { mode: best.mode, fr: best.freq, crisp: Math.exp(-Math.pow(bd / (f * RESONANCE_TOLERANCE), 2)) };
 }
 
+// ---------- εξαγωγή WAV ----------
+// Καθαρή συνάρτηση: δεν αγγίζει DOM, ώστε να μπορεί να τρέξει και μέσα σε Web Worker.
+function wavPcm(type, f, sr, n) {
+  const data = new Int16Array(n), amp = 0.6, fade = sr * 0.05; // 50ms fade in/out
+  for (let i = 0; i < n; i++) {
+    const ph = (i * f / sr) % 1;
+    let s;
+    if (type === 'sine') s = Math.sin(2 * Math.PI * ph);
+    else if (type === 'square') s = ph < 0.5 ? 1 : -1;
+    else if (type === 'sawtooth') s = 2 * ph - 1;
+    else s = ph < 0.5 ? 4 * ph - 1 : 3 - 4 * ph; // triangle
+    let env = 1;
+    if (i < fade) env = i / fade;
+    else if (i > n - fade) env = (n - i) / fade;
+    data[i] = Math.round(s * amp * env * 32767);
+  }
+  return data;
+}
+
+function wavFile(pcm, sr) {
+  const n = pcm.length;
+  const buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  const wstr = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  wstr(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); wstr(8, 'WAVE');
+  wstr(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+  wstr(36, 'data'); v.setUint32(40, n * 2, true);
+  new Int16Array(buf, 44).set(pcm);
+  return buf;
+}
+
+// 600 δευτερόλεπτα = ~26 εκατομμύρια δείγματα· στον κύριο thread πάγωνε η σελίδα.
+// Ο κώδικας του worker φτιάχνεται από την ΙΔΙΑ wavPcm, ώστε να μην υπάρχουν δύο
+// εκδοχές των μαθηματικών. Αν δεν υπάρχουν Workers, γίνεται κανονικά στη σελίδα.
+function wavPcmAsync(type, f, sr, n) {
+  if (typeof Worker === 'undefined') return Promise.resolve(wavPcm(type, f, sr, n));
+  const src = `${wavPcm}
+self.onmessage = e => { const d = wavPcm(...e.data); self.postMessage(d, [d.buffer]); };`;
+  const url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+  return new Promise(resolve => {
+    const done = pcm => { URL.revokeObjectURL(url); resolve(pcm); };
+    let w;
+    try { w = new Worker(url); } catch (e) { return done(wavPcm(type, f, sr, n)); }
+    w.onmessage = e => { w.terminate(); done(e.data); };
+    w.onerror = () => { w.terminate(); done(wavPcm(type, f, sr, n)); };
+    w.postMessage([type, f, sr, n]);
+  });
+}
+
 // ---------- Chladni patterns ----------
 const chlCanvas = document.getElementById('chl');
 const chlFreq = document.getElementById('chlFreq');
@@ -366,6 +415,8 @@ const chlSlider = document.getElementById('chlSlider');
 const chlPlate = document.getElementById('chlPlate');
 const chlStatus = document.getElementById('chlStatus');
 // Τρόποι ταλάντωσης τετράγωνης πλάκας (m,n) με το άθροισμα m²+n² που ορίζει τη συχνότητα.
+// Όρια των πεδίων συχνότητας — ίδια με τα min/max στο HTML.
+const CHL_FREQ_RANGE = [200, 1000], CRY_FREQ_RANGE = [20, 2000];
 const CHL_MODES = [];
 for (let m = 1; m <= 9; m++) for (let n = m + 1; n <= 10; n++) CHL_MODES.push([m, n, m * m + n * n]);
 // Στο 100% η πλάκα είναι κουρδισμένη ώστε τα 432Hz να πέφτουν ακριβώς στον τρόπο
@@ -378,7 +429,7 @@ function findPlateResonance(f, pct) {
 }
 
 function drawChladni() {
-  const f = Math.min(1000, Math.max(200, +chlFreq.value || 432));
+  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { mode: [bm, bn], fr: bf, crisp } = findPlateResonance(f, +chlPlate.value);
   const W = chlCanvas.width, H = chlCanvas.height;
   const g = chlCanvas.getContext('2d');
@@ -431,7 +482,7 @@ let chlShape = 'plate'; // 'plate' | 'drop'
 let chlRaf = null;
 
 function drawDrop(pulsePhase) {
-  const f = Math.min(1000, Math.max(200, +chlFreq.value || 432));
+  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { n, fr, crisp } = findDropResonance(f, +chlPlate.value);
   const W = chlCanvas.width, H = chlCanvas.height, cx = W / 2, cy = H / 2;
   const g = chlCanvas.getContext('2d');
@@ -535,7 +586,7 @@ function crySeg(g, x1, y1, x2, y2, k) {
 }
 
 function drawCrystal(t) {
-  const f = Math.min(2000, Math.max(20, +cryFreq.value || 432));
+  const f = Math.min(CRY_FREQ_RANGE[1], Math.max(CRY_FREQ_RANGE[0], +cryFreq.value || 432));
   const P = cryParams(f);
   const g = cryCanvas.getContext('2d');
   const W = cryCanvas.width, H = cryCanvas.height, cx = W / 2, cy = H / 2;
@@ -647,40 +698,32 @@ function wire() {
   waveSel.onchange = () => { if (osc) osc.type = waveSel.value; };
   document.getElementById('play').onclick = startTone;
   document.getElementById('stop').onclick = stopTone;
-  document.getElementById('wavdl').onclick = () => {
+  const wavBtn = document.getElementById('wavdl');
+  wavBtn.onclick = async () => {
     const f = +tfreq.value || 432;
     const dur = Math.min(600, Math.max(1, +document.getElementById('wavdur').value || 60));
-    const sr = 44100, n = Math.floor(sr * dur), amp = 0.6;
-    const type = waveSel.value;
-    const data = new Int16Array(n);
-    const fade = sr * 0.05; // 50ms fade in/out
-    for (let i = 0; i < n; i++) {
-      const ph = (i * f / sr) % 1;
-      let s;
-      if (type === 'sine') s = Math.sin(2 * Math.PI * ph);
-      else if (type === 'square') s = ph < 0.5 ? 1 : -1;
-      else if (type === 'sawtooth') s = 2 * ph - 1;
-      else s = ph < 0.5 ? 4 * ph - 1 : 3 - 4 * ph; // triangle
-      let env = 1;
-      if (i < fade) env = i / fade;
-      else if (i > n - fade) env = (n - i) / fade;
-      data[i] = Math.round(s * amp * env * 32767);
+    const sr = 44100, type = waveSel.value;
+    wavBtn.disabled = true;
+    try {
+      const pcm = await wavPcmAsync(type, f, sr, Math.floor(sr * dur));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([wavFile(pcm, sr)], { type: 'audio/wav' }));
+      a.download = `tone_${f}Hz_${type}_${dur}s.wav`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    } finally {
+      wavBtn.disabled = false;
     }
-    const buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
-    const wstr = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
-    wstr(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); wstr(8, 'WAVE');
-    wstr(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
-    v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
-    wstr(36, 'data'); v.setUint32(40, n * 2, true);
-    new Int16Array(buf, 44).set(data);
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
-    a.download = `tone_${f}Hz_${type}_${dur}s.wav`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
   };
   chlSlider.oninput = () => { chlFreq.value = chlSlider.value; refreshChl(); };
   chlFreq.oninput = () => { chlSlider.value = chlFreq.value; refreshChl(); };
+  // μόλις τελειώσει η πληκτρολόγηση, φέρε την τιμή μέσα στα όρια — αλλιώς το πεδίο,
+  // ο slider και τα μαθηματικά δείχνουν τρία διαφορετικά πράγματα
+  chlFreq.onchange = () => {
+    chlFreq.value = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
+    chlSlider.value = chlFreq.value;
+    refreshChl();
+  };
   chlPlate.oninput = refreshChl;
   document.querySelectorAll('#panel-chladni .freq-row .chip[data-f]').forEach(c => c.onclick = () => {
     chlFreq.value = c.dataset.f; chlSlider.value = c.dataset.f;
@@ -690,6 +733,10 @@ function wire() {
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
   document.getElementById('chlShapeDrop').onclick = () => setChlShape('drop');
   cryFreq.oninput = growCrystal;
+  cryFreq.onchange = () => {
+    cryFreq.value = Math.min(CRY_FREQ_RANGE[1], Math.max(CRY_FREQ_RANGE[0], +cryFreq.value || 432));
+    growCrystal();
+  };
   document.getElementById('cryAgain').onclick = growCrystal;
   document.querySelectorAll('#panel-crystal .chip').forEach(c => c.onclick = () => {
     cryFreq.value = c.dataset.f;

@@ -88,6 +88,7 @@ input[type=number] {
     cursor: pointer; transition: filter .15s; box-shadow: 0 4px 18px rgba(255,157,70,.25);
   }
 .btn:hover { filter: brightness(1.1); }
+.btn:disabled { filter: grayscale(.8); cursor: wait; }
 /* --- Tone generator --- */
   .freq-display { text-align: center; margin: 6px 0 14px; }
 .freq-display input {
