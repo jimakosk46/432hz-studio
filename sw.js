@@ -1,5 +1,5 @@
 // 432Hz Studio PWA — offline cache (cache-first)
-const CACHE = 'hz432-v19';
+const CACHE = 'hz432-v22';
 const ASSETS = [
   './', './index.html', './app.css', './app.js',
   './manifest.webmanifest', './icon192.png', './icon512.png',

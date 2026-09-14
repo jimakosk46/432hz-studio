@@ -63,7 +63,6 @@ header p { color: var(--muted); margin-top: 6px; font-size: .95rem; }
     background: var(--panel); border: 1px solid var(--border);
     border-radius: 16px; padding: 22px; box-shadow: 0 10px 34px rgba(0,0,0,.45);
   }
-.hidden { display: none; }
 label.small { display: block; color: var(--muted); font-size: .85rem; margin: 16px 0 6px; }
 .note {
     margin-top: 14px; padding: 12px; border-radius: 10px; background: #1b1338;
@@ -143,3 +142,29 @@ select {
     .tonecard .acts { flex-direction: row; width: 100%; min-width: 0; }
     .tonecard .acts > * { flex: 1; }
   }
+
+/* --- αγαπημένα & μπάρα ενεργειών --- */
+  .favs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.favs:empty { display: none; }
+.favs .fav { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; }
+.favs .fav .x { color: var(--muted); font-weight: 700; line-height: 1; }
+.favs .fav .x:hover { color: var(--danger); }
+.actbar {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid var(--border);
+  }
+#toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%);
+    background: var(--panel2); border: 1px solid var(--accent); color: var(--accent);
+    padding: 10px 18px; border-radius: 999px; font-size: .9rem; z-index: 50;
+    box-shadow: 0 6px 24px rgba(0,0,0,.5);
+  }
+.sleeprow .sleepleft { color: var(--accent2); font-size: .85rem; }
+.tonecard.pending { border-color: var(--accent); box-shadow: 0 0 22px rgba(255,199,107,.28); }
+.tonecard.pending .mus { animation: breathe 1.6s ease-in-out infinite alternate; }
+@keyframes breathe { from { opacity: .55; } to { opacity: 1; } }
+
+/* ΤΕΛΕΥΤΑΙΟ ΕΠΙΤΗΔΕΣ: το .hidden έχει την ίδια ειδικότητα με κανόνες συστατικών
+   όπως το .btn, που ορίζουν display. Όποιος γράφεται τελευταίος κερδίζει — όσο το
+   .hidden ήταν πιο πάνω, το «Στοπ» της γεννήτριας τόνων έμενε μόνιμα ορατό. */
+.hidden { display: none; }

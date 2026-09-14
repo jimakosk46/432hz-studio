@@ -48,7 +48,16 @@ const SHARED_I18N = {
     "tab_cry": "Κρύσταλλοι",
     "cry_note": "Κάθε συχνότητα γεννά τον δικό της μοναδικό κρύσταλλο πάγου: εξαγωνική συμμετρία όπως οι αληθινές χιονονιφάδες, με τα κλαδιά να υπολογίζονται μαθηματικά από τον αριθμό της συχνότητας. Η ίδια συχνότητα δίνει πάντα τον ίδιο κρύσταλλο — το κρυστάλλινο πορτρέτο της.",
     "cry_title": "❄ Ο κρύσταλλος των {f}Hz",
-    "cry_again": "❄ Μεγάλωσε ξανά τον κρύσταλλο"
+    "cry_again": "❄ Μεγάλωσε ξανά τον κρύσταλλο",
+    "act_fav": "☆ Αποθήκευση",
+    "act_share": "🔗 Αντιγραφή συνδέσμου",
+    "act_png": "🖼 Εικόνα",
+    "copied": "Ο σύνδεσμος αντιγράφηκε ✓",
+    "saved_fav": "Αποθηκεύτηκε ✓",
+    "png_done": "Η εικόνα κατέβηκε ✓",
+    "sleep_label": "Χρονοδιακόπτης ύπνου",
+    "sleep_off": "✕ Κλειστό",
+    "sleep_left": "Σταματά σε {n}"
   },
   "de": {
     "tab_tone": "Tongenerator",
@@ -85,7 +94,16 @@ const SHARED_I18N = {
     "tab_cry": "Kristalle",
     "cry_note": "Jede Frequenz erzeugt ihren eigenen, einzigartigen Eiskristall: sechseckige Symmetrie wie echte Schneeflocken, die Äste werden mathematisch aus der Frequenzzahl berechnet. Dieselbe Frequenz ergibt immer denselben Kristall — ihr kristallines Porträt.",
     "cry_title": "❄ Der Kristall von {f}Hz",
-    "cry_again": "❄ Kristall erneut wachsen lassen"
+    "cry_again": "❄ Kristall erneut wachsen lassen",
+    "act_fav": "☆ Speichern",
+    "act_share": "🔗 Link kopieren",
+    "act_png": "🖼 Bild",
+    "copied": "Link kopiert ✓",
+    "saved_fav": "Gespeichert ✓",
+    "png_done": "Bild heruntergeladen ✓",
+    "sleep_label": "Einschlaf-Timer",
+    "sleep_off": "✕ Aus",
+    "sleep_left": "Stoppt in {n}"
   },
   "en": {
     "tab_tone": "Tone generator",
@@ -122,7 +140,16 @@ const SHARED_I18N = {
     "tab_cry": "Crystals",
     "cry_note": "Every frequency grows its own unique ice crystal: hexagonal symmetry like real snowflakes, with branches computed mathematically from the frequency number. The same frequency always gives the same crystal — its crystalline portrait.",
     "cry_title": "❄ The crystal of {f}Hz",
-    "cry_again": "❄ Grow the crystal again"
+    "cry_again": "❄ Grow the crystal again",
+    "act_fav": "☆ Save",
+    "act_share": "🔗 Copy link",
+    "act_png": "🖼 Image",
+    "copied": "Link copied ✓",
+    "saved_fav": "Saved ✓",
+    "png_done": "Image downloaded ✓",
+    "sleep_label": "Sleep timer",
+    "sleep_off": "✕ Off",
+    "sleep_left": "Stops in {n}"
   }
 };
 let I18N = SHARED_I18N;
@@ -139,6 +166,14 @@ const T = k => {
   return k;
 };
 
+// Όταν η κατάσταση δεν έρχεται από κλικ αλλά από σύνδεσμο ή αγαπημένο, πρέπει να
+// φωτιστεί μόνο του το chip που ταιριάζει — αλλιώς το πεδίο λέει 963 και το χρυσό
+// chip λέει 432. Αν καμία προεπιλογή δεν ταιριάζει, δεν φωτίζεται καμία.
+function syncChips(groupSelector, value) {
+  document.querySelectorAll(groupSelector).forEach(c =>
+    c.classList.toggle('sel', Math.abs(+c.dataset.f - value) < 0.01));
+}
+
 // Ένα chip «σελ»: το πατημένο παίρνει την κλάση, τα υπόλοιπα της ίδιας ομάδας τη χάνουν.
 function selectChip(groupSelector, clicked) {
   document.querySelectorAll(groupSelector).forEach(x => x.classList.toggle('sel', x === clicked));
@@ -154,7 +189,10 @@ function sliderToFreq(v) { return Math.exp(smin + (smax - smin) * v / 1000); }
 function freqToSlider(f) { return Math.round((Math.log(f) - smin) / (smax - smin) * 1000); }
 
 function vol() { return Math.pow(+volInp.value / 100, 2) * 0.5; }
-function applyFreq() { if (osc) osc.frequency.setTargetAtTime(+tfreq.value || 432, ctx.currentTime, .02); }
+function applyFreq() {
+  if (osc) osc.frequency.setTargetAtTime(+tfreq.value || 432, ctx.currentTime, .02);
+  pushUrl();
+}
 
 function startTone() {
   if (osc) return;
@@ -296,6 +334,7 @@ function renderTones() {
   TONES.forEach(t => {
     const el = document.createElement('div');
     el.className = 'tonecard';
+    if (pendingHeal === t.f) el.classList.add('pending');
     const ytUrl = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(t.yt);
     const musOn = musicF === t.f;
     const phones = t.f < 60 ? `<span class="phones">${T('need_phones')}</span>` : '';
@@ -307,6 +346,7 @@ function renderTones() {
         <a class="yt" href="${ytUrl}" target="_blank" rel="noopener">🔎 YouTube</a>
       </div>`;
     el.querySelector('.pl').onclick = () => {
+      clearPendingHeal();
       const playingThis = osc && Math.abs(+tfreq.value - t.f) < 0.01;
       if (playingThis) { stopTone(); return; }
       stopMusic();
@@ -319,6 +359,13 @@ function renderTones() {
     list.appendChild(el);
   });
   syncUI();
+  if (pendingHeal !== null && !healScrolled) {
+    const card = list.querySelector('.tonecard.pending');
+    // Δεν ξεκινάμε ήχο: ο browser το μπλοκάρει χωρίς χειρονομία. Δείχνουμε πού να πατήσει.
+    // ΜΙΑ φορά μόνο: το renderTones ξανατρέχει σε κάθε αλλαγή γλώσσας, και δεν επιτρέπεται
+    // να τραβήξει ξανά τη σελίδα αν ο επισκέπτης έχει κυλήσει αλλού στο μεταξύ.
+    if (card) { card.scrollIntoView({ block: 'center', behavior: 'smooth' }); healScrolled = true; }
+  }
 }
 
 let music = null, musicF = null;
@@ -329,6 +376,7 @@ function stopMusic() {
   });
 }
 function toggleMusic(f, btn) {
+  clearPendingHeal();
   if (musicF === f) { stopMusic(); return; }
   stopMusic();
   stopTone();               // μη μπλέκονται τόνος + μουσική
@@ -428,11 +476,12 @@ function findPlateResonance(f, pct) {
   return nearestMode(CHL_MODES.map(([m, n, s]) => ({ mode: [m, n], freq: k * s })), f);
 }
 
-function drawChladni() {
+function drawChladni(canvas) {
+  canvas = canvas || chlCanvas;
   const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { mode: [bm, bn], fr: bf, crisp } = findPlateResonance(f, +chlPlate.value);
-  const W = chlCanvas.width, H = chlCanvas.height;
-  const g = chlCanvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const g = canvas.getContext('2d');
   const img = g.createImageData(W, H);
   const sigma = 0.06 + (1 - crisp) * 0.5; // εκτός συντονισμού → θολές γραμμές
   for (let y = 0; y < H; y++) {
@@ -449,11 +498,15 @@ function drawChladni() {
     }
   }
   g.putImageData(img, 0, 0);
+  if (canvas !== chlCanvas) return;    // εξαγωγή εικόνας: μην πειράζεις την ορατή διεπαφή
   document.getElementById('chlPlateVal').textContent = (+chlPlate.value).toFixed(1).replace('.0', '') + '%';
   chlStatus.textContent = (crisp > 0.6 ? T('chl_on') : T('chl_off')).replace('{f}', bf.toFixed(1));
   chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
 }
-function refreshChl() { if (chlShape !== 'drop') drawChladni(); } // η λίστα drop ανανεώνεται μόνη της κάθε frame
+function refreshChl() {   // η λίστα drop ανανεώνεται μόνη της κάθε frame
+  if (chlShape !== 'drop') drawChladni();
+  pushUrl();
+}
 
 // ---------- water-drop star mode (Rayleigh drop-oscillation formula) ----------
 const DROP_SIGMA = 0.072, DROP_RHO = 1000; // επιφανειακή τάση (N/m) & πυκνότητα (kg/m³) νερού
@@ -481,11 +534,14 @@ function findDropResonance(f, pct) {
 let chlShape = 'plate'; // 'plate' | 'drop'
 let chlRaf = null;
 
-function drawDrop(pulsePhase) {
+function drawDrop(pulsePhase, canvas, scale) {
+  canvas = canvas || chlCanvas;
+  scale = scale || 1;
   const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { n, fr, crisp } = findDropResonance(f, +chlPlate.value);
-  const W = chlCanvas.width, H = chlCanvas.height, cx = W / 2, cy = H / 2;
-  const g = chlCanvas.getContext('2d');
+  const g = canvas.getContext('2d');
+  g.setTransform(scale, 0, 0, scale, 0, 0);   // όλα τα υπόλοιπα δουλεύουν σε λογικά 300px
+  const W = canvas.width / scale, H = canvas.height / scale, cx = W / 2, cy = H / 2;
   const bg = g.createRadialGradient(cx, cy, 10, cx, cy, W * .7);
   bg.addColorStop(0, '#1d1440'); bg.addColorStop(1, '#120b28');
   g.fillStyle = bg; g.fillRect(0, 0, W, H);
@@ -505,10 +561,13 @@ function drawDrop(pulsePhase) {
   const fill = g.createRadialGradient(0, 0, 4, 0, 0, baseR * 1.3);
   fill.addColorStop(0, 'rgba(255,199,107,.20)'); fill.addColorStop(1, 'rgba(255,199,107,0)');
   g.fillStyle = fill; g.fill();
-  g.shadowBlur = 14; g.shadowColor = '#ffc76b';
+  g.shadowBlur = 14 * scale;   // το shadowBlur ΔΕΝ κλιμακώνεται από τον μετασχηματισμό
+  g.shadowColor = '#ffc76b';
   g.strokeStyle = '#ffe6bd'; g.lineWidth = 2.2;
   g.stroke();
   g.restore();
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  if (canvas !== chlCanvas) return;
   document.getElementById('chlPlateVal').textContent = (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
   chlStatus.textContent = (crisp > 0.6 ? T('chl_drop_on') : T('chl_drop_off')).replace('{f}', fr.toFixed(1)).replace('{n}', n);
   chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
@@ -535,6 +594,7 @@ function setChlShape(shape) {
   chlPlate.value = Math.min(hi, Math.max(lo, +chlPlate.value));   // αν γυρίσουμε σε στενότερο εύρος
   if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (shape === 'drop') animateDrop(); else drawChladni();
+  pushUrl();
 }
 
 // ---------- frequency crystals ----------
@@ -585,11 +645,14 @@ function crySeg(g, x1, y1, x2, y2, k) {
   g.stroke();
 }
 
-function drawCrystal(t) {
+function drawCrystal(t, canvas, scale) {
+  canvas = canvas || cryCanvas;
+  scale = scale || 1;
   const f = Math.min(CRY_FREQ_RANGE[1], Math.max(CRY_FREQ_RANGE[0], +cryFreq.value || 432));
   const P = cryParams(f);
-  const g = cryCanvas.getContext('2d');
-  const W = cryCanvas.width, H = cryCanvas.height, cx = W / 2, cy = H / 2;
+  const g = canvas.getContext('2d');
+  g.setTransform(scale, 0, 0, scale, 0, 0);
+  const W = canvas.width / scale, H = canvas.height / scale, cx = W / 2, cy = H / 2;
   const bg = g.createRadialGradient(cx, cy, 10, cx, cy, W * .7);
   bg.addColorStop(0, '#1d1440'); bg.addColorStop(1, '#120b28');
   g.fillStyle = bg; g.fillRect(0, 0, W, H);
@@ -597,19 +660,19 @@ function drawCrystal(t) {
   g.save(); g.translate(cx, cy);
   g.lineCap = 'round'; g.shadowColor = '#7fe7ff';
   if (P.bigHex) { // κεντρική εξαγωνική πλάκα (sectored plate)
-    g.shadowBlur = 8; g.strokeStyle = '#bfe6f7'; g.lineWidth = P.w * .7;
+    g.shadowBlur = 8 * scale; g.strokeStyle = '#bfe6f7'; g.lineWidth = P.w * .7;
     cryHex(g, 0, 0, P.L * P.bigHex * ease, 0, 'rgba(140,200,255,.08)');
   }
   if (P.ring && ease > .3) { // εσωτερικό εξαγωνικό δαχτυλίδι
-    g.shadowBlur = 5; g.strokeStyle = 'rgba(185,225,250,.55)'; g.lineWidth = P.w * .45;
+    g.shadowBlur = 5 * scale; g.strokeStyle = 'rgba(185,225,250,.55)'; g.lineWidth = P.w * .45;
     cryHex(g, 0, 0, P.L * P.ring * Math.min(1, (ease - .3) / .5), 0);
   }
   for (let k = 0; k < 6; k++) {
     g.save(); g.rotate(k * Math.PI / 3);
     const gl = P.L * ease;
-    g.shadowBlur = 10; g.strokeStyle = '#dff4ff'; g.lineWidth = P.w;
+    g.shadowBlur = 10 * scale; g.strokeStyle = '#dff4ff'; g.lineWidth = P.w;
     crySeg(g, 0, 0, P.L, 0, ease);
-    g.lineWidth = P.w * .65; g.strokeStyle = '#a9e2f5'; g.shadowBlur = 6;
+    g.lineWidth = P.w * .65; g.strokeStyle = '#a9e2f5'; g.shadowBlur = 6 * scale;
     for (const s of P.side) {
       const bx = P.L * s.pos;
       if (gl <= bx) continue;
@@ -638,20 +701,23 @@ function drawCrystal(t) {
       g.strokeStyle = '#a9e2f5';
     }
     if (ease > .96) { // χρυσή σπίθα στην άκρη
-      g.shadowBlur = 12; g.shadowColor = '#ffd479'; g.fillStyle = '#ffd479';
+      g.shadowBlur = 12 * scale; g.shadowColor = '#ffd479'; g.fillStyle = '#ffd479';
       g.beginPath(); g.arc(P.L, 0, 2.2, 0, 7); g.fill();
       g.shadowColor = '#7fe7ff';
     }
     g.restore();
   }
   const hr = P.hex * Math.min(1, t * 2.5); // εξάγωνο στον πυρήνα
-  g.shadowBlur = 8; g.strokeStyle = '#cfeeff'; g.lineWidth = P.w * .8;
+  g.shadowBlur = 8 * scale; g.strokeStyle = '#cfeeff'; g.lineWidth = P.w * .8;
   cryHex(g, 0, 0, hr, Math.PI / 6);
   g.restore();
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  if (canvas !== cryCanvas) return;
   cryTitle.textContent = T('cry_title').replace('{f}', f);
 }
 
 function growCrystal() {
+  pushUrl();
   if (cryRaf) cancelAnimationFrame(cryRaf);
   const t0 = performance.now();
   const step = now => {
@@ -662,10 +728,324 @@ function growCrystal() {
   cryRaf = requestAnimationFrame(step);
 }
 
+// ---------- κατάσταση καρτέλας: κοινή βάση για URL, αγαπημένα και λεζάντα εικόνας ----------
+// Η εφαρμογή δεν έχει αντικείμενο κατάστασης — η κατάσταση ΕΙΝΑΙ το DOM. Εδώ μπαίνει
+// ένας προσαρμογέας ανά καρτέλα που μεταφράζει DOM <-> απλό αντικείμενο. Το write()
+// δεν κάνει δική του επικύρωση: περνάει από τα ίδια όρια που ήδη προστατεύουν τα πεδία,
+// ώστε να υπάρχει ένα μόνο μονοπάτι ελέγχου.
+const TAB_NAMES = ['conv', 'tone', 'heal', 'chladni', 'crystal'];
+let activeTab = 'conv';
+let pendingHeal = null;   // συχνότητα από κοινόχρηστο σύνδεσμο· περιμένει χειρονομία χρήστη
+let healScrolled = false;   // το scroll του κοινόχρηστου συνδέσμου γίνεται μία φορά
+
+function clearPendingHeal() {
+  pendingHeal = null;
+  healScrolled = false;
+  document.querySelectorAll('.tonecard.pending').forEach(c => c.classList.remove('pending'));
+}
+
+function clampNum(v, lo, hi, dflt) {
+  const n = +v;
+  return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : dflt;
+}
+
+const TAB_STATE = {
+  conv: { read: () => ({}), write: () => {} },
+
+  tone: {
+    read: () => ({ f: +tfreq.value, w: waveSel.value }),
+    write: s => {
+      if (s.f != null) {
+        tfreq.value = clampNum(s.f, 1, 20000, 432);
+        if (+tfreq.value >= 20 && +tfreq.value <= 2000) tslider.value = freqToSlider(+tfreq.value);
+        syncChips('#panel-tone .presets .chip', +tfreq.value);
+        applyFreq();
+      }
+      if (s.w && Array.prototype.some.call(waveSel.options, o => o.value === s.w)) waveSel.value = s.w;
+    },
+  },
+
+  heal: {
+    read: () => ({ f: musicF }),
+    // Δεν ξεκινάμε ήχο μόνοι μας: ο browser μπλοκάρει autoplay χωρίς χειρονομία.
+    // Κρατάμε τη συχνότητα και ο renderTones() θα τονίσει την αντίστοιχη κάρτα.
+    write: s => { const f = +s.f; pendingHeal = TONES.some(t => t.f === f) ? f : null; },
+  },
+
+  chladni: {
+    read: () => ({ f: +chlFreq.value, p: +chlPlate.value, sh: chlShape }),
+    write: s => {
+      // ΣΕΙΡΑ: πρώτα το σχήμα. Το setChlShape ξαναγράφει τα min/max του chlPlate
+      // (πλάκα 90–110%, σταγόνα 85–120%) και θα «έκοβε» ένα έγκυρο μέγεθος σταγόνας.
+      if (s.sh === 'drop' || s.sh === 'plate') setChlShape(s.sh);
+      if (s.f != null) {
+        chlFreq.value = clampNum(s.f, CHL_FREQ_RANGE[0], CHL_FREQ_RANGE[1], 432);
+        chlSlider.value = chlFreq.value;
+      }
+      if (s.p != null) chlPlate.value = clampNum(s.p, +chlPlate.min, +chlPlate.max, 100);
+      syncChips('#panel-chladni .freq-row .chip[data-f]', +chlFreq.value);
+      refreshChl();
+    },
+  },
+
+  crystal: {
+    read: () => ({ f: +cryFreq.value }),
+    write: s => {
+      if (s.f != null) cryFreq.value = clampNum(s.f, CRY_FREQ_RANGE[0], CRY_FREQ_RANGE[1], 432);
+      syncChips('#panel-crystal .freq-row .chip[data-f]', +cryFreq.value);
+      growCrystal();
+    },
+  },
+};
+
+function stateToQuery(tab, s) {
+  const q = new URLSearchParams({ t: tab });
+  for (const k of Object.keys(s)) {
+    const v = s[k];
+    if (v !== null && v !== undefined && v !== '') q.set(k, String(v));
+  }
+  return '?' + q.toString();
+}
+
+function queryToState(search) {
+  const q = new URLSearchParams(search);
+  const t = q.get('t');
+  if (!TAB_STATE[t]) return null;
+  const s = {};
+  q.forEach((v, k) => { if (k !== 't') s[k] = v; });
+  return { tab: t, state: s };
+}
+
+function showTab(name) {
+  if (!TAB_STATE[name]) name = 'conv';
+  activeTab = name;
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
+  TAB_NAMES.forEach(p => document.getElementById('panel-' + p).classList.toggle('hidden', p !== name));
+  if (name === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
+  else if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
+  pushUrl();
+  renderFavs();
+}
+
+let urlTimer = null;
+function pushUrl() {
+  // replaceState και όχι pushState: αλλιώς κάθε κίνηση του slider γεμίζει το «πίσω».
+  clearTimeout(urlTimer);
+  urlTimer = setTimeout(() => {
+    try {
+      history.replaceState(null, '', stateToQuery(activeTab, TAB_STATE[activeTab].read()));
+    } catch (e) { /* file:// ή sandbox — ο σύνδεσμος απλώς δεν ενημερώνεται */ }
+  }, 300);
+}
+
+function shareUrl() {
+  return location.origin + location.pathname + stateToQuery(activeTab, TAB_STATE[activeTab].read());
+}
+
+function applyUrlState() {
+  const p = queryToState(location.search);
+  if (!p) return;
+  TAB_STATE[p.tab].write(p.state);
+  showTab(p.tab);
+}
+
+// ---------- εξαγωγή εικόνας ----------
+// Η κάρτα ζωγραφίζεται στη ΔΙΚΗ της ανάλυση, όχι με μεγέθυνση του καμβά των 300px:
+// μεγεθυμένο bitmap θα ήταν θολό, δηλαδή ακριβώς το αντίθετο από «κάτι που στέλνεις».
+const CARD_W = 1080, CARD_H = 1350, CARD_ART = 1080;
+
+function cardBackground(g) {
+  g.fillStyle = '#0a0618';
+  g.fillRect(0, 0, CARD_W, CARD_H);
+  const blobs = [
+    [0.10, -0.05, 0.62, 'rgba(61,229,199,.20)'],
+    [0.96, 0.04, 0.60, 'rgba(255,94,196,.17)'],
+    [0.88, 0.96, 0.62, 'rgba(160,107,255,.18)'],
+    [0.50, 1.06, 0.55, 'rgba(255,150,60,.20)'],
+  ];
+  for (const [x, y, r, col] of blobs) {
+    const gr = g.createRadialGradient(x * CARD_W, y * CARD_H, 0, x * CARD_W, y * CARD_H, r * CARD_W);
+    gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, CARD_W, CARD_H);
+  }
+}
+
+function exportCard() {
+  const tab = activeTab;
+  if (tab !== 'chladni' && tab !== 'crystal') return;
+  const art = document.createElement('canvas');
+  art.width = art.height = CARD_ART;
+  if (tab === 'crystal') drawCrystal(1, art, CARD_ART / 300);
+  else if (chlShape === 'drop') drawDrop(0, art, CARD_ART / 300);
+  else drawChladni(art);
+
+  const card = document.createElement('canvas');
+  card.width = CARD_W; card.height = CARD_H;
+  const g = card.getContext('2d');
+  cardBackground(g);
+  g.save();
+  g.beginPath();
+  g.roundRect ? g.roundRect(0, 120, CARD_W, CARD_ART, 28) : g.rect(0, 120, CARD_W, CARD_ART);
+  g.clip();
+  g.drawImage(art, 0, 120);
+  g.restore();
+
+  const s = TAB_STATE[tab].read();
+  g.textAlign = 'center';
+  g.fillStyle = '#ffc76b';
+  g.font = '600 76px "Segoe UI", system-ui, sans-serif';
+  g.fillText(s.f + ' Hz', CARD_W / 2, 1290);
+  g.fillStyle = '#a89fc7';
+  g.font = '400 34px "Segoe UI", system-ui, sans-serif';
+  g.fillText('432Hz Studio', CARD_W / 2, 78);
+
+  card.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = tab + '_' + s.f + 'Hz.png';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    toast(T('png_done'));
+  }, 'image/png');
+}
+
+// ---------- χρονοδιακόπτης ύπνου ----------
+// Παίζει πάντα ΕΝΑ μόνο πράγμα (ο τόνος και η μουσική αλληλοαποκλείονται), οπότε όταν
+// ΑΡΧΙΖΕΙ το σβήσιμο δεν χρειάζεται να ξέρει ποιο: σβήνει ό,τι βρει. Το τέλος όμως
+// έρχεται 20 δευτερόλεπτα αργότερα, και ως τότε μπορεί να παίζει κάτι άλλο — γι' αυτό
+// το σταμάτημα ελέγχει ταυτότητα (βλ. fadeOutAndStop).
+const SLEEP_FADE_MS = 20000;
+let sleepAt = null, sleepTick = null;
+
+// Ο χρονιστής που σβήνει πρέπει να θυμάται ΠΟΙΟΝ ήχο έπιασε. Αν ο χρήστης ξυπνήσει
+// μέσα στα 20 δευτερόλεπτα και ξαναρχίσει κάτι, ο παλιός χρονιστής δεν επιτρέπεται
+// να σκοτώσει τον καινούριο ήχο — γι' αυτό ελέγχεται η ταυτότητα πριν το σταμάτημα.
+function fadeOutAndStop() {
+  if (osc && gain && ctx) {
+    const o = osc;
+    gain.gain.setTargetAtTime(0, ctx.currentTime, SLEEP_FADE_MS / 4000);
+    setTimeout(() => { if (osc === o) stopTone(); }, SLEEP_FADE_MS);
+  } else if (music) {
+    const m = music, v0 = m.volume, t0 = performance.now();
+    const id = setInterval(() => {
+      if (music !== m) { clearInterval(id); return; }   // άλλαξε κομμάτι ή σταμάτησε
+      const k = Math.min(1, (performance.now() - t0) / SLEEP_FADE_MS);
+      m.volume = v0 * (1 - k);
+      if (k >= 1) { clearInterval(id); stopMusic(); }
+    }, 200);
+  }
+}
+
+function renderSleep() {
+  const left = sleepAt ? Math.max(0, sleepAt - Date.now()) : 0;
+  const txt = left
+    ? T('sleep_left').replace('{n}', Math.floor(left / 60000) + ':' + String(Math.floor(left / 1000) % 60).padStart(2, '0'))
+    : '';
+  document.querySelectorAll('.sleeprow .sleepleft').forEach(el => el.textContent = txt);
+  // Η επιλογή του chip ανήκει στο setSleep. Αν την πείραζε κι εδώ, το πρώτο
+  // δευτερόλεπτο του χρονοδιακόπτη θα ξεδιάλεγε το chip που μόλις πάτησε ο χρήστης.
+}
+
+function setSleep(minutes) {
+  clearInterval(sleepTick); sleepTick = null;
+  sleepAt = minutes > 0 ? Date.now() + minutes * 60000 : null;
+  if (sleepAt) {
+    sleepTick = setInterval(() => {
+      if (Date.now() >= sleepAt) {
+        clearInterval(sleepTick); sleepTick = null; sleepAt = null;
+        fadeOutAndStop();
+        document.querySelectorAll('.sleeprow .chip').forEach(c => c.classList.toggle('sel', c.dataset.sleep === '0'));
+      }
+      renderSleep();
+    }, 1000);
+  }
+  document.querySelectorAll('.sleeprow .chip').forEach(c =>
+    c.classList.toggle('sel', +c.dataset.sleep === minutes));
+  renderSleep();
+}
+
+// ---------- ειδοποίηση & κοινή χρήση ----------
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.add('hidden'), 2000);
+}
+
+async function doShare() {
+  const url = shareUrl();
+  if (navigator.share) {
+    try { await navigator.share({ title: '432Hz Studio', url }); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }  // ο χρήστης το ακύρωσε
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    toast(T('copied'));
+  } catch (e) {
+    window.prompt(T('act_share'), url);   // μη ασφαλής προέλευση: δώσ' τον για χειροκίνητη αντιγραφή
+  }
+}
+
+// ---------- αγαπημένα ----------
+// Ένα αγαπημένο ΕΙΝΑΙ στιγμιότυπο καρτέλας, γι' αυτό εμφανίζεται μόνο μέσα στη δική
+// του καρτέλα. Η ετικέτα παράγεται από τις παραμέτρους και δεν αποθηκεύεται, ώστε
+// καμία αποθηκευμένη εγγραφή να μη χρειάζεται μετάφραση.
+const FAV_KEY = 'fav432', FAV_MAX = 12;
+
+function loadFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveFavs(store) {
+  try { localStorage.setItem(FAV_KEY, JSON.stringify(store)); } catch (e) { /* γεμάτο ή ιδιωτική περιήγηση */ }
+}
+function favLabel(tab, s) {
+  if (tab === 'chladni') return s.f + ' Hz · ' + (+s.p).toFixed(0) + '% · ' + T(s.sh === 'drop' ? 'chl_shape_drop' : 'chl_shape_plate');
+  if (tab === 'tone') return s.f + ' Hz · ' + T('wave_' + (s.w === 'sawtooth' ? 'saw' : s.w));
+  return s.f + ' Hz';
+}
+function addFav(tab) {
+  const store = loadFavs();
+  const list = store[tab] || (store[tab] = []);
+  const s = TAB_STATE[tab].read();
+  const key = JSON.stringify(s);
+  if (list.some(x => JSON.stringify(x) === key)) return;   // ήδη αποθηκευμένο
+  list.push(s);
+  while (list.length > FAV_MAX) list.shift();              // παλαιότερο φεύγει πρώτο
+  saveFavs(store);
+  renderFavs();
+}
+function removeFav(tab, i) {
+  const store = loadFavs();
+  if (!store[tab]) return;
+  store[tab].splice(i, 1);
+  saveFavs(store);
+  renderFavs();
+}
+function renderFavs() {
+  const store = loadFavs();
+  document.querySelectorAll('.favs').forEach(box => {
+    const tab = box.dataset.favs;
+    box.innerHTML = '';
+    (store[tab] || []).forEach((s, i) => {
+      const b = document.createElement('button');
+      b.className = 'chip fav';
+      b.innerHTML = '<span></span><span class="x">×</span>';
+      b.firstChild.textContent = favLabel(tab, s);
+      b.onclick = e => {
+        if (e.target.classList.contains('x')) { removeFav(tab, i); return; }
+        TAB_STATE[tab].write(s);
+      };
+      box.appendChild(b);
+    });
+  });
+}
+
 // ---------- language switch ----------
 function applyLang(l) {
   LANG = I18N[l] ? l : 'el';
-  localStorage.setItem('lang432', LANG);
+  try { localStorage.setItem('lang432', LANG); } catch (e) { /* ιδιωτική περιήγηση */ }
   document.documentElement.lang = LANG;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
   document.querySelectorAll('.langs .chip').forEach(c => c.classList.toggle('sel', c.dataset.l === LANG));
@@ -676,22 +1056,18 @@ function applyLang(l) {
   renderTones();
   if (chlShape !== 'drop') drawChladni();
   drawCrystal(1);
+  renderFavs();
+  renderSleep();
 }
 
 // ---------- σύνδεση χειριστών ----------
 function wire() {
-  document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
-    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
-    ['conv', 'tone', 'heal', 'chladni', 'crystal'].forEach(name =>
-      document.getElementById('panel-' + name).classList.toggle('hidden', t.dataset.tab !== name));
-    if (t.dataset.tab === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
-    else if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
-  });
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => showTab(t.dataset.tab));
   tslider.oninput = () => { tfreq.value = sliderToFreq(+tslider.value).toFixed(1); applyFreq(); };
   tfreq.oninput = () => { const f = +tfreq.value; if (f >= 20 && f <= 2000) tslider.value = freqToSlider(f); applyFreq(); };
-  document.querySelectorAll('#panel-tone .chip').forEach(c => c.onclick = () => {
+  document.querySelectorAll('#panel-tone .presets .chip').forEach(c => c.onclick = () => {
     tfreq.value = c.dataset.f; tslider.value = freqToSlider(+c.dataset.f);
-    selectChip('#panel-tone .chip', c);
+    selectChip('#panel-tone .presets .chip', c);
     applyFreq();
   });
   volInp.oninput = () => { if (gain) gain.gain.setTargetAtTime(vol(), ctx.currentTime, .02); };
@@ -738,13 +1114,19 @@ function wire() {
     growCrystal();
   };
   document.getElementById('cryAgain').onclick = growCrystal;
-  document.querySelectorAll('#panel-crystal .chip').forEach(c => c.onclick = () => {
+  document.querySelectorAll('#panel-crystal .freq-row .chip[data-f]').forEach(c => c.onclick = () => {
     cryFreq.value = c.dataset.f;
-    selectChip('#panel-crystal .chip', c);
+    selectChip('#panel-crystal .freq-row .chip[data-f]', c);
     growCrystal();
   });
   document.querySelectorAll('.langs .chip').forEach(c => c.onclick = () => applyLang(c.dataset.l));
 
+  document.querySelectorAll('.actbar [data-act]').forEach(b => b.onclick = () => {
+    if (b.dataset.act === 'fav') { addFav(b.dataset.tab); toast(T('saved_fav')); }
+    else if (b.dataset.act === 'share') doShare();
+    else if (b.dataset.act === 'png') exportCard();
+  });
+  document.querySelectorAll('.sleeprow .chip').forEach(c => c.onclick = () => setSleep(+c.dataset.sleep));
 }
 
 // ---------- εκκίνηση ----------
@@ -754,5 +1136,6 @@ function startApp(cfg) {
   for (const l of ['el', 'de', 'en']) I18N[l] = Object.assign({}, SHARED_I18N[l], (cfg.i18n || {})[l]);
   if (!I18N[LANG]) LANG = 'el';
   wire();
+  applyUrlState();
   applyLang(LANG);
 }
