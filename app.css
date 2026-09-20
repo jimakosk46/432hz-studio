@@ -165,7 +165,7 @@ select {
 @keyframes breathe { from { opacity: .55; } to { opacity: 1; } }
 
 /* --- κουρδιστήρι --- */
-  .courses { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+.courses { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
 .course {
     min-width: 76px; text-align: center; padding: 10px 8px; border-radius: 10px;
     border: 1px solid var(--border); background: var(--panel2); color: var(--muted);

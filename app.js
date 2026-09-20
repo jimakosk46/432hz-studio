@@ -1063,6 +1063,13 @@ async function startMic() {
   // σε επίπεδο συστήματος. Διαβάζουμε τι πήραμε στην πραγματικότητα, όχι τι ζητήσαμε.
   const track = micStream.getAudioTracks()[0];
   micSettings = track && track.getSettings ? track.getSettings() : null;
+  // Αν ο browser εκθέτει τον περιορισμό αλλά επέστρεψε true ενώ ζητήσαμε false, δεν τον
+  // τήρησε — μόνο τότε αξίζει προειδοποίηση, όχι μια απλή καταγραφή ολόκληρου του αντικειμένου.
+  if (micSettings) {
+    ['echoCancellation', 'autoGainControl', 'noiseSuppression'].forEach(k => {
+      if (micSettings[k] === true) console.warn('κουρδιστήρι: ζητήθηκε ' + k + '=false, ο browser έδωσε true');
+    });
+  }
   try {
   micCtx = new (window.AudioContext || window.webkitAudioContext)();
   // το context γεννιέται ΜΕΤΑ το getUserMedia (μετά το παράθυρο άδειας), οπότε μπορεί
@@ -1113,16 +1120,25 @@ function medianOf(a) {
 // τη λωρίδα — ο παίκτης χρειάζεται μόνο να ξέρει προς τα πού να γυρίσει το κλειδί.
 const CENTS_SPAN = 50, CENTS_OK = 5;
 
+// ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: η μόνη διακλαδική αριθμητική της λωρίδας cents, βγαλμένη από το
+// DOM ακριβώς όπως το detectPitch — ώστε να ελέγχεται με απλά νούμερα, χωρίς μικρόφωνο
+// ή σελίδα. Η updateCentsBar μένει λεπτό περιτύλιγμα που μόνο διαβάζει/γράφει το DOM.
+function centsBarState(cents) {
+  const pct = Math.max(-1, Math.min(1, cents / CENTS_SPAN));
+  const good = Math.abs(cents) <= CENTS_OK;
+  // ΠΡΟΣΟΧΗ ΣΤΗ ΦΟΡΑ: αρνητικά cents = χαμηλά = η χορδή θέλει ΣΦΙΞΙΜΟ.
+  const adviceKey = good ? 'tuner_intune' : (cents < 0 ? 'tuner_tighten' : 'tuner_loosen');
+  return { left: 50 + pct * 50, good: good, adviceKey: adviceKey };
+}
+
 function updateCentsBar(m) {
   const mark = document.getElementById('centsMark');
+  const advice = document.getElementById('tunerAdvice');
   if (!mark) return;
-  const pct = Math.max(-1, Math.min(1, m.cents / CENTS_SPAN));
-  mark.style.left = (50 + pct * 50) + '%';
-  const good = Math.abs(m.cents) <= CENTS_OK;
-  mark.classList.toggle('good', good);
-  // ΠΡΟΣΟΧΗ ΣΤΗ ΦΟΡΑ: αρνητικά cents = χαμηλά = η χορδή θέλει ΣΦΙΞΙΜΟ.
-  document.getElementById('tunerAdvice').textContent =
-    good ? T('tuner_intune') : T(m.cents < 0 ? 'tuner_tighten' : 'tuner_loosen');
+  const s = centsBarState(m.cents);
+  mark.style.left = s.left + '%';
+  mark.classList.toggle('good', s.good);
+  if (advice) advice.textContent = T(s.adviceKey);
 }
 
 function clearCentsBar() {
