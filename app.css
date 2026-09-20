@@ -164,6 +164,44 @@ select {
 .tonecard.pending .mus { animation: breathe 1.6s ease-in-out infinite alternate; }
 @keyframes breathe { from { opacity: .55; } to { opacity: 1; } }
 
+/* --- κουρδιστήρι --- */
+  .courses { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+.course {
+    min-width: 76px; text-align: center; padding: 10px 8px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--panel2); color: var(--muted);
+    font-size: .9rem; line-height: 1.35;
+  }
+.course b { display: block; color: var(--text); font-size: 1.05rem; }
+.course small { display: block; font-size: .7rem; opacity: .75; }
+.course.oct { border-color: #6b5527; }
+.course.on { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.25); }
+.tunernote { font-size: .78rem; }
+.strbtn {
+    display: block; width: 100%; margin-top: 4px; padding: 6px 4px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--accent); cursor: pointer;
+    font-size: .92rem; font-weight: 600;
+  }
+.strbtn small { display: block; font-weight: 400; color: var(--muted); font-size: .68rem; }
+.strbtn.on { background: #3a2c12; border-color: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.3); }
+
+#tunerReadout { text-align: center; margin-top: 16px; min-height: 26px; color: var(--muted); font-size: .95rem; }
+.micbtn-hidden { display: none; }
+
+.centsbar { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.centsend { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+.centstrack {
+    position: relative; flex: 1; height: 14px; border-radius: 999px;
+    background: var(--panel2); border: 1px solid var(--border);
+  }
+.centszero { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: var(--muted); }
+.centsmark {
+    position: absolute; top: -4px; width: 12px; height: 20px; border-radius: 4px;
+    left: 50%; margin-left: -6px; background: var(--danger);
+    transition: left .12s linear, background .2s;
+  }
+.centsmark.good { background: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.5); }
+#tunerAdvice { text-align: center; margin-top: 8px; min-height: 20px; font-size: .9rem; color: var(--muted); }
 /* ΤΕΛΕΥΤΑΙΟ ΕΠΙΤΗΔΕΣ: το .hidden έχει την ίδια ειδικότητα με κανόνες συστατικών
    όπως το .btn, που ορίζουν display. Όποιος γράφεται τελευταίος κερδίζει — όσο το
    .hidden ήταν πιο πάνω, το «Στοπ» της γεννήτριας τόνων έμενε μόνιμα ορατό. */

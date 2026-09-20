@@ -46,6 +46,32 @@ const SHARED_I18N = {
     "chl_drop_on": "✨ Συντονισμός στα {f}Hz — καθαρό αστέρι {n} ακτίνων!",
     "chl_drop_off": "Εκτός συντονισμού — ασταθές σχήμα. Κοντινότερος συντονισμός: {f}Hz ({n} ακτίνες)",
     "tab_cry": "Κρύσταλλοι",
+    "tab_tuner": "Κουρδιστήρι",
+    "tuner_note": "Διάλεξε όργανο και συχνότητα αναφοράς, πάτα μια νότα για να την ακούσεις, και κούρδισε με το αυτί. Στα 432 Hz κατεβαίνουν όλες οι χορδές το ίδιο — οι σχέσεις μεταξύ τους δεν αλλάζουν.",
+    "tuner_instrument": "Όργανο",
+    "tuner_ref": "Συχνότητα αναφοράς (Λα)",
+    "inst_trichordo": "Μπουζούκι τρίχορδο",
+    "inst_tetrachordo": "Μπουζούκι τετράχορδο",
+    "inst_baglamas": "Μπαγλαμάς",
+    "inst_tzouras": "Τζουράς",
+    "inst_guitar": "Κιθάρα",
+    "inst_violin": "Βιολί",
+    "inst_ukulele": "Γιουκαλίλι",
+    "note_baglamas": "Ο μπαγλαμάς κουρδιζόταν ιστορικά σε σχέση με το μπουζούκι της παρέας, όχι με διαπασών. Ο στόχος εδώ είναι ακριβώς μία οκτάβα πάνω από το τρίχορδο.",
+    "note_ukulele": "Προσοχή: στο γιουκαλίλι η χορδή σολ ηχεί ΠΑΝΩ από το ντο, δεν είναι η χαμηλότερη.",
+    "note_octave": "Η χαμηλή σειρά είναι ζεύγος σε οκτάβα — δύο χορδές, μία οκτάβα απόσταση.",
+    "tuner_octave_pair": "οκτάβα",
+    "tuner_tap": "Πάτα μια νότα για να την ακούσεις και κούρδισε με το αυτί.",
+    "mic_start": "🎤 Ενεργοποίηση μικροφώνου",
+    "mic_denied": "Δεν δόθηκε άδεια για το μικρόφωνο. Ο browser θυμάται την άρνηση — θα χρειαστεί να την αλλάξεις από τις ρυθμίσεις της σελίδας (το εικονίδιο αριστερά από τη διεύθυνση).",
+    "mic_none": "Δεν βρέθηκε μικρόφωνο σε αυτή τη συσκευή.",
+    "mic_insecure": "Το μικρόφωνο δουλεύει μόνο σε ασφαλή σύνδεση (https ή localhost).",
+    "mic_listening": "Ακούω…",
+    "tuner_flat": "χαμηλά",
+    "tuner_sharp": "ψηλά",
+    "tuner_tighten": "σφίξε λίγο",
+    "tuner_loosen": "χαλάρωσε λίγο",
+    "tuner_intune": "✓ κουρδισμένη",
     "cry_note": "Κάθε συχνότητα γεννά τον δικό της μοναδικό κρύσταλλο πάγου: εξαγωνική συμμετρία όπως οι αληθινές χιονονιφάδες, με τα κλαδιά να υπολογίζονται μαθηματικά από τον αριθμό της συχνότητας. Η ίδια συχνότητα δίνει πάντα τον ίδιο κρύσταλλο — το κρυστάλλινο πορτρέτο της.",
     "cry_title": "❄ Ο κρύσταλλος των {f}Hz",
     "cry_again": "❄ Μεγάλωσε ξανά τον κρύσταλλο",
@@ -92,6 +118,32 @@ const SHARED_I18N = {
     "chl_drop_on": "✨ Resonanz bei {f}Hz — klarer Stern mit {n} Spitzen!",
     "chl_drop_off": "Außerhalb der Resonanz — instabile Form. Nächste Resonanz: {f}Hz ({n} Spitzen)",
     "tab_cry": "Kristalle",
+    "tab_tuner": "Stimmgerät",
+    "tuner_note": "Wähle Instrument und Referenzfrequenz, tippe eine Note an, um sie zu hören, und stimme nach Gehör. Bei 432 Hz sinken alle Saiten gleich weit — ihre Verhältnisse zueinander bleiben unverändert.",
+    "tuner_instrument": "Instrument",
+    "tuner_ref": "Referenzfrequenz (A)",
+    "inst_trichordo": "Bouzouki, dreichörig",
+    "inst_tetrachordo": "Bouzouki, vierchörig",
+    "inst_baglamas": "Baglamas",
+    "inst_tzouras": "Tzouras",
+    "inst_guitar": "Gitarre",
+    "inst_violin": "Geige",
+    "inst_ukulele": "Ukulele",
+    "note_baglamas": "Der Baglamas wurde historisch relativ zur Bouzouki der Runde gestimmt, nicht nach Kammerton. Das Ziel hier ist genau eine Oktave über der dreichörigen Bouzouki.",
+    "note_ukulele": "Achtung: Bei der Ukulele klingt die G-Saite HÖHER als die C-Saite, sie ist nicht die tiefste.",
+    "note_octave": "Der tiefste Chor ist ein Oktavpaar — zwei Saiten im Abstand einer Oktave.",
+    "tuner_octave_pair": "Oktave",
+    "tuner_tap": "Tippe eine Note an, um sie zu hören, und stimme nach Gehör.",
+    "mic_start": "🎤 Mikrofon aktivieren",
+    "mic_denied": "Kein Zugriff auf das Mikrofon. Der Browser merkt sich die Ablehnung — du musst sie in den Seiteneinstellungen ändern (das Symbol links neben der Adresse).",
+    "mic_none": "Auf diesem Gerät wurde kein Mikrofon gefunden.",
+    "mic_insecure": "Das Mikrofon funktioniert nur über eine sichere Verbindung (https oder localhost).",
+    "mic_listening": "Ich höre zu…",
+    "tuner_flat": "zu tief",
+    "tuner_sharp": "zu hoch",
+    "tuner_tighten": "etwas straffer",
+    "tuner_loosen": "etwas lockerer",
+    "tuner_intune": "✓ gestimmt",
     "cry_note": "Jede Frequenz erzeugt ihren eigenen, einzigartigen Eiskristall: sechseckige Symmetrie wie echte Schneeflocken, die Äste werden mathematisch aus der Frequenzzahl berechnet. Dieselbe Frequenz ergibt immer denselben Kristall — ihr kristallines Porträt.",
     "cry_title": "❄ Der Kristall von {f}Hz",
     "cry_again": "❄ Kristall erneut wachsen lassen",
@@ -138,6 +190,32 @@ const SHARED_I18N = {
     "chl_drop_on": "✨ Resonance at {f}Hz — clear {n}-point star!",
     "chl_drop_off": "Off resonance — unstable shape. Nearest resonance: {f}Hz ({n} points)",
     "tab_cry": "Crystals",
+    "tab_tuner": "Tuner",
+    "tuner_note": "Choose an instrument and a reference pitch, tap a note to hear it, and tune by ear. At 432 Hz every string drops by the same amount — the relationships between them do not change.",
+    "tuner_instrument": "Instrument",
+    "tuner_ref": "Reference pitch (A)",
+    "inst_trichordo": "Bouzouki, three-course",
+    "inst_tetrachordo": "Bouzouki, four-course",
+    "inst_baglamas": "Baglamas",
+    "inst_tzouras": "Tzouras",
+    "inst_guitar": "Guitar",
+    "inst_violin": "Violin",
+    "inst_ukulele": "Ukulele",
+    "note_baglamas": "The baglamas was historically tuned relative to whichever bouzouki was in the room, not to a fixed reference. The target here is exactly one octave above the three-course bouzouki.",
+    "note_ukulele": "Note: on the ukulele the G string sounds HIGHER than the C, it is not the lowest.",
+    "note_octave": "The lowest course is an octave pair — two strings an octave apart.",
+    "tuner_octave_pair": "octave",
+    "tuner_tap": "Tap a note to hear it and tune by ear.",
+    "mic_start": "🎤 Enable microphone",
+    "mic_denied": "Microphone access was refused. The browser remembers this — you will need to change it in the site settings (the icon to the left of the address).",
+    "mic_none": "No microphone was found on this device.",
+    "mic_insecure": "The microphone only works over a secure connection (https or localhost).",
+    "mic_listening": "Listening…",
+    "tuner_flat": "flat",
+    "tuner_sharp": "sharp",
+    "tuner_tighten": "tighten a little",
+    "tuner_loosen": "loosen a little",
+    "tuner_intune": "✓ in tune",
     "cry_note": "Every frequency grows its own unique ice crystal: hexagonal symmetry like real snowflakes, with branches computed mathematically from the frequency number. The same frequency always gives the same crystal — its crystalline portrait.",
     "cry_title": "❄ The crystal of {f}Hz",
     "cry_again": "❄ Grow the crystal again",
@@ -197,6 +275,7 @@ function applyFreq() {
 function startTone() {
   if (osc) return;
   stopSongPlayer();
+  stopRefTone();
   ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
   ctx.resume();
   osc = ctx.createOscillator(); gain = ctx.createGain();
@@ -380,6 +459,7 @@ function toggleMusic(f, btn) {
   if (musicF === f) { stopMusic(); return; }
   stopMusic();
   stopTone();               // μη μπλέκονται τόνος + μουσική
+  stopRefTone();
   stopSongPlayer();
   music = new Audio(APP.trackUrl(f));
   music.loop = true;
@@ -728,12 +808,369 @@ function growCrystal() {
   cryRaf = requestAnimationFrame(step);
 }
 
+// ---------- ανίχνευση τονικού ύψους ----------
+// ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: δεν ξέρει από μικρόφωνα, DOM ή όργανα. Γι' αυτό μπορεί να ελεγχθεί
+// με συνθετικά κύματα — ο headless browser των τεστ δεν έχει μικρόφωνο, οπότε αν ο
+// αλγόριθμος ήταν μπλεγμένος με το getUserMedia δεν θα ελεγχόταν ποτέ.
+//
+// Κανονικοποιημένη αυτοσυσχέτιση (NSDF, κατά McLeod) και όχι FFT: το χαμηλό μι της
+// κιθάρας είναι 82Hz, όπου ένα FFT με αυτό το παράθυρο έχει διακριτική ικανότητα
+// χειρότερη από ημιτόνιο. Η αυτοσυσχέτιση δουλεύει στον χρόνο, και η παραβολική
+// παρεμβολή στην κορυφή δίνει ακρίβεια καλύτερη από 1 cent.
+const PITCH_MIN_HZ = 70, PITCH_MAX_HZ = 1100;
+const PITCH_WINDOW = 2048;        // 46ms στα 44.1kHz — ~4 περίοδοι του χαμηλού μι
+const PITCH_RMS_GATE = 0.01;      // κάτω από αυτό είναι σιωπή
+const PITCH_CLARITY_GATE = 0.9;   // κάτω από αυτό το σήμα δεν είναι τονικό
+const PITCH_PEAK_K = 0.9;         // πόσο κοντά στην ψηλότερη αρκεί να είναι μια κορυφή
+
+function detectPitch(buf, sampleRate) {
+  const n = buf.length;
+  let sum = 0;
+  for (let i = 0; i < n; i++) sum += buf[i] * buf[i];
+  if (Math.sqrt(sum / n) < PITCH_RMS_GATE) return { hz: 0, clarity: 0 };
+
+  const minLag = Math.max(2, Math.floor(sampleRate / PITCH_MAX_HZ));
+  const maxLag = Math.min(Math.floor(sampleRate / PITCH_MIN_HZ), n - 2);
+  if (maxLag <= minLag) return { hz: 0, clarity: 0 };
+
+  // NSDF: n(τ) = 2·Σ x[i]x[i+τ] / Σ (x[i]² + x[i+τ]²) — κανονικοποιημένο στο [-1,1],
+  // ώστε το κατώφλι σαφήνειας να μη γίνεται αυστηρότερο όσο σβήνει η νότα.
+  const nsdf = new Float32Array(maxLag + 2);
+  for (let lag = minLag; lag <= maxLag; lag++) {
+    let ac = 0, energy = 0;
+    for (let i = 0; i < n - lag; i++) {
+      const a = buf[i], b = buf[i + lag];
+      ac += a * b;
+      energy += a * a + b * b;
+    }
+    nsdf[lag] = energy > 0 ? 2 * ac / energy : 0;
+  }
+
+  // Προσπέρασε την αρχική θετική ζώνη: η αυτοσυσχέτιση είναι πάντα ψηλή σε πολύ μικρές
+  // υστερήσεις και θα έδινε ψεύτικη κορυφή.
+  let i = minLag;
+  while (i <= maxLag && nsdf[i] > 0) i++;
+
+  // Μία κορυφή ανά θετική ζώνη, δηλαδή μία ανά περίοδο.
+  const peaks = [];
+  while (i <= maxLag) {
+    if (nsdf[i] > 0) {
+      let top = i;
+      while (i <= maxLag && nsdf[i] > 0) { if (nsdf[i] > nsdf[top]) top = i; i++; }
+      peaks.push(top);
+    } else i++;
+  }
+  if (!peaks.length) return { hz: 0, clarity: 0 };
+
+  // ΠΡΩΤΗ κορυφή που φτάνει κοντά στην ψηλότερη — όχι η ψηλότερη απόλυτα. Σε περιοδικό
+  // σήμα κάθε πολλαπλάσιο της περιόδου δίνει κορυφή ~1, και το ποια βγαίνει ψηλότερη
+  // κρίνεται από στρογγυλοποίηση· παίρνοντας την ψηλότερη κλειδώνεις σε υπο-αρμονική
+  // και διαβάζεις τα 659Hz ως 73Hz. Αυτός είναι ο κανόνας του McLeod.
+  let highest = 0;
+  for (const q of peaks) if (nsdf[q] > highest) highest = nsdf[q];
+  if (highest < PITCH_CLARITY_GATE) return { hz: 0, clarity: highest };
+  const thresh = PITCH_PEAK_K * highest;
+  let lag = peaks[0];
+  for (const q of peaks) if (nsdf[q] >= thresh) { lag = q; break; }
+  const best = nsdf[lag];
+
+  // Παραβολική παρεμβολή γύρω από την κορυφή. Στα δύο άκρα του εύρους λείπει γείτονας,
+  // οπότε δεν παρεμβάλλουμε καθόλου αντί να διαβάσουμε κενό κελί ως τιμή.
+  let shift = 0;
+  if (lag > minLag && lag < maxLag) {
+    const y0 = nsdf[lag - 1], y1 = nsdf[lag], y2 = nsdf[lag + 1];
+    const d = y0 - 2 * y1 + y2;
+    if (d !== 0) shift = 0.5 * (y0 - y2) / d;
+  }
+  return { hz: sampleRate / (lag + shift), clarity: best };
+}
+
+// ---------- κουρδίσματα οργάνων ----------
+// Αποθηκεύονται ΑΡΙΘΜΟΙ ΝΟΤΑΣ MIDI, όχι Hz: η συχνότητα βγαίνει από την αναφορά, οπότε
+// τα 432 δεν χρειάζονται δεύτερο πίνακα που θα ξέφευγε από τον πρώτο.
+// Κάθε «σειρά» (course) είναι πίνακας: ένα στοιχείο = μονή ή ταυτόφωνη σειρά,
+// δύο στοιχεία = ΖΕΥΓΟΣ ΟΚΤΑΒΑΣ, όπως η χαμηλή σειρά του μπουζουκιού.
+const INSTRUMENTS = ['trichordo', 'tetrachordo', 'baglamas', 'tzouras', 'guitar', 'violin', 'ukulele'];
+const TUNINGS = {
+  trichordo:   { courses: [[50, 62], [57], [62]] },              // ρε3+ρε4 · λα3 · ρε4
+  tetrachordo: { courses: [[48, 60], [53, 65], [57], [62]] },    // ντο3+ντο4 · φα3+φα4 · λα3 · ρε4
+  baglamas:    { courses: [[62, 74], [69], [74]] },              // οκτάβα πάνω από το τρίχορδο — ονομαστικά
+  tzouras:     { courses: [[50, 62], [57], [62]] },              // ίδιο απόλυτο ύψος με το τρίχορδο
+  guitar:      { courses: [[40], [45], [50], [55], [59], [64]] },
+  violin:      { courses: [[55], [62], [69], [76]] },
+  ukulele:     { courses: [[67], [60], [64], [69]] },            // αναδρομικό: το σολ ηχεί ΠΑΝΩ από το ντο
+};
+
+function noteFreq(midi, a4) { return a4 * Math.pow(2, (midi - 69) / 12); }
+function centsBetween(hz, target) { return 1200 * Math.log(hz / target) / Math.LN2; }
+
+// Τρεις ανεξάρτητοι πίνακες, όχι ένας με μεταφράσεις: στα γερμανικά το σι είναι H,
+// ενώ το B σημαίνει σι ύφεση — «B» θα ήταν λάθος, όχι απλώς αδόκιμο.
+const NOTE_NAMES = {
+  el: ['Ντο', 'Ντο♯', 'Ρε', 'Ρε♯', 'Μι', 'Φα', 'Φα♯', 'Σολ', 'Σολ♯', 'Λα', 'Λα♯', 'Σι'],
+  de: ['C', 'Cis', 'D', 'Dis', 'E', 'F', 'Fis', 'G', 'Gis', 'A', 'Ais', 'H'],
+  en: ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'],
+};
+function noteName(midi, lang) {
+  const names = NOTE_NAMES[lang] || NOTE_NAMES.el;
+  return names[((midi % 12) + 12) % 12] + (Math.floor(midi / 12) - 1);
+}
+
+// Δέχεται ΚΑΙ ΤΑ ΔΥΟ μέλη ενός ζεύγους οκτάβας ως έγκυρους στόχους: όταν χτυπάς τη
+// χαμηλή σειρά ηχούν και οι δύο χορδές, και δεν επιτρέπεται να λέμε στον παίκτη ότι
+// έπεσε μια οκτάβα έξω ενώ είναι σωστός.
+function matchString(hz, instrument, a4) {
+  const t = TUNINGS[instrument];
+  if (!t || !hz) return null;
+  let best = null;
+  t.courses.forEach((course, ci) => {
+    course.forEach(midi => {
+      const target = noteFreq(midi, a4);
+      const cents = centsBetween(hz, target);
+      if (!best || Math.abs(cents) < Math.abs(best.cents)) best = { course: ci, midi, cents, target };
+    });
+  });
+  return best;
+}
+
+// Ζωγραφίζει τη σειρά των χορδών. Οι σειρές με δύο νότες είναι ζεύγη οκτάβας και
+// σημειώνονται ρητά — αλλιώς ο παίκτης δεν καταλαβαίνει γιατί βλέπει δύο νότες.
+function renderTuner() {
+  const box = document.getElementById('tunerCourses');
+  if (!box) return;
+  const courses = TUNINGS[tunerInst].courses;
+  box.innerHTML = '';
+  courses.forEach((course, ci) => {
+    const el = document.createElement('div');
+    el.className = 'course' + (course.length > 1 ? ' oct' : '');
+    el.dataset.course = ci;
+    if (course.length > 1) {
+      const tag = document.createElement('small');
+      tag.textContent = T('tuner_octave_pair');
+      el.appendChild(tag);
+    }
+    // Ένα κουμπί ανά ΝΟΤΑ, όχι ανά σειρά: στα ζεύγη οκτάβας ο παίκτης κουρδίζει τις δύο
+    // χορδές χωριστά, οπότε χρειάζεται να ακούσει την καθεμιά.
+    course.forEach(midi => {
+      const b = document.createElement('button');
+      b.className = 'strbtn';
+      b.dataset.midi = midi;
+      b.dataset.key = ci + ':' + midi;
+      b.innerHTML = '<span></span><small></small>';
+      b.firstChild.textContent = noteName(midi, LANG);
+      b.querySelector('small').textContent = noteFreq(midi, tunerA4).toFixed(1) + ' Hz';
+      b.onclick = () => playRefTone(midi, ci + ':' + midi);
+      el.appendChild(b);
+    });
+    box.appendChild(el);
+  });
+  document.querySelectorAll('#tunerInstruments .chip').forEach(c =>
+    c.classList.toggle('sel', c.dataset.inst === tunerInst));
+  // Όχι syncChips() εδώ: εκείνη διαβάζει data-f, ενώ τα chips αναφοράς έχουν data-a.
+  document.querySelectorAll('#panel-tuner .freq-row .chip[data-a]').forEach(c =>
+    c.classList.toggle('sel', Math.abs(+c.dataset.a - tunerA4) < 0.01));
+  const hint = document.getElementById('tunerHint');
+  const key = tunerInst === 'baglamas' ? 'note_baglamas'
+            : tunerInst === 'ukulele' ? 'note_ukulele'
+            : courses.some(c => c.length > 1) ? 'note_octave' : '';
+  hint.textContent = key ? T(key) : '';
+  hint.classList.toggle('hidden', !key);
+  syncRefButtons();
+}
+
+// ---------- τόνος αναφοράς ----------
+// Μπαίνει στην ίδια πειθαρχία «ένας ήχος τη φορά» με τη γεννήτρια και τα κομμάτια:
+// ξεκινώντας εδώ σταματούν εκείνα, και αντίστροφα. Αλλιώς δύο πηγές θα έπαιζαν μαζί.
+let refOsc = null, refGain = null, refMidi = null, refKey = null;
+
+function stopRefTone() {
+  if (!refOsc) return;
+  const o = refOsc, g = refGain;
+  refOsc = null; refGain = null; refMidi = null; refKey = null;
+  g.gain.setTargetAtTime(0, ctx.currentTime, .03);
+  setTimeout(() => { o.stop(); o.disconnect(); g.disconnect(); }, 200);
+  syncRefButtons();
+}
+
+function playRefTone(midi, key) {
+  if (refKey === key) { stopRefTone(); return; }   // δεύτερο πάτημα = σβήσιμο
+  stopRefTone();
+  stopTone(); stopMusic(); APP.stopSongPlayer();
+  stopMic();   // ο τόνος αναφοράς και το μικρόφωνο δεν παίζουν ποτέ μαζί — το κουρδιστήρι θα κυνηγούσε τον δικό του ήχο
+  ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+  ctx.resume();
+  refOsc = ctx.createOscillator(); refGain = ctx.createGain();
+  // τρίγωνο και όχι ημίτονο: έχει αρμονικές, οπότε ακούγεται πιο κοντά σε χορδή και
+  // το αυτί πιάνει ευκολότερα το «δέσιμο» των δύο τόνων
+  refOsc.type = 'triangle';
+  refOsc.frequency.value = noteFreq(midi, tunerA4);
+  refGain.gain.setValueAtTime(0, ctx.currentTime);
+  refGain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + .05);
+  refOsc.connect(refGain).connect(ctx.destination);
+  refOsc.start();
+  refMidi = midi; refKey = key;
+  syncRefButtons();
+}
+
+// Ταιριάζουμε με το ΚΟΥΜΠΙ, όχι με τη νότα: στο τρίχορδο το ρε4 υπάρχει και ως
+// σύντροφος οκτάβας της πρώτης σειράς και ως τρίτη σειρά, οπότε το ταίριασμα κατά
+// νότα θα άναβε δύο κουμπιά ενώ ηχεί ένας τόνος.
+function syncRefButtons() {
+  document.querySelectorAll('#tunerCourses .strbtn').forEach(b =>
+    b.classList.toggle('on', refKey !== null && b.dataset.key === refKey));
+}
+
+// ---------- μικρόφωνο ----------
+// Ο ρυθμός ανίχνευσης είναι ~12 φορές το δευτερόλεπτο, ΟΧΙ σε κάθε καρέ: η αυτοσυσχέτιση
+// κοστίζει maxLag×παράθυρο πράξεις, και στα 60fps θα έτρωγε ολόκληρο πυρήνα σε παλιό
+// διπύρηνο μηχάνημα. Δώδεκα φορές το δευτερόλεπτο φαίνεται ακαριαίο στο μάτι.
+const TUNER_INTERVAL_MS = 80;
+const PITCH_SMOOTH = 5;           // διάμεσος των τελευταίων μετρήσεων
+let micStream = null, micCtx = null, micAnalyser = null, micTimer = null;
+let micBuf = null, pitchHistory = [];
+let micStarting = false;   // κλειδί: το πάτημα κλειδώνει ΠΡΙΝ ρωτηθεί ο χρήστης
+let micFloatSupported = true, micByteBuf = null, micSettings = null;
+
+function micFail(key) {
+  const box = document.getElementById('micError');
+  box.textContent = T(key);
+  box.classList.remove('hidden');
+  document.getElementById('micStart').classList.remove('micbtn-hidden');
+}
+
+async function startMic() {
+  stopRefTone();
+  // Το micStarting μπαίνει ΣΥΓΧΡΟΝΑ, πριν το await: αλλιώς ένα δεύτερο πάτημα όσο
+  // περιμένουμε την άδεια ξεκινά δεύτερη ροή, η πρώτη μένει ορφανή με τον χρονιστή
+  // της, και το μικρόφωνο συνεχίζει να ηχογραφεί ενώ ο χρήστης νομίζει ότι το έκλεισε.
+  if (micStream || micStarting) return;
+  micStarting = true;
+  try {
+  const box = document.getElementById('micError');
+  box.classList.add('hidden');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { micFail('mic_insecure'); return; }
+  try {
+    // Χωρίς επεξεργασία φωνής: τα φίλτρα ηχούς και θορύβου πειράζουν το ύψος του τόνου.
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+    });
+  } catch (e) {
+    micFail(e && e.name === 'NotFoundError' ? 'mic_none' : 'mic_denied');
+    return;
+  }
+  // Το ζητούμενο δεν είναι πάντα το πραγματικό: το autoGainControl:false δεν υλοποιείται
+  // στη Safari και αγνοείται σιωπηλά, και το Chrome μπορεί να αγνοήσει το echoCancellation
+  // σε επίπεδο συστήματος. Διαβάζουμε τι πήραμε στην πραγματικότητα, όχι τι ζητήσαμε.
+  const track = micStream.getAudioTracks()[0];
+  micSettings = track && track.getSettings ? track.getSettings() : null;
+  try {
+  micCtx = new (window.AudioContext || window.webkitAudioContext)();
+  // το context γεννιέται ΜΕΤΑ το getUserMedia (μετά το παράθυρο άδειας), οπότε μπορεί
+  // να βρεθεί εκτός του user-gesture και να ξεκινήσει suspended — resume() όπως παντού αλλού
+  micCtx.resume();
+  micAnalyser = micCtx.createAnalyser();
+  micAnalyser.fftSize = PITCH_WINDOW * 2;   // getFloatTimeDomainData δίνει fftSize δείγματα
+  // Το getFloatTimeDomainData έχει ιστορικό αναξιοπιστίας στη Safari iOS με ζωντανό ρεύμα·
+  // ανιχνεύουμε την υποστήριξή του και πέφτουμε πίσω σε getByteTimeDomainData, που δίνει
+  // ακέραιους 0-255 γύρω από το 128 και τους κλιμακώνουμε ξανά σε [-1, 1].
+  micFloatSupported = typeof micAnalyser.getFloatTimeDomainData === 'function';
+  micBuf = new Float32Array(micAnalyser.fftSize);
+  micByteBuf = micFloatSupported ? null : new Uint8Array(micAnalyser.fftSize);
+  micCtx.createMediaStreamSource(micStream).connect(micAnalyser);
+  } catch (e) {
+    // πήραμε ροή αλλά το Web Audio δεν στήθηκε — μην την αφήσεις ανοιχτή
+    stopMic();
+    micFail('mic_denied');
+    return;
+  }
+  document.getElementById('micStart').classList.add('micbtn-hidden');
+  pitchHistory = [];
+  document.getElementById('tunerReadout').textContent = T('mic_listening');
+  micTimer = setInterval(tunerFrame, TUNER_INTERVAL_MS);
+  } finally { micStarting = false; }
+}
+
+function stopMic() {
+  clearInterval(micTimer); micTimer = null;
+  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  if (micCtx) { micCtx.close().catch(() => {}); micCtx = null; }
+  micAnalyser = null; micBuf = null; micByteBuf = null; micSettings = null; pitchHistory = [];
+  const btn = document.getElementById('micStart');
+  if (btn) btn.classList.remove('micbtn-hidden');
+  const out = document.getElementById('tunerReadout');
+  if (out) out.textContent = '';
+  clearCentsBar();
+}
+
+// Διάμεσος και όχι μέσος όρος: μία αστοχία οκτάβας ανάμεσα σε σωστές μετρήσεις θα
+// τραβούσε τον μέσο όρο, ενώ τη διάμεσο δεν την κουνάει.
+function medianOf(a) {
+  const s = a.slice().sort((x, y) => x - y);
+  return s[Math.floor(s.length / 2)];
+}
+
+// ±50 cents γεμίζουν τη λωρίδα. Πιο έξω ο δείκτης κολλάει στην άκρη αντί να βγαίνει από
+// τη λωρίδα — ο παίκτης χρειάζεται μόνο να ξέρει προς τα πού να γυρίσει το κλειδί.
+const CENTS_SPAN = 50, CENTS_OK = 5;
+
+function updateCentsBar(m) {
+  const mark = document.getElementById('centsMark');
+  if (!mark) return;
+  const pct = Math.max(-1, Math.min(1, m.cents / CENTS_SPAN));
+  mark.style.left = (50 + pct * 50) + '%';
+  const good = Math.abs(m.cents) <= CENTS_OK;
+  mark.classList.toggle('good', good);
+  // ΠΡΟΣΟΧΗ ΣΤΗ ΦΟΡΑ: αρνητικά cents = χαμηλά = η χορδή θέλει ΣΦΙΞΙΜΟ.
+  document.getElementById('tunerAdvice').textContent =
+    good ? T('tuner_intune') : T(m.cents < 0 ? 'tuner_tighten' : 'tuner_loosen');
+}
+
+function clearCentsBar() {
+  const mark = document.getElementById('centsMark');
+  if (!mark) return;
+  mark.style.left = '50%';
+  mark.classList.remove('good');
+  const advice = document.getElementById('tunerAdvice');
+  if (advice) advice.textContent = '';
+}
+
+function tunerFrame() {
+  if (!micAnalyser) return;
+  if (micFloatSupported) {
+    micAnalyser.getFloatTimeDomainData(micBuf);
+  } else {
+    micAnalyser.getByteTimeDomainData(micByteBuf);
+    for (let i = 0; i < micByteBuf.length; i++) micBuf[i] = (micByteBuf[i] - 128) / 128;
+  }
+  // Ο ρυθμός δειγματοληψίας διαβάζεται από το ζωντανό context σε κάθε καρέ, ποτέ ως
+  // σταθερά: εξαρτάται από τη συσκευή, και μια σύγχυση 44100/48000 είναι σφάλμα ύψους
+  // 8.9% — εκατοντάδες cents, χωρίς κανένα άλλο σύμπτωμα εκτός από το να είναι λάθος.
+  const r = detectPitch(micBuf.subarray(0, PITCH_WINDOW), micCtx.sampleRate);
+  const out = document.getElementById('tunerReadout');
+  if (!r.hz) {
+    pitchHistory = [];
+    out.textContent = T('mic_listening');
+    document.querySelectorAll('.course.on').forEach(c => c.classList.remove('on'));
+    clearCentsBar();
+    return;
+  }
+  pitchHistory.push(r.hz);
+  if (pitchHistory.length > PITCH_SMOOTH) pitchHistory.shift();
+  const hz = medianOf(pitchHistory);
+  const m = matchString(hz, tunerInst, tunerA4);
+  out.textContent = noteName(m.midi, LANG) + '  ·  ' + hz.toFixed(1) + ' Hz';
+  document.querySelectorAll('#tunerCourses .course').forEach(c =>
+    c.classList.toggle('on', +c.dataset.course === m.course));
+  updateCentsBar(m);
+}
+
 // ---------- κατάσταση καρτέλας: κοινή βάση για URL, αγαπημένα και λεζάντα εικόνας ----------
 // Η εφαρμογή δεν έχει αντικείμενο κατάστασης — η κατάσταση ΕΙΝΑΙ το DOM. Εδώ μπαίνει
 // ένας προσαρμογέας ανά καρτέλα που μεταφράζει DOM <-> απλό αντικείμενο. Το write()
 // δεν κάνει δική του επικύρωση: περνάει από τα ίδια όρια που ήδη προστατεύουν τα πεδία,
 // ώστε να υπάρχει ένα μόνο μονοπάτι ελέγχου.
-const TAB_NAMES = ['conv', 'tone', 'heal', 'chladni', 'crystal'];
+const TAB_NAMES = ['conv', 'tone', 'heal', 'chladni', 'crystal', 'tuner'];
+let tunerInst = 'trichordo', tunerA4 = 432;
 let activeTab = 'conv';
 let pendingHeal = null;   // συχνότητα από κοινόχρηστο σύνδεσμο· περιμένει χειρονομία χρήστη
 let healScrolled = false;   // το scroll του κοινόχρηστου συνδέσμου γίνεται μία φορά
@@ -796,6 +1233,18 @@ const TAB_STATE = {
       growCrystal();
     },
   },
+  tuner: {
+    read: () => ({ inst: tunerInst, a: tunerA4 }),
+    write: s => {
+      if (s.inst && TUNINGS[s.inst]) tunerInst = s.inst;
+      if (s.a != null) {
+        tunerA4 = clampNum(s.a, 390, 460, 432);
+        const el = document.getElementById('tunerA4');
+        if (el) el.value = tunerA4;
+      }
+      renderTuner();
+    },
+  },
 };
 
 function stateToQuery(tab, s) {
@@ -823,6 +1272,8 @@ function showTab(name) {
   TAB_NAMES.forEach(p => document.getElementById('panel-' + p).classList.toggle('hidden', p !== name));
   if (name === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
   else if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
+  if (name !== 'tuner') stopRefTone();
+  if (name !== 'tuner') stopMic();   // το μικρόφωνο δεν μένει ανοιχτό στο παρασκήνιο
   pushUrl();
   renderFavs();
 }
@@ -1058,6 +1509,7 @@ function applyLang(l) {
   drawCrystal(1);
   renderFavs();
   renderSleep();
+  renderTuner();
 }
 
 // ---------- σύνδεση χειριστών ----------
@@ -1127,6 +1579,46 @@ function wire() {
     else if (b.dataset.act === 'png') exportCard();
   });
   document.querySelectorAll('.sleeprow .chip').forEach(c => c.onclick = () => setSleep(+c.dataset.sleep));
+  // τα chips οργάνων φτιάχνονται εδώ, ώστε να μη διπλογράφονται στα δύο index.html
+  const instBox = document.getElementById('tunerInstruments');
+  if (instBox) {
+    INSTRUMENTS.forEach(key => {
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.dataset.inst = key;
+      b.dataset.i18n = 'inst_' + key;
+      b.onclick = () => {
+        // αλλαγή οργάνου ξαναχτίζει τα κουμπιά του tunerCourses με άλλα κλειδιά,
+        // οπότε ο τόνος αναφοράς που ηχεί δεν θα ταίριαζε πια με κανένα αναμμένο κουμπί
+        stopRefTone();
+        tunerInst = key; renderTuner(); pushUrl();
+      };
+      instBox.appendChild(b);
+    });
+  }
+  document.querySelectorAll('#panel-tuner .freq-row .chip[data-a]').forEach(c => c.onclick = () => {
+    // αλλαγή A4 δεν ξαναρυθμίζει τον ήχο που ήδη παίζει — σταματάμε τον, αλλιώς η
+    // οθόνη θα έδειχνε άλλη συχνότητα από αυτήν που ακούγεται
+    stopRefTone();
+    tunerA4 = +c.dataset.a;
+    document.getElementById('tunerA4').value = tunerA4;
+    renderTuner();
+    pushUrl();
+  });
+  const a4inp = document.getElementById('tunerA4');
+  if (a4inp) a4inp.onchange = () => {
+    // ίδιος λόγος με τα chips 432/440 παραπάνω: το A4 άλλαξε, ο ήχος που παίζει όχι
+    stopRefTone();
+    tunerA4 = clampNum(a4inp.value, 390, 460, 432);
+    a4inp.value = tunerA4;
+    renderTuner();
+    pushUrl();
+  };
+  const micBtn = document.getElementById('micStart');
+  if (micBtn) micBtn.onclick = startMic;
+  // παρασκήνιο/κλείδωμα οθόνης: το ρεύμα του μικροφώνου πρέπει να σταματά αμέσως,
+  // αλλιώς η κάμερα/το μικρόφωνο μένει ανοιχτό και η ένδειξη παγώνει σαν να είναι ζωντανή
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopMic(); });
 }
 
 // ---------- εκκίνηση ----------

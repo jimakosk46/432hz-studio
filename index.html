@@ -44,6 +44,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <button class="tab" data-tab="heal" data-i18n="tab_heal"></button>
     <button class="tab" data-tab="chladni" data-i18n="tab_chl"></button>
     <button class="tab" data-tab="crystal" data-i18n="tab_cry"></button>
+    <button class="tab" data-tab="tuner" data-i18n="tab_tuner"></button>
   </div>
   <div id="toast" class="hidden"></div>
   <!-- /shared:top -->
@@ -201,6 +202,44 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <button class="chip" data-act="png" data-i18n="act_png"></button>
     </div>
     <div class="favs" data-favs="crystal"></div>
+  </div>
+  <!-- ===================== TUNER ===================== -->
+  <div class="card hidden" id="panel-tuner">
+    <div class="note" data-i18n="tuner_note"></div>
+
+    <label class="small" data-i18n="tuner_instrument"></label>
+    <div class="presets" id="tunerInstruments"></div>
+
+    <label class="small" data-i18n="tuner_ref"></label>
+    <div class="freq-row">
+      <input type="number" id="tunerA4" value="432" min="390" max="460" step="0.1">
+      <button class="chip sel" data-a="432">432 Hz</button>
+      <button class="chip" data-a="440">440 Hz</button>
+    </div>
+
+    <div class="note tunernote hidden" id="tunerHint"></div>
+
+    <div class="note tunernote" data-i18n="tuner_tap"></div>
+
+    <div class="courses" id="tunerCourses"></div>
+
+    <div id="tunerReadout"></div>
+    <div class="centsbar">
+      <span class="centsend" data-i18n="tuner_flat"></span>
+      <div class="centstrack">
+        <div class="centszero"></div>
+        <div class="centsmark" id="centsMark"></div>
+      </div>
+      <span class="centsend" data-i18n="tuner_sharp"></span>
+    </div>
+    <div id="tunerAdvice"></div>
+
+    <button class="btn" id="micStart" data-i18n="mic_start"></button>
+    <div class="note tunernote hidden" id="micError"></div>
+
+    <div class="actbar">
+      <button class="chip" data-act="share" data-i18n="act_share"></button>
+    </div>
   </div>
   <!-- /shared:panels -->
 
