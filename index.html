@@ -158,8 +158,12 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <button class="chip" id="chlShapeDrop" data-i18n="chl_shape_drop"></button>
     </div>
     <div class="note" id="chlNote" data-i18n="chl_note"></div>
+    <!-- ΔΥΟ καμβάδες, όχι ένας: ένας καμβάς HTML δέχεται ΕΝΑΝ και μόνο τύπο context σε
+         όλη τη ζωή του. Ο #chl είναι δεσμευμένος σε 2d από την πλάκα Chladni, οπότε η
+         σταγόνα σε WebGL2 χρειάζεται δικό της. Δείχνεται ο ένας, κρύβεται ο άλλος. -->
     <div style="text-align:center;margin-top:14px">
       <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
+      <canvas id="chlDrop" class="hidden" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#120b28"></canvas>
     </div>
     <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
     <div class="small" id="chlRotateHint" style="text-align:center;margin-top:4px;opacity:.65"></div>

@@ -177,8 +177,13 @@ select {
 .course.on { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.25); }
 
 /* --- 3D σταγόνα: ο καμβάς γίνεται διαδραστικός ΜΟΝΟ σε λειτουργία σταγόνας --- */
-#chl.rotatable { touch-action: none; cursor: grab; }
-#chl.rotatable:active { cursor: grabbing; }
+/* ΚΑΙ ΟΙ ΔΥΟ καμβάδες, όχι μόνο ο #chl. Η σταγόνα ζωγραφίζεται στον #chlDrop όποτε
+   υπάρχει WebGL2 — δηλαδή σχεδόν παντού — και ο #chl την παίρνει μόνο στο σπάνιο
+   εφεδρικό. Με τον κανόνα μόνο στον #chl, το touch-action ΔΕΝ εφαρμοζόταν ποτέ στην
+   πράξη: σε κινητό το σύρσιμο για να γυρίσει η σταγόνα πάλευε με το κύλισμα της
+   σελίδας, δηλαδή η ίδια η δυνατότητα ήταν νεκρή ακριβώς εκεί που χρειάζεται. */
+#chl.rotatable, #chlDrop.rotatable { touch-action: none; cursor: grab; }
+#chl.rotatable:active, #chlDrop.rotatable:active { cursor: grabbing; }
 
 .tunernote { font-size: .78rem; }
 .strbtn {
