@@ -43,6 +43,7 @@ const SHARED_I18N = {
     "chl_shape_drop": "Σταγόνα νερού",
     "chl_note_drop": "Φυσική ταλάντωση σταγόνας νερού: το περίγραμμά της παίρνει σχήμα αστεριού με n αιχμές όταν η συχνότητα πετυχαίνει έναν φυσικό τρόπο ταλάντωσης της επιφάνειάς της (τύπος Rayleigh). Δοκίμασε 432 και 440 — και άλλαξε λίγο το «μέγεθος σταγόνας»: κάθε συχνότητα έχει το μέγεθος σταγόνας που τη βγάζει πιο όμορφο αστέρι.",
     "chl_drop_size": "Μέγεθος σταγόνας",
+    "chl_drop_rotate": "σύρε πάνω στη σταγόνα για να τη γυρίσεις · διπλό κλικ για επαναφορά",
     "chl_drop_on": "✨ Συντονισμός στα {f}Hz — καθαρό αστέρι {n} ακτίνων!",
     "chl_drop_off": "Εκτός συντονισμού — ασταθές σχήμα. Κοντινότερος συντονισμός: {f}Hz ({n} ακτίνες)",
     "tab_cry": "Κρύσταλλοι",
@@ -115,6 +116,7 @@ const SHARED_I18N = {
     "chl_shape_drop": "Wassertropfen",
     "chl_note_drop": "Physikalische Schwingung eines Wassertropfens: Sein Rand nimmt die Form eines Sterns mit n Spitzen an, wenn die Frequenz eine natürliche Schwingungsart der Oberfläche trifft (Rayleigh-Formel). Probiere 432 und 440 — und ändere dann leicht die Tropfengröße: Jede Frequenz hat eine Tropfengröße, bei der sie den schönsten Stern ergibt.",
     "chl_drop_size": "Tropfengröße",
+    "chl_drop_rotate": "zieh am Tropfen, um ihn zu drehen · Doppelklick setzt zurück",
     "chl_drop_on": "✨ Resonanz bei {f}Hz — klarer Stern mit {n} Spitzen!",
     "chl_drop_off": "Außerhalb der Resonanz — instabile Form. Nächste Resonanz: {f}Hz ({n} Spitzen)",
     "tab_cry": "Kristalle",
@@ -187,6 +189,7 @@ const SHARED_I18N = {
     "chl_shape_drop": "Water drop",
     "chl_note_drop": "The physical oscillation of a water drop: its rim takes the shape of a star with n points when the frequency hits a natural surface oscillation mode (Rayleigh formula). Try 432 and 440 — then slightly change the drop size: every frequency has a drop size that makes it the most beautiful star.",
     "chl_drop_size": "Drop size",
+    "chl_drop_rotate": "drag the drop to turn it · double-click to reset",
     "chl_drop_on": "✨ Resonance at {f}Hz — clear {n}-point star!",
     "chl_drop_off": "Off resonance — unstable shape. Nearest resonance: {f}Hz ({n} points)",
     "tab_cry": "Crystals",
@@ -611,8 +614,74 @@ function findDropResonance(f, pct) {
   return { n, fr, crisp };     // n = πόσες αιχμές έχει το αστέρι
 }
 
+// ---------- 3D γεωμετρία σταγόνας (sectoral σφαιρική αρμονική Y_n^n) ----------
+// Το πλήθος δακτυλίων ΠΡΕΠΕΙ να είναι ζυγό: το τεστ του ισημερινού διαβάζει τον
+// δακτύλιο rings/2 και θέλει να πέφτει ακριβώς πάνω στο φ=π/2.
+const DROP_RINGS = 28, DROP_SEGS = 64;
+
+// ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: οι κορυφές της παραμορφωμένης σφαίρας σε μοναδιαίο χώρο.
+//   r(θ,φ) = 1 + amp · sinⁿ(φ) · cos(nθ − rot)
+// Ο όρος sinⁿ(φ) είναι αυτός που κάνει το σχήμα sectoral: η παραμόρφωση κορυφώνεται
+// στον ισημερινό και σβήνει στους πόλους — δηλαδή αυλακωτή σφαίρα με n λοβούς, που
+// είναι ακριβώς το «αστέρι με n αιχμές» που λένε ήδη τα τρίγλωσσα κείμενα.
+// ΣΤΟΝ ΙΣΗΜΕΡΙΝΟ ο τύπος πέφτει πάνω στον παλιό δισδιάστατο — αυτό το φρουρεί το probe.
+function dropMesh(n, amp, rot, rings, segs) {
+  rings = rings || DROP_RINGS;
+  segs = segs || DROP_SEGS;
+  const verts = [];
+  for (let i = 0; i <= rings; i++) {
+    const phi = (i / rings) * Math.PI;
+    const sp = Math.sin(phi), cp = Math.cos(phi);
+    const lobe = Math.pow(sp, n);          // sinⁿ(φ): 0 στους πόλους, 1 στον ισημερινό
+    for (let j = 0; j <= segs; j++) {
+      const th = (j / segs) * Math.PI * 2;
+      const r = 1 + amp * lobe * Math.cos(n * th - rot);
+      verts.push({ x: r * sp * Math.cos(th), y: r * cp, z: r * sp * Math.sin(th), r: r });
+    }
+  }
+  return { verts: verts, rings: rings, segs: segs };
+}
+
+// ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: yaw γύρω από τον κατακόρυφο άξονα y, μετά pitch γύρω από τον x.
+// Ορθή προβολή — κρατάμε το z ως βάθος, και για την ταξινόμηση και για το κόψιμο
+// των πίσω επιφανειών. Άξονες θέασης: x δεξιά, y πάνω, z προς τον θεατή.
+function projectMesh(verts, yaw, pitch) {
+  const cy = Math.cos(yaw), sy = Math.sin(yaw);
+  const cx = Math.cos(pitch), sx = Math.sin(pitch);
+  const out = new Array(verts.length);
+  for (let i = 0; i < verts.length; i++) {
+    const v = verts[i];
+    const x1 = v.x * cy + v.z * sy;
+    const z1 = -v.x * sy + v.z * cy;
+    out[i] = { x: x1, y: v.y * cx - z1 * sx, z: v.y * sx + z1 * cx };
+  }
+  return out;
+}
+
+// Η ΚΑΜΕΡΑ — και είναι ΑΛΛΟ ΠΡΑΓΜΑ από το rot της φυσικής. Το rot είναι η φάση του
+// κύματος και τρέχει μόνο του· αυτά εδώ είναι η ματιά του χρήστη και αλλάζουν μόνο
+// όταν σύρει. Η σταγόνα πάλλεται ακόμα κι όταν κανείς δεν την αγγίζει.
+const DROP_YAW0 = 25 * Math.PI / 180, DROP_PITCH0 = 20 * Math.PI / 180;
+const DROP_PITCH_MAX = 85 * Math.PI / 180;   // πιο πέρα αναποδογυρίζει και χάνεσαι
+let dropYaw = DROP_YAW0, dropPitch = DROP_PITCH0;
+
 let chlShape = 'plate'; // 'plate' | 'drop'
 let chlRaf = null;
+
+// Η ράμπα φωτισμού της σταγόνας, σε ΔΥΟ τμήματα. Με μία ίσια ράμπα οι τρεις χρωματικές
+// συνιστώσες ανεβαίνουν σχεδόν παράλληλα, η κορεσμός πέφτει και το χρυσό ξεθωριάζει σε
+// μπεζ. Έτσι οι μεσαίοι τόνοι προσγειώνονται στο #ffc76b — το κεχριμπαρένιο της
+// εφαρμογής — και μόνο η αιχμή του φωτός φτάνει στο ανοιχτό #ffe6bd.
+const AMBER_K = 0.72;
+function dropShade(t) {
+  if (t <= AMBER_K) {
+    const u = t / AMBER_K;
+    return 'rgb(' + Math.round(25 + 230 * u) + ',' + Math.round(10 + 189 * u) + ',' +
+      Math.round(3 + 104 * u) + ')';
+  }
+  const u = (t - AMBER_K) / (1 - AMBER_K);
+  return 'rgb(255,' + Math.round(199 + 31 * u) + ',' + Math.round(107 + 82 * u) + ')';
+}
 
 function drawDrop(pulsePhase, canvas, scale) {
   canvas = canvas || chlCanvas;
@@ -628,24 +697,60 @@ function drawDrop(pulsePhase, canvas, scale) {
   const baseR = W * 0.30;
   const amp = (0.06 + 0.22 * crisp) * (1 + 0.06 * Math.sin(pulsePhase));
   const rot = pulsePhase * 0.05;
-  g.save(); g.translate(cx, cy);
-  g.beginPath();
-  const steps = 240;
-  for (let i = 0; i <= steps; i++) {
-    const th = (i / steps) * Math.PI * 2;
-    const r = baseR * (1 + amp * Math.cos(n * th - rot));
-    const x = Math.cos(th) * r, y = Math.sin(th) * r;
-    if (i === 0) g.moveTo(x, y); else g.lineTo(x, y);
+
+  // Άλως: ΕΝΑ γέμισμα πριν το πλέγμα. Δεν βάζουμε shadowBlur στις ~900 όψεις —
+  // ο καμβάς υπολογίζει τη σκιά ξεχωριστά για καθεμιά και γονατίζει το καρέ.
+  const halo = g.createRadialGradient(cx, cy, 4, cx, cy, baseR * 1.45);
+  halo.addColorStop(0, 'rgba(255,199,107,.22)'); halo.addColorStop(1, 'rgba(255,199,107,0)');
+  g.fillStyle = halo; g.fillRect(0, 0, W, H);
+
+  const mesh = dropMesh(n, amp, rot);
+  const P = projectMesh(mesh.verts, dropYaw, dropPitch);
+  const stride = mesh.segs + 1;
+  // Σταθερό φως στον χώρο της κάμερας: πάνω αριστερά και λίγο μπροστά.
+  const LX = -0.40, LY = 0.60, LZ = 0.69;
+  const faces = [];
+  for (let i = 0; i < mesh.rings; i++) {
+    for (let j = 0; j < mesh.segs; j++) {
+      const a = P[i * stride + j], b = P[i * stride + j + 1];
+      const c = P[(i + 1) * stride + j + 1], d = P[(i + 1) * stride + j];
+      // ΔΙΑΓΩΝΙΟΙ, όχι ακμές: στους πόλους όλο το πρώτο/τελευταίο δαχτυλίδι πέφτει
+      // στο ΙΔΙΟ σημείο, οπότε η ακμή b−a μηδενίζεται και μαζί της το κάθετο διάνυσμα
+      // — η όψη κοβόταν και έμενε μαύρη τρύπα στην κορυφή. Οι διαγώνιοι δεν εκφυλίζονται.
+      const ux = c.x - a.x, uy = c.y - a.y, uz = c.z - a.z;
+      const vx = d.x - b.x, vy = d.y - b.y, vz = d.z - b.z;
+      const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+      // Με +z προς τον θεατή, οι όψεις που ΜΑΣ κοιτάνε έχουν nz > 0. Κόβουμε τις άλλες:
+      // αλλιώς ζωγραφίζαμε το εσωτερικό της πίσω πλευράς και το φως ερχόταν από κάτω.
+      if (nz <= 0) continue;
+      const len = Math.hypot(nx, ny, nz) || 1;
+      faces.push({
+        a: a, b: b, c: c, d: d,
+        lit: Math.max(0, (nx * LX + ny * LY + nz * LZ) / len),
+        depth: a.z + b.z + c.z + d.z,
+      });
+    }
   }
-  g.closePath();
-  const fill = g.createRadialGradient(0, 0, 4, 0, 0, baseR * 1.3);
-  fill.addColorStop(0, 'rgba(255,199,107,.20)'); fill.addColorStop(1, 'rgba(255,199,107,0)');
-  g.fillStyle = fill; g.fill();
-  g.shadowBlur = 14 * scale;   // το shadowBlur ΔΕΝ κλιμακώνεται από τον μετασχηματισμό
-  g.shadowColor = '#ffc76b';
-  g.strokeStyle = '#ffe6bd'; g.lineWidth = 2.2;
-  g.stroke();
+  faces.sort((p, q) => p.depth - q.depth);   // από πίσω προς τα μπρος
+
+  g.save(); g.translate(cx, cy);
+  for (let k = 0; k < faces.length; k++) {
+    const fc = faces[k], t = fc.lit;
+    const col = dropShade(t);
+    g.beginPath();
+    g.moveTo(fc.a.x * baseR, -fc.a.y * baseR);   // −y: ο καμβάς μετράει προς τα κάτω
+    g.lineTo(fc.b.x * baseR, -fc.b.y * baseR);
+    g.lineTo(fc.c.x * baseR, -fc.c.y * baseR);
+    g.lineTo(fc.d.x * baseR, -fc.d.y * baseR);
+    g.closePath();
+    g.fillStyle = col;
+    g.fill();
+    // Το ίδιο χρώμα και στην ακμή: κλείνει τις τριχοειδείς χαραμάδες που αφήνει
+    // το antialiasing ανάμεσα σε γειτονικές όψεις.
+    g.strokeStyle = col; g.lineWidth = 1; g.stroke();
+  }
   g.restore();
+
   g.setTransform(1, 0, 0, 1, 0, 0);
   if (canvas !== chlCanvas) return;
   document.getElementById('chlPlateVal').textContent = (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
@@ -662,6 +767,44 @@ function animateDrop() {
   chlRaf = requestAnimationFrame(step);
 }
 
+function wireDropCamera() {
+  let dragging = false, lx = 0, ly = 0;
+  const DRAG = 0.01;   // rad ανά pixel — μια οθόνη πλάτους κάνει λίγο πάνω από μια στροφή
+  chlCanvas.addEventListener('pointerdown', e => {
+    if (chlShape !== 'drop') return;
+    dragging = true; lx = e.clientX; ly = e.clientY;
+    // Πιάνουμε τον δείκτη: αν το χέρι φύγει γρήγορα εκτός καμβά, η σταγόνα δεν
+    // «κολλάει» στη μέση της κίνησης.
+    try { chlCanvas.setPointerCapture(e.pointerId); } catch (_) { }
+  });
+  chlCanvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    // ΑΥΤΟΘΕΡΑΠΕΙΑ. Αν το setPointerCapture παραπάνω απέτυχε, η απελευθέρωση μπορεί να
+    // πέσει σε άλλο στοιχείο και το `dragging` να μείνει κολλημένο — τότε η σταγόνα θα
+    // γύριζε με σκέτο πέρασμα του ποντικιού, χωρίς πατημένο κουμπί. Το buttons είναι 0
+    // σε hover και 1 όσο κρατάς (ποντίκι ή δάχτυλο), οπότε ξεκολλάει μόνο του.
+    // Ελέγχουμε ΚΑΙ το σχήμα: αν κάτι αλλάξει σε πλάκα στη μέση του σύρσιμου, δεν θέλουμε
+    // να συνεχίσει να κουνάει μια κάμερα που δεν φαίνεται πουθενά.
+    if (!e.buttons || chlShape !== 'drop') { dragging = false; return; }
+    dropYaw += (e.clientX - lx) * DRAG;
+    dropPitch = Math.max(-DROP_PITCH_MAX, Math.min(DROP_PITCH_MAX, dropPitch + (e.clientY - ly) * DRAG));
+    lx = e.clientX; ly = e.clientY;
+    pushUrl();   // ήδη debounced 300ms, οπότε το σύρσιμο δεν πλημμυρίζει το history
+  });
+  const end = e => {
+    if (!dragging) return;
+    dragging = false;
+    try { chlCanvas.releasePointerCapture(e.pointerId); } catch (_) { }
+  };
+  chlCanvas.addEventListener('pointerup', end);
+  chlCanvas.addEventListener('pointercancel', end);
+  chlCanvas.addEventListener('dblclick', () => {
+    if (chlShape !== 'drop') return;
+    dropYaw = DROP_YAW0; dropPitch = DROP_PITCH0;
+    pushUrl();
+  });
+}
+
 function setChlShape(shape) {
   chlShape = shape;
   document.getElementById('chlShapePlate').classList.toggle('sel', shape === 'plate');
@@ -672,6 +815,8 @@ function setChlShape(shape) {
   chlPlate.min = lo;
   chlPlate.max = hi;
   chlPlate.value = Math.min(hi, Math.max(lo, +chlPlate.value));   // αν γυρίσουμε σε στενότερο εύρος
+  chlCanvas.classList.toggle('rotatable', shape === 'drop');
+  document.getElementById('chlRotateHint').textContent = shape === 'drop' ? T('chl_drop_rotate') : '';
   if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (shape === 'drop') animateDrop(); else drawChladni();
   pushUrl();
@@ -1202,6 +1347,12 @@ function clampNum(v, lo, hi, dflt) {
   return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : dflt;
 }
 
+// Η οριζόντια στροφή είναι ΠΕΡΙΟΔΙΚΗ: οι 400° δείχνουν ακριβώς ό,τι και οι 40°. Το
+// σύρσιμο δεν την περιορίζει πουθενά, οπότε μετά από λίγο παιχνίδι ξεπερνάει εύκολα
+// τον κύκλο. Αν απλώς την κόβαμε στις 360, ένας σύνδεσμος θα άνοιγε σε ΑΛΛΗ γωνία από
+// αυτήν που είδε ο χρήστης — δηλαδή θα αθετούσε ακριβώς αυτό που υπόσχεται. Τυλίγουμε.
+function wrapDeg(d) { return ((d % 360) + 360) % 360; }
+
 const TAB_STATE = {
   conv: { read: () => ({}), write: () => {} },
 
@@ -1226,7 +1377,15 @@ const TAB_STATE = {
   },
 
   chladni: {
-    read: () => ({ f: +chlFreq.value, p: +chlPlate.value, sh: chlShape }),
+    read: () => {
+      const s = { f: +chlFreq.value, p: +chlPlate.value, sh: chlShape };
+      // Η γωνία θέας αφορά μόνο τη σταγόνα — οι σύνδεσμοι της πλάκας μένουν σύντομοι.
+      if (chlShape === 'drop') {
+        s.yw = Math.round(wrapDeg(dropYaw * 180 / Math.PI));
+        s.pt = Math.round(dropPitch * 180 / Math.PI);
+      }
+      return s;
+    },
     write: s => {
       // ΣΕΙΡΑ: πρώτα το σχήμα. Το setChlShape ξαναγράφει τα min/max του chlPlate
       // (πλάκα 90–110%, σταγόνα 85–120%) και θα «έκοβε» ένα έγκυρο μέγεθος σταγόνας.
@@ -1236,6 +1395,13 @@ const TAB_STATE = {
         chlSlider.value = chlFreq.value;
       }
       if (s.p != null) chlPlate.value = clampNum(s.p, +chlPlate.min, +chlPlate.max, 100);
+      // Το τύλιγμα δέχεται και χειρόγραφα URL με 400 ή -400 και τα φέρνει στον κύκλο·
+      // η clampNum μένει μόνο για να πιάσει το μη αριθμητικό και να δώσει την προεπιλογή.
+      if (s.yw != null) dropYaw = wrapDeg(clampNum(s.yw, -1e6, 1e6, DROP_YAW0 * 180 / Math.PI)) * Math.PI / 180;
+      // Το όριο κλίσης ΒΓΑΙΝΕΙ από τη σταθερά της κάμερας, να μη μένει ξεκρέμαστο 85αρι
+      // που θα ξεσυγχρονιζόταν σιωπηλά αν αλλάξει το DROP_PITCH_MAX.
+      const PT_MAX = Math.round(DROP_PITCH_MAX * 180 / Math.PI);
+      if (s.pt != null) dropPitch = clampNum(s.pt, -PT_MAX, PT_MAX, DROP_PITCH0 * 180 / Math.PI) * Math.PI / 180;
       syncChips('#panel-chladni .freq-row .chip[data-f]', +chlFreq.value);
       refreshChl();
     },
@@ -1519,6 +1685,7 @@ function applyLang(l) {
   if (chlShape === 'drop') {
     document.getElementById('chlNote').textContent = T('chl_note_drop');
     document.getElementById('chlPlateLabel').textContent = T('chl_drop_size');
+    document.getElementById('chlRotateHint').textContent = T('chl_drop_rotate');
   }
   renderTones();
   if (chlShape !== 'drop') drawChladni();
@@ -1576,6 +1743,7 @@ function wire() {
   });
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
   document.getElementById('chlShapeDrop').onclick = () => setChlShape('drop');
+  wireDropCamera();
   cryFreq.oninput = growCrystal;
   cryFreq.onchange = () => {
     cryFreq.value = Math.min(CRY_FREQ_RANGE[1], Math.max(CRY_FREQ_RANGE[0], +cryFreq.value || 432));

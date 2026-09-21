@@ -175,6 +175,11 @@ select {
 .course small { display: block; font-size: .7rem; opacity: .75; }
 .course.oct { border-color: #6b5527; }
 .course.on { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.25); }
+
+/* --- 3D σταγόνα: ο καμβάς γίνεται διαδραστικός ΜΟΝΟ σε λειτουργία σταγόνας --- */
+#chl.rotatable { touch-action: none; cursor: grab; }
+#chl.rotatable:active { cursor: grabbing; }
+
 .tunernote { font-size: .78rem; }
 .strbtn {
     display: block; width: 100%; margin-top: 4px; padding: 6px 4px;
