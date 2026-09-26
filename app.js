@@ -730,8 +730,9 @@ const DROP_FS = `#version 300 es
 precision highp float;
 out vec4 fragColor;
 uniform vec2  uRes;
-uniform float uAmp, uRot, uTime, uYaw, uPitch, uStars, uObl, uPulse;
-uniform int   uN, uVariant;
+uniform float uAmp, uTime, uYaw, uPitch, uStars, uObl, uPulse;
+uniform vec2  uRotCS;   // (cos rot, sin rot) — έτοιμο, ίδιο για όλο το καρέ
+uniform int   uN, uVariant, uDebug;
 uniform vec2  uBob;
 
 const float PI = 3.14159265;
@@ -744,13 +745,29 @@ const float PI = 3.14159265;
 // ΝΕΟ 2: το «uObl» πλατένει τη σταγόνα, όπως κάνει η ακουστική πίεση στην παγίδα.
 //        Ο όρος (1 − e·cos²φ) είναι ΑΚΡΙΒΩΣ 1 στον ισημερινό (cos φ = 0), άρα η
 //        ταυτότητα με τον δισδιάστατο τύπο — το τεστ του golden.py — ΔΕΝ πειράζεται.
+// ΧΩΡΙΣ ΚΑΜΙΑ ΥΠΕΡΒΑΤΙΚΗ ΣΥΝΑΡΤΗΣΗ. Η rad() καλείται ~250 φορές ΑΝΑ PIXEL (ιχνηλάτηση
+// εισόδου + εξόδου + κλίση, επί 4 δείγματα), και η παλιά της μορφή έκανε κάθε φορά
+// acos + atan + sin + cos + pow με ΔΕΚΑΔΙΚΟ εκθέτη (= exp(n·log x)). Σε Intel HD 3000
+// αυτό είναι ό,τι ακριβότερο υπάρχει, και ΑΥΤΟ ήταν που δεν άφηνε περιθώριο να γίνει
+// σωστά η ιχνηλάτηση. Και τα τρία φεύγουν με άλγεβρα, ΧΩΡΙΣ αλλαγή στο σχήμα:
+//   sin φ = ρ/L  όπου ρ = |(x,z)|      -> ούτε acos ούτε sin
+//   sinⁿφ        -> n πολλαπλασιασμοί στον ίδιο βρόχο
+//   cos(nθ − rot) = cos nθ · cos rot + sin nθ · sin rot, και τα cos nθ, sin nθ βγαίνουν
+//   από την αναδρομή του Chebyshev πάνω στο (cos θ, sin θ) = (x/ρ, z/ρ) -> ούτε atan
+//   ούτε cos. Το (cos rot, sin rot) έρχεται έτοιμο ως uniform: είναι ίδιο για όλο το καρέ.
 float rad(vec3 p){
   float L    = max(length(p), 1e-6);
   float cphi = clamp(p.y / L, -1.0, 1.0);
-  float phi  = acos(cphi);
-  float th   = atan(p.z, p.x);
-  float lobe = pow(max(sin(phi), 0.0), float(uN));
-  float star = 1.0 + uAmp * uPulse * lobe * cos(float(uN) * th - uRot);
+  float rho  = max(length(p.xz), 1e-9);
+  float u    = p.x / rho, v = p.z / rho;   // cos θ, sin θ
+  float sphi = rho / L;                    // sin φ, πάντα ≥ 0 — ταυτόσημο με το παλιό
+  float c = 1.0, s = 0.0, lobe = 1.0;
+  for (int i = 0; i < uN; i++){            // uniform όριο: ίδιο για ΟΛΑ τα pixel
+    float c2 = c * u - s * v;              // (cos kθ, sin kθ) -> (cos (k+1)θ, sin (k+1)θ)
+    s = s * u + c * v; c = c2;
+    lobe *= sphi;
+  }
+  float star = 1.0 + uAmp * uPulse * lobe * (c * uRotCS.x + s * uRotCS.y);
   return star * (1.0 - uObl * cphi * cphi);
 }
 float F(vec3 p){ return length(p) - rad(p); }   // <0 μέσα, >0 έξω
@@ -844,7 +861,10 @@ vec3 shade(vec2 uv){
 
   float R  = 1.0 + uAmp;                         // σφαίρα-φράχτης, κολλητά στην επιφάνεια
   vec2  q  = (uv - uBob) / 0.60;                 // ακτίνα σταγόνας 1 == 0.60 του μισού πλάτους
-  if (dot(q,q) > R*R) return base;
+  // ΜΠΛΕ στο debug: σημαδεύει το «σίγουρα έξω». Χωρίς αυτό το τεστ δεν μπορεί να πει
+  // ποιο κόκκινο είναι νόμιμο φόντο ΓΥΡΩ από τη σταγόνα και ποιο είναι τρύπα ΜΕΣΑ της,
+  // γιατί το κόκκινο δεν αγγίζει ποτέ την άκρη του καμβά για να ξεκινήσει η πλημμύρα.
+  if (dot(q,q) > R*R) return (uDebug == 1) ? vec3(0.0, 0.0, 4.0) : base;
 
   mat3 M  = camM();
   mat3 Mi = transpose(M);                        // στροφή -> ανάστροφη = αντίστροφη
@@ -857,13 +877,53 @@ vec3 shade(vec2 uv){
   // --- πρώτη επιφάνεια. Ξεκινάμε ΠΑΝΩ στον φράχτη, άρα είμαστε ήδη σχεδόν στο δέρμα.
   float t = 0.0, tMax = 2.0 * zEnter;
   bool hit = false;
-  for (int i = 0; i < 28; i++){          // ΗΤΑΝ 40. Ξεκινάμε πάνω στον φράχτη, άρα
-    float d = F(ro + rd*t);            // είμαστε ήδη στο δέρμα: συγκλίνει σε λίγα βήματα
-    if (d < 0.0009){ hit = true; break; }
+  // ΤΟ ΣΦΑΛΜΑ ΠΟΥ ΕΚΟΒΕ ΤΟΥΣ ΛΟΒΟΥΣ, ΚΑΙ ΓΙΑΤΙ ΤΟ ΜΟΝΟΠΑΤΙ ΕΙΝΑΙ ΔΙΠΛΟ.
+  // Το F δεν είναι αληθινή απόσταση — είναι length(p) − rad(p) — και υποτιμά χοντρά την
+  // απόσταση όταν η ακτίνα περνάει ΞΥΣΤΑ. Εκεί ο ιχνηλάτης σέρνεται με βήματα 0.004 και
+  // τα 28 βήματα τελειώνουν ΠΡΙΝ αγγίξει: το pixel γυρίζει φόντο, και με n=5 (432Hz),
+  // όπου η επιφάνεια έχει βαθιά φαράγγια, ο λοβός φαινόταν ΑΠΟΚΟΜΜΕΝΟΣ — «αυτιά».
+  // Με n=2 (240Hz) η επιφάνεια είναι σχεδόν σφαίρα και δεν φαινόταν τίποτα· γι' αυτό
+  // επέζησε. Επαληθεύτηκε βάφοντας κόκκινο την αστοχία (uDebug) — δες dropTraceSig.
+  //
+  // Η ΘΕΡΑΠΕΙΑ ΕΙΝΑΙ ΔΥΟ ΜΟΝΟΠΑΤΙΑ, ΓΙΑΤΙ ΤΟ ΕΝΑ ΔΕΝ ΦΤΑΝΕΙ:
+  //  - σκέτη αύξηση βημάτων (28->96): καθάρισε την εικόνα, ΕΡΙΞΕ τα fps στα 38.
+  //  - σκέτη σάρωση παντού: σταθερό κόστος, αλλά το πληρώνουν ΟΛΑ τα pixel.
+  // Τα ξυστά pixel είναι μειοψηφία: κρατάμε το γρήγορο sphere tracing για όλους και
+  // πληρώνουμε τη σάρωση ΜΟΝΟ όπου αυτό ξέμεινε από βήματα — που είναι, ακριβώς, το
+  // σημάδι ότι σερνόταν. Αν βγήκε από τον φράχτη, η αστοχία είναι ΓΝΗΣΙΑ: δεν ψάχνουμε.
+  bool starved = true;
+  for (int i = 0; i < 28; i++){
+    float d = F(ro + rd*t);
+    if (d < 0.0009){ hit = true; starved = false; break; }
     t += max(d * 0.40, 0.004);
-    if (t > tMax) break;
+    if (t > tMax){ starved = false; break; }
   }
-  if (!hit) return base;
+  if (!hit && starved){
+    // ΟΜΟΙΟΜΟΡΦΗ ΣΑΡΩΣΗ: δεν σέρνεται ποτέ, γιατί το βήμα δεν εξαρτάται από το F.
+    // Ψάχνει αλλαγή προσήμου και μετά διχοτομεί — 7 διχοτομήσεις = dt/128 ≈ 0.0006,
+    // δηλαδή η ίδια ακρίβεια με το κατώφλι του γρήγορου μονοπατιού.
+    // ΔΕΝ ΣΑΡΩΝΟΥΜΕ ΑΠΟ ΤΗΝ ΑΡΧΗ. Το γρήγορο μονοπάτι έφτασε ήδη ώς το t με βήματα
+    // 0.40·F, και για το εύρος που δέχεται η εφαρμογή (n·amp ≤ ~2) αυτό είναι μέσα στο
+    // όριο Lipschitz της rad, άρα δεν προσπέρασε επιφάνεια. Κρατάμε μικρό περιθώριο
+    // πίσω για τα ακραία n. Έτσι το ίδιο πλήθος δειγμάτων πέφτει σε ΜΙΚΡΟΤΕΡΟ διάστημα:
+    // και φθηνότερο, και πιο ακριβές.
+    const int NS = 20;
+    float t0s = max(0.0, t - 0.10);
+    float dt = (tMax - t0s) / float(NS), tPrev = t0s;
+    for (int i = 1; i <= NS; i++){
+      float ti = t0s + float(i) * dt;
+      if (F(ro + rd*ti) < 0.0){
+        float lo = tPrev, hi = ti;
+        for (int k = 0; k < 7; k++){
+          float m = 0.5 * (lo + hi);
+          if (F(ro + rd*m) < 0.0) hi = m; else lo = m;
+        }
+        t = hi; hit = true; break;
+      }
+      tPrev = ti;
+    }
+  }
+  if (!hit) return (uDebug == 1) ? vec3(4.0, 0.0, 0.0) : base;
 
   vec3 pObj = ro + rd*t;
   vec3 nObj = grad(pObj);
@@ -900,12 +960,32 @@ vec3 shade(vec2 uv){
   // Η σωστή οικονομία ΔΕΝ είναι λιγότερα βήματα — είναι ΜΕΓΑΛΥΤΕΡΟ βήμα. Το εσωτερικό
   // είναι ομαλό (καμία κοντινή επιφάνεια να προσπεράσουμε), οπότε 0.75 αντί 0.40
   // συγκλίνει στα ίδια βήματα χωρίς να χάνει την επιφάνεια εξόδου.
+  // Η ΕΞΟΔΟΣ ΕΙΧΕ ΤΟ ΙΔΙΟ ΣΦΑΛΜΑ, ΔΕΥΤΕΡΗ ΦΟΡΑ. Το παλιό σχόλιο έλεγε ότι «μεγαλύτερο
+  // βήμα» έλυσε την εξάντληση· δεν τη έλυσε, τη ΜΕΤΑΚΙΝΗΣΕ σε άλλες γωνίες, όπου η
+  // δέσμη δεν έβγαινε ΠΟΤΕ από το νερό και το pixel έβγαινε σκοτεινή ραφή στο σώμα.
+  bool exited = false, starved2 = true;
   for (int i = 0; i < 30; i++){
     float d = F(pObj + rInObj*t2);
-    if (d > -0.0009) break;
+    if (d > -0.0009){ exited = true; starved2 = false; break; }
     t2 += max(-d * 0.75, 0.008);
-    if (t2 > 3.0) break;
+    if (t2 > 3.0){ starved2 = false; break; }
   }
+  if (!exited && starved2){
+    const int NS2 = 24;
+    float dt2 = 2.60 / float(NS2);       // η διάμετρος δεν ξεπερνά το 2(1+amp) ≈ 2.56
+    for (int i = 1; i <= NS2; i++){
+      float ti = t2 + float(i) * dt2;
+      if (F(pObj + rInObj*ti) > 0.0){
+        float lo = ti - dt2, hi = ti;
+        for (int k = 0; k < 6; k++){
+          float m = 0.5 * (lo + hi);
+          if (F(pObj + rInObj*m) > 0.0) hi = m; else lo = m;
+        }
+        t2 = hi; exited = true; break;
+      }
+    }
+  }
+  if (!exited && uDebug == 1) return vec3(0.0, 4.0, 0.0);
   thick = t2;
   vec3 pExitObj = pObj + rInObj*t2;
   vec3 nExit = normalize(M * grad(pExitObj));
@@ -917,7 +997,7 @@ vec3 shade(vec2 uv){
   // η δέσμη καθρεφτίζεται μέσα και ξαναβγάζει το περιβάλλον. Το σημειώνουμε και το τιμάμε.
   bool tir = false;
   vec3 rOut = refract(rIn, -nExit, 1.333);
-  if (dot(rOut, rOut) < 0.001){ rOut = reflect(rIn, nExit); tir = true; }
+  if (dot(rOut, rOut) < 0.001 || !exited){ rOut = reflect(rIn, nExit); tir = true; }
 
   // Ο φακός: όσο πιο δυνατό το στράβωμα, τόσο πιο ΞΕΚΑΘΑΡΑ διαβάζεται ως νερό, γιατί
   // βλέπεις το φόντο να κουνιέται μέσα του. Με 0.85 τα αστέρια μόλις μετακινούνταν.
@@ -952,12 +1032,27 @@ void main(){
   // τετραπλάσια pixel από τα 300x300, άρα ο χώρος υπάρχει ΗΔΗ μετρημένος.
   float sc = 0.5 * min(uRes.x, uRes.y);
   vec2 uv0 = (gl_FragCoord.xy - 0.5*uRes) / sc;
+  // ΣΤΟ DEBUG ΕΝΑ ΔΕΙΓΜΑ, ΟΧΙ ΤΕΣΣΕΡΑ. Ο μέσος όρος 4 δειγμάτων ανακατεύει κόκκινο με
+  // νερό και γεννά ενδιάμεσα pixel που το τεστ μετράει λανθασμένα ως «τρύπες» στην
+  // ακμή. Το debug δεν κοιτάζεται με το μάτι — θέλει ΚΑΘΑΡΗ κατηγορία ανά pixel.
+  if (uDebug == 1){ fragColor = vec4(pow(max(shade(uv0), 0.0), vec3(0.4545)), 1.0); return; }
   float e = 1.0 / sc;
-  vec3 acc = shade(uv0 + e*vec2(-0.125,-0.375))
-           + shade(uv0 + e*vec2( 0.375,-0.125))
-           + shade(uv0 + e*vec2( 0.125, 0.375))
-           + shade(uv0 + e*vec2(-0.375, 0.125));
-  fragColor = vec4(pow(max(acc * 0.25, 0.0), vec3(0.4545)), 1.0);   // γάμμα, ΜΙΑ φορά
+  // ΠΡΟΣΑΡΜΟΣΤΙΚΗ ΑΝΤΙΕΞΟΜΑΛΥΝΣΗ. Η σωστή ιχνηλάτηση (βλ. starved) κοστίζει, και 4 δείγματα
+  // σε ΚΑΘΕ pixel έριχναν τα fps στα ~42. Τα 2 σκέτα έβγαζαν σκαλοπάτι στην ακμή. Εδώ:
+  // 2 διαγώνια δείγματα παντού, και τα άλλα 2 ΜΟΝΟ όπου διαφωνούν — δηλαδή στην ακμή
+  // της σταγόνας και στις λάμψεις, εκεί όπου φαίνεται το σκαλοπάτι. Το εσωτερικό και το
+  // φόντο είναι ομαλά και τα 2 δείγματα συμφωνούν ήδη.
+  vec3 s0 = shade(uv0 + e*vec2(-0.125,-0.375));
+  vec3 s1 = shade(uv0 + e*vec2( 0.125, 0.375));
+  vec3 acc;
+  vec3 dd = abs(s0 - s1);
+  if (max(dd.r, max(dd.g, dd.b)) > 0.04){
+    acc = (s0 + s1 + shade(uv0 + e*vec2( 0.375,-0.125))
+                   + shade(uv0 + e*vec2(-0.375, 0.125))) * 0.25;
+  } else {
+    acc = (s0 + s1) * 0.5;
+  }
+  fragColor = vec4(pow(max(acc, 0.0), vec3(0.4545)), 1.0);   // γάμμα, ΜΙΑ φορά
 }`;
 const DROP_VS = `#version 300 es
 void main(){
@@ -999,7 +1094,7 @@ function dropGLCreate(canvas) {
 
   const U = {};
   for (const k of ['uRes', 'uAmp', 'uRot', 'uTime', 'uYaw', 'uPitch', 'uStars',
-                   'uObl', 'uPulse', 'uN', 'uVariant', 'uBob']) {
+                   'uObl', 'uPulse', 'uN', 'uVariant', 'uDebug', 'uBob', 'uRotCS']) {
     U[k] = gl.getUniformLocation(prog, k);
   }
 
@@ -1010,13 +1105,17 @@ function dropGLCreate(canvas) {
     gl.uniform1f(U.uAmp, p.amp);
     gl.uniform1f(U.uObl, p.obl);
     gl.uniform1f(U.uPulse, p.pulse);
-    gl.uniform1f(U.uRot, p.rot);
+    gl.uniform2f(U.uRotCS, Math.cos(p.rot), Math.sin(p.rot));
     gl.uniform1f(U.uTime, p.time);
     gl.uniform1f(U.uYaw, p.yaw);
     gl.uniform1f(U.uPitch, p.pitch);
     gl.uniform1f(U.uStars, 1);
     gl.uniform1i(U.uN, p.n);
     gl.uniform1i(U.uVariant, 0);       // 0 = νερό με λευκό φως
+    // ΜΟΝΟ για τα τεστ: βάφει κόκκινο όπου η ακτίνα δεν βρήκε επιφάνεια και πράσινο
+    // όπου δεν βγήκε ποτέ από το νερό. Και τα δύο είναι σφάλματα ιχνηλάτησης που
+    // αλλιώς διαβάζονται ως «σχήμα», και κανένα golden hash δεν τα ξεχωρίζει.
+    gl.uniform1i(U.uDebug, p.debug ? 1 : 0);
     gl.uniform2f(U.uBob, p.bob.x, p.bob.y);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
   };
