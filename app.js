@@ -235,7 +235,11 @@ const SHARED_I18N = {
 };
 let I18N = SHARED_I18N;
 
-let LANG = localStorage.getItem('lang432') || 'el';
+function preferredLanguage() {
+  try { return localStorage.getItem('lang432') || 'el'; }
+  catch (e) { return 'el'; } // ιδιωτική περιήγηση ή αποκλεισμένος χώρος αποθήκευσης
+}
+let LANG = preferredLanguage();
 if (!I18N[LANG]) LANG = 'el';
 // προσοχή στο κενό string: είναι έγκυρη μετάφραση (π.χ. πρόταση που ισχύει μόνο
 // στη μία εφαρμογή), οπότε ο έλεγχος γίνεται με undefined, όχι με ||
@@ -561,7 +565,7 @@ function findPlateResonance(f, pct) {
 }
 
 function drawChladni(canvas) {
-  canvas = canvas || chlCanvas;
+  if (!canvas) { canvas = chlCanvas; fitCanvasToScreen(canvas); }
   const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { mode: [bm, bn], fr: bf, crisp } = findPlateResonance(f, +chlPlate.value);
   const W = canvas.width, H = canvas.height;
@@ -1155,11 +1159,14 @@ chlDropCanvas.addEventListener('webglcontextrestored', () => {
 // τεντώνεται στα 340 CSS px, δηλαδή σε κινητό με DPR 3 ο browser μεγαλώνει 300 pixel
 // σε 1020 — θολούρα. Το spike μέτρησε τα 600px μέσα στο vsync, άρα ο χώρος υπάρχει.
 // Πλαφόν στο 2: στα 3 ο καμβάς γίνεται 900² = 810k pixel και σε φτηνό κινητό δεν αξίζει.
-function dropSizeCanvas() {
+// ΙΔΙΟ για όλους τους ορατούς καμβάδες (πλάκα, σταγόνα, κρύσταλλος): οι ζωγράφοι δουλεύουν
+// σε λογικά 300px και παίρνουν κλίμακα canvas.width / 300, άρα αρκεί να μεγαλώσει ο χώρος.
+function fitCanvasToScreen(canvas) {
   const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
   const px = Math.round(300 * dpr);
-  if (chlDropCanvas.width !== px) { chlDropCanvas.width = chlDropCanvas.height = px; }
+  if (canvas.width !== px) { canvas.width = canvas.height = px; }
 }
+function dropSizeCanvas() { fitCanvasToScreen(chlDropCanvas); }
 
 // ΕΝΑ σημείο για τα κείμενα κατάστασης, γιατί τα ΔΥΟ μονοπάτια απόδοσης πρέπει να λένε
 // ΤΟ ΙΔΙΟ ΠΡΑΓΜΑ: ο χρήστης δεν πρέπει να καταλαβαίνει ποιο τρέχει. Διπλασιασμένο, μια
@@ -1173,8 +1180,8 @@ function dropStatusText(n, fr, crisp) {
 }
 
 function drawDrop(pulsePhase, canvas, scale) {
-  canvas = canvas || chlCanvas;
-  scale = scale || 1;
+  if (!canvas) { canvas = chlCanvas; fitCanvasToScreen(canvas); }
+  scale = scale || canvas.width / 300;
   const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
   const { n, fr, crisp } = findDropResonance(f, +chlPlate.value);
   const g = canvas.getContext('2d');
@@ -1406,8 +1413,8 @@ function crySeg(g, x1, y1, x2, y2, k) {
 }
 
 function drawCrystal(t, canvas, scale) {
-  canvas = canvas || cryCanvas;
-  scale = scale || 1;
+  if (!canvas) { canvas = cryCanvas; fitCanvasToScreen(canvas); }
+  scale = scale || canvas.width / 300;
   const f = Math.min(CRY_FREQ_RANGE[1], Math.max(CRY_FREQ_RANGE[0], +cryFreq.value || 432));
   const P = cryParams(f);
   const g = canvas.getContext('2d');
