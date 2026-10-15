@@ -1,7 +1,7 @@
 {
   "name": "432Hz Studio",
   "short_name": "432Hz",
-  "description": "Healing frequencies & tone generator — FFT-verified tracks",
+  "description": "Frequencies & tone generator — FFT-verified tracks",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
