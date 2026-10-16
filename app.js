@@ -1597,8 +1597,12 @@ function detectPitch(buf, sampleRate) {
 
   // NSDF: n(τ) = 2·Σ x[i]x[i+τ] / Σ (x[i]² + x[i+τ]²) — κανονικοποιημένο στο [-1,1],
   // ώστε το κατώφλι σαφήνειας να μη γίνεται αυστηρότερο όσο σβήνει η νότα.
+  // The NSDF starts at lag 1, not at minLag: the initial positive zone has to be measured
+  // from lag 0 (McLeod). Starting at minLag mistook the first period's own peak lobe for
+  // the initial zone whenever minLag fell inside it (notes above ~837 Hz), which skipped
+  // the real peak and read the note one octave low. Peaks above PITCH_MAX_HZ are dropped below.
   const nsdf = new Float32Array(maxLag + 2);
-  for (let lag = minLag; lag <= maxLag; lag++) {
+  for (let lag = 1; lag <= maxLag; lag++) {
     let ac = 0, energy = 0;
     for (let i = 0; i < n - lag; i++) {
       const a = buf[i], b = buf[i + lag];
@@ -1610,7 +1614,7 @@ function detectPitch(buf, sampleRate) {
 
   // Προσπέρασε την αρχική θετική ζώνη: η αυτοσυσχέτιση είναι πάντα ψηλή σε πολύ μικρές
   // υστερήσεις και θα έδινε ψεύτικη κορυφή.
-  let i = minLag;
+  let i = 1;
   while (i <= maxLag && nsdf[i] > 0) i++;
 
   // Μία κορυφή ανά θετική ζώνη, δηλαδή μία ανά περίοδο.
@@ -1619,7 +1623,7 @@ function detectPitch(buf, sampleRate) {
     if (nsdf[i] > 0) {
       let top = i;
       while (i <= maxLag && nsdf[i] > 0) { if (nsdf[i] > nsdf[top]) top = i; i++; }
-      peaks.push(top);
+      if (top >= minLag) peaks.push(top);
     } else i++;
   }
   if (!peaks.length) return { hz: 0, clarity: 0 };
@@ -1639,7 +1643,8 @@ function detectPitch(buf, sampleRate) {
   // Παραβολική παρεμβολή γύρω από την κορυφή. Στα δύο άκρα του εύρους λείπει γείτονας,
   // οπότε δεν παρεμβάλλουμε καθόλου αντί να διαβάσουμε κενό κελί ως τιμή.
   let shift = 0;
-  if (lag > minLag && lag < maxLag) {
+  // nsdf[minLag - 1] is computed now (the NSDF starts at lag 1), so only lag 1 lacks a neighbour.
+  if (lag > 1 && lag < maxLag) {
     const y0 = nsdf[lag - 1], y1 = nsdf[lag], y2 = nsdf[lag + 1];
     const d = y0 - 2 * y1 + y2;
     if (d !== 0) shift = 0.5 * (y0 - y2) / d;
@@ -2073,6 +2078,7 @@ function showTab(name) {
   else if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (name !== 'tuner') stopRefTone();
   if (name !== 'tuner') stopMic();   // το μικρόφωνο δεν μένει ανοιχτό στο παρασκήνιο
+  if (window.TuningLab) window.TuningLab.setActive(name === 'tuning');
   pushUrl();
   renderFavs();
 }
@@ -2359,6 +2365,7 @@ function applyLang(l) {
   renderTuner();
   document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
   updateMediaSession();
+  if (window.TuningLab) window.TuningLab.setLanguage(LANG);
 }
 
 // ---------- σύνδεση χειριστών ----------
@@ -2478,6 +2485,18 @@ function startApp(cfg) {
   for (const l of ['el', 'de', 'en']) I18N[l] = Object.assign({}, SHARED_I18N[l], (cfg.i18n || {})[l]);
   if (!I18N[LANG]) LANG = 'el';
   installMediaSession();
+  if (window.TuningLab) {
+    if (!TAB_STATE.tuning) {
+      TAB_NAMES.push('tuning');
+      TAB_STATE.tuning = { read: () => window.TuningLab.readState(), write: s => window.TuningLab.writeState(s) };
+    }
+    window.TuningLab.mount({
+      detectPitch, instruments: INSTRUMENTS, tunings: TUNINGS, noteFreq, noteName,
+      instrumentName: key => T('inst_' + key),
+      language: LANG, showTab,
+      stopOthers: () => { stopRefTone(); stopMic(); stopTone(); stopMusic(); APP.stopSongPlayer(); },
+    });
+  }
   wire();
   applyUrlState();
   applyLang(LANG);
