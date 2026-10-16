@@ -88,7 +88,20 @@ const SHARED_I18N = {
     "png_done": "Η εικόνα κατέβηκε ✓",
     "sleep_label": "Χρονοδιακόπτης ύπνου",
     "sleep_off": "✕ Κλειστό",
-    "sleep_left": "Σταματά σε {n}"
+    "sleep_left": "Σταματά σε {n}",
+    "tools_title": "Πρόσφατα & ρυθμίσεις",
+    "recent_title": "Πρόσφατες ρυθμίσεις",
+    "recent_empty": "Δεν υπάρχουν ακόμα πρόσφατες ρυθμίσεις.",
+    "recent_clear": "Καθαρισμός λίστας",
+    "recent_label": "Επαναφορά: {x}",
+    "settings_export": "Εξαγωγή ρυθμίσεων",
+    "settings_import": "Εισαγωγή ρυθμίσεων",
+    "settings_hint": "Αγαπημένα, πρόσφατα, γλώσσα και δικά σου όργανα — σε αρχείο JSON, μόνο σε αυτή τη συσκευή.",
+    "settings_import_prompt": "Να αντικατασταθούν οι αντίστοιχες ρυθμίσεις με αυτές του αρχείου;",
+    "settings_exported": "Οι ρυθμίσεις αποθηκεύτηκαν σε αρχείο ✓",
+    "settings_imported": "Οι ρυθμίσεις εισήχθησαν ✓",
+    "settings_export_error": "Η εξαγωγή δεν ήταν δυνατή.",
+    "settings_import_error": "Το αρχείο δεν είναι έγκυρο αρχείο ρυθμίσεων (ή είναι μεγαλύτερο από 100 KB). Δεν άλλαξε τίποτα."
   },
   "de": {
     "tab_tone": "Tongenerator",
@@ -165,7 +178,20 @@ const SHARED_I18N = {
     "png_done": "Bild heruntergeladen ✓",
     "sleep_label": "Einschlaf-Timer",
     "sleep_off": "✕ Aus",
-    "sleep_left": "Stoppt in {n}"
+    "sleep_left": "Stoppt in {n}",
+    "tools_title": "Zuletzt & Einstellungen",
+    "recent_title": "Zuletzt verwendet",
+    "recent_empty": "Noch keine zuletzt verwendeten Einstellungen.",
+    "recent_clear": "Liste leeren",
+    "recent_label": "Wiederherstellen: {x}",
+    "settings_export": "Einstellungen exportieren",
+    "settings_import": "Einstellungen importieren",
+    "settings_hint": "Favoriten, zuletzt verwendet, Sprache und eigene Instrumente — als JSON-Datei, nur auf diesem Gerät.",
+    "settings_import_prompt": "Die entsprechenden Einstellungen durch die aus der Datei ersetzen?",
+    "settings_exported": "Einstellungen als Datei gespeichert ✓",
+    "settings_imported": "Einstellungen importiert ✓",
+    "settings_export_error": "Export nicht möglich.",
+    "settings_import_error": "Keine gültige Einstellungsdatei (oder größer als 100 KB). Es wurde nichts geändert."
   },
   "en": {
     "tab_tone": "Tone generator",
@@ -242,7 +268,20 @@ const SHARED_I18N = {
     "png_done": "Image downloaded ✓",
     "sleep_label": "Sleep timer",
     "sleep_off": "✕ Off",
-    "sleep_left": "Stops in {n}"
+    "sleep_left": "Stops in {n}",
+    "tools_title": "Recent & settings",
+    "recent_title": "Recent settings",
+    "recent_empty": "No recent settings yet.",
+    "recent_clear": "Clear list",
+    "recent_label": "Restore: {x}",
+    "settings_export": "Export settings",
+    "settings_import": "Import settings",
+    "settings_hint": "Favourites, recent settings, language and your own instruments — as a JSON file, on this device only.",
+    "settings_import_prompt": "Replace the matching settings with the ones in this file?",
+    "settings_exported": "Settings saved to a file ✓",
+    "settings_imported": "Settings imported ✓",
+    "settings_export_error": "Export was not possible.",
+    "settings_import_error": "This is not a valid settings file (or it is larger than 100 KB). Nothing was changed."
   }
 };
 let I18N = SHARED_I18N;
@@ -2079,6 +2118,8 @@ function showTab(name) {
   if (name !== 'tuner') stopRefTone();
   if (name !== 'tuner') stopMic();   // το μικρόφωνο δεν μένει ανοιχτό στο παρασκήνιο
   if (window.TuningLab) window.TuningLab.setActive(name === 'tuning');
+  document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.tab === name)));
+  markRecentBaseline();
   pushUrl();
   renderFavs();
 }
@@ -2092,6 +2133,7 @@ function pushUrl() {
       history.replaceState(null, '', stateToQuery(activeTab, TAB_STATE[activeTab].read()));
     } catch (e) { /* file:// ή sandbox — ο σύνδεσμος απλώς δεν ενημερώνεται */ }
   }, 300);
+  scheduleRecent();
 }
 
 function shareUrl() {
@@ -2345,13 +2387,99 @@ function renderFavs() {
   });
 }
 
+// ---------- πρόσφατες ρυθμίσεις ----------
+// Μια ρύθμιση μπαίνει στα «πρόσφατα» μόνο αν ο χρήστης την ΑΛΛΑΞΕ και μετά τη
+// σταμάτησε για RECENT_SETTLE_MS: το απλό άνοιγμα καρτέλας ή κάθε βήμα ενός slider
+// δεν γεμίζει τη λίστα. Αποθήκευση και επικύρωση: static/settings_transfer.js.
+const RECENT_SETTLE_MS = 2000;
+let recentTimer = null, recentTab = null, recentBaseline = {};
+function settingsStore() { try { return window.localStorage; } catch (e) { return null; } }
+// Καλείται όταν ανοίγει καρτέλα: μια αλλαγή που περίμενε ακόμα το «κάθισμα» δεν χάνεται.
+function markRecentBaseline() {
+  if (recentTimer) flushRecent();
+  try { recentBaseline[activeTab] = JSON.stringify(TAB_STATE[activeTab].read()); } catch (e) { /* tab without state */ }
+}
+function flushRecent() {
+  clearTimeout(recentTimer); recentTimer = null;
+  const store = settingsStore(), tab = recentTab;
+  if (!window.SettingsTransfer || !store || !TAB_STATE[tab]) return;
+  const state = TAB_STATE[tab].read(), key = JSON.stringify(state);
+  if (key === recentBaseline[tab]) return;
+  recentBaseline[tab] = key;
+  if (SettingsTransfer.rememberRecent(store, tab, state)) renderRecents();
+}
+function scheduleRecent() {
+  if (recentTimer && recentTab !== activeTab) flushRecent();
+  clearTimeout(recentTimer);
+  recentTab = activeTab;
+  recentTimer = setTimeout(flushRecent, RECENT_SETTLE_MS);
+}
+function recentLabel(item) {
+  const tabKey = { tone: 'tab_tone', heal: 'tab_heal', chladni: 'tab_chl', crystal: 'tab_cry', tuner: 'tab_tuner' }[item.tab];
+  const s = item.state;
+  const detail = item.tab === 'tuner' ? T('inst_' + s.inst) + ' · A ' + s.a + ' Hz'
+    : item.tab === 'heal' ? s.f + ' Hz' : favLabel(item.tab, s);
+  return T(tabKey) + ' · ' + detail;
+}
+function renderRecents() {
+  const list = document.getElementById('recentList');
+  if (!list) return;
+  const store = settingsStore();
+  const items = window.SettingsTransfer && store ? SettingsTransfer.readRecents(store) : [];
+  list.replaceChildren();
+  items.forEach(item => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip recent-item';
+    b.textContent = recentLabel(item);   // textContent: οι τιμές έρχονται από αποθήκευση
+    b.setAttribute('aria-label', T('recent_label').replace('{x}', b.textContent));
+    b.onclick = () => { TAB_STATE[item.tab].write(item.state); showTab(item.tab); };
+    list.appendChild(b);
+  });
+  document.getElementById('recentEmpty').classList.toggle('hidden', items.length > 0);
+  document.getElementById('clearRecents').classList.toggle('hidden', items.length === 0);
+}
+function settingsStatus(key) {
+  const el = document.getElementById('settingsStatus');
+  if (el) el.textContent = key ? T(key) : '';
+}
+function exportSettingsFile() {
+  try {
+    const blob = new Blob([SettingsTransfer.exportSettings(settingsStore())], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '432hz-studio-settings.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    settingsStatus('settings_exported');
+  } catch (e) { settingsStatus('settings_export_error'); }
+}
+async function importSettingsFile(file) {
+  if (!file) return;
+  try {
+    if (file.size > SettingsTransfer.MAX_BYTES) throw new RangeError('too large');
+    const text = await file.text();
+    SettingsTransfer.parseSettings(text);           // πρώτα έλεγχος, μετά ερώτηση
+    if (!window.confirm(T('settings_import_prompt'))) { settingsStatus(''); return; }
+    const changed = SettingsTransfer.importSettings(settingsStore(), text);
+    if (changed.includes('hz-tuning-profiles') && window.TuningLab && window.TuningLab.mounted) {
+      window.TuningLab.custom = window.TuningLab.readCustom();
+      window.TuningLab.renderInstruments();
+    }
+    applyLang(changed.includes('lang432') ? preferredLanguage() : LANG);   // ξαναζωγραφίζει αγαπημένα + πρόσφατα
+    settingsStatus('settings_imported');
+  } catch (e) { settingsStatus('settings_import_error'); }
+}
+
 // ---------- language switch ----------
 function applyLang(l) {
   LANG = I18N[l] ? l : 'el';
   try { localStorage.setItem('lang432', LANG); } catch (e) { /* ιδιωτική περιήγηση */ }
   document.documentElement.lang = LANG;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
-  document.querySelectorAll('.langs .chip').forEach(c => c.classList.toggle('sel', c.dataset.l === LANG));
+  document.querySelectorAll('.langs .chip').forEach(c => {
+    c.classList.toggle('sel', c.dataset.l === LANG);
+    c.setAttribute('aria-pressed', String(c.dataset.l === LANG));
+  });
   if (chlShape === 'drop') {
     document.getElementById('chlNote').textContent = T('chl_note_drop');
     document.getElementById('chlPlateLabel').textContent = T('chl_drop_size');
@@ -2361,6 +2489,7 @@ function applyLang(l) {
   if (chlShape !== 'drop') drawChladni();
   drawCrystal(1);
   renderFavs();
+  renderRecents();
   renderSleep();
   renderTuner();
   document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
@@ -2429,6 +2558,14 @@ function wire() {
     growCrystal();
   });
   document.querySelectorAll('.langs .chip').forEach(c => c.onclick = () => applyLang(c.dataset.l));
+  const clearBtn = document.getElementById('clearRecents');
+  if (clearBtn && window.SettingsTransfer) {
+    clearBtn.onclick = () => { SettingsTransfer.clearRecents(settingsStore()); renderRecents(); };
+    const importInp = document.getElementById('settingsImportFile');
+    document.getElementById('exportSettings').onclick = exportSettingsFile;
+    document.getElementById('importSettings').onclick = () => importInp.click();
+    importInp.onchange = () => { const f = importInp.files[0]; importInp.value = ''; importSettingsFile(f); };
+  }
 
   document.querySelectorAll('.actbar [data-act]').forEach(b => b.onclick = () => {
     if (b.dataset.act === 'fav') { addFav(b.dataset.tab); toast(T('saved_fav')); }
@@ -2500,4 +2637,5 @@ function startApp(cfg) {
   wire();
   applyUrlState();
   applyLang(LANG);
+  document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.tab === activeTab)));
 }
