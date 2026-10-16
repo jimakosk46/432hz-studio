@@ -124,6 +124,16 @@ select {
     border-radius: 10px; padding: 10px 6px;
   }
 .tonecard .freq small { display: block; font-weight: 400; color: var(--muted); font-size: .7rem; }
+/* Cover thumbnail above the frequency badge: small and dimmed, so the bright
+   artwork never competes with the text (sensitive eyes). Brightens while playing. */
+.tonecard .side { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
+.tonecard .cover {
+    display: block; width: 86px; height: 86px; object-fit: cover;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--panel);
+    filter: saturate(.7) brightness(.78); transition: filter .4s;
+  }
+.tonecard .cover.missing { visibility: hidden; }
+.tonecard:has(.mus.on) .cover { filter: saturate(.9) brightness(.95); }
 .tonecard .info { flex: 1; }
 .tonecard .info b { display: block; margin-bottom: 3px; }
 .tonecard .info small { color: var(--muted); line-height: 1.45; }
@@ -146,6 +156,9 @@ select {
 .tonecard .yt { background: #2a1518; color: #ff9d8a; border-color: #5c2f2f; font-size: .78rem; padding: 7px 10px; }
 @media (max-width: 620px) {
     .tonecard { flex-wrap: wrap; }
+    .tonecard .side { align-self: flex-start; }
+    .tonecard .cover { width: 72px; height: 72px; }
+    .tonecard .freq { min-width: 72px; }
     .tonecard .acts { flex-direction: row; width: 100%; min-width: 0; }
     .tonecard .acts > * { flex: 1; }
   }
@@ -170,6 +183,47 @@ select {
 .tonecard.pending { border-color: var(--accent); box-shadow: 0 0 22px rgba(255,199,107,.28); }
 .tonecard.pending .mus { animation: breathe 1.6s ease-in-out infinite alternate; }
 @keyframes breathe { from { opacity: .55; } to { opacity: 1; } }
+
+/* --- PWA: selected tracks for offline playback --- */
+.offline-panel {
+  margin: 16px 0 20px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel2); overflow: hidden;
+}
+.offline-panel[hidden] { display: none; }
+.offline-panel > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 13px 15px; color: var(--text); cursor: pointer; list-style: none;
+}
+.offline-panel > summary::-webkit-details-marker { display: none; }
+.offline-summary-copy { min-width: 0; }
+.offline-panel > summary b, .offline-panel > summary small { display: block; }
+.offline-panel > summary small { margin-top: 4px; color: var(--muted); font-size: .76rem; line-height: 1.4; }
+.offline-chevron { color: var(--accent); transition: transform .15s; }
+.offline-panel[open] .offline-chevron { transform: rotate(180deg); }
+.offline-body, .offline-content { padding: 0 14px 14px; }
+.offline-storage-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#offlineStorage { color: var(--accent2); font-size: .8rem; margin: 0 0 8px; }
+#offlinePersist { font-size: .76rem; padding: 7px 10px; }
+.offline-note, .offline-support-note { color: var(--muted); font-size: .75rem; line-height: 1.45; margin: 9px 0; }
+.offline-tracks { display: grid; gap: 7px; }
+.offline-track {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(78px, 100px) auto;
+  align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 9px; background: var(--panel);
+}
+.offline-track-name { min-width: 0; color: var(--text); font-size: .82rem; overflow-wrap: anywhere; }
+.offline-track-state { color: var(--muted); font-size: .72rem; }
+.offline-track-state:not(:empty) { color: var(--accent2); }
+.offline-progress { width: 100%; height: 8px; accent-color: var(--accent); }
+.offline-track-action { padding: 7px 10px; font-size: .75rem; white-space: nowrap; }
+@media (max-width: 620px) {
+  .offline-storage-row { align-items: flex-start; }
+  .offline-track { grid-template-columns: minmax(0, 1fr) auto; }
+  .offline-track-name { grid-column: 1 / -1; }
+  .offline-track-state { grid-row: 2; grid-column: 1; }
+  .offline-track-action { grid-row: 2; grid-column: 2; }
+  .offline-progress { grid-row: 3; grid-column: 1 / -1; }
+}
 
 /* --- κουρδιστήρι --- */
 .courses { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }

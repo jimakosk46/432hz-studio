@@ -32,6 +32,8 @@ const SHARED_I18N = {
     "stop_short": "■ Στοπ",
     "music_btn": "🎵 Μουσική {f}Hz",
     "music_stop": "■ Στοπ {f}Hz",
+    "music_offline": "Χωρίς σύνδεση: αυτό το κομμάτι δεν έχει κατέβει για offline.",
+    "music_failed": "Το κομμάτι δεν φόρτωσε. Δοκίμασε ξανά.",
     "need_phones": "🎧 Η μουσική θέλει ακουστικά — ο παλμός γεννιέται από τη διαφορά ανάμεσα στα δύο αυτιά (binaural)",
     "subaudible_note": "Ο καθαρός τόνος των 7,83 Hz είναι κάτω από το όριο της ανθρώπινης ακοής: συνήθως δεν ακούγεται, και πολλά ηχεία δεν μπορούν καν να τον παίξουν.",
     "credit": "από τον Δημήτρη Κατσαβό",
@@ -107,6 +109,8 @@ const SHARED_I18N = {
     "stop_short": "■ Stopp",
     "music_btn": "🎵 Musik {f}Hz",
     "music_stop": "■ Stopp {f}Hz",
+    "music_offline": "Offline: Dieser Titel ist nicht heruntergeladen.",
+    "music_failed": "Der Titel konnte nicht geladen werden. Bitte erneut versuchen.",
     "need_phones": "🎧 Für die Musik Kopfhörer nötig — der Puls entsteht erst aus dem Unterschied zwischen beiden Ohren (binaural)",
     "subaudible_note": "Der reine 7,83-Hz-Ton liegt unterhalb des menschlichen Hörbereichs: Meist hört man ihn nicht, und viele Lautsprecher können ihn gar nicht wiedergeben.",
     "credit": "von Dimitri Katsavos",
@@ -182,6 +186,8 @@ const SHARED_I18N = {
     "stop_short": "■ Stop",
     "music_btn": "🎵 Music {f}Hz",
     "music_stop": "■ Stop {f}Hz",
+    "music_offline": "Offline: this track has not been downloaded.",
+    "music_failed": "The track could not be loaded. Please try again.",
     "need_phones": "🎧 Headphones required for the music — the pulse arises from the difference between the two ears (binaural)",
     "subaudible_note": "The pure 7.83 Hz tone lies below the range of human hearing: you usually won't hear it, and many speakers can't play it at all.",
     "credit": "by Dimitri Katsavos",
@@ -320,98 +326,98 @@ function syncUI() {
 
 // ---------- healing tones ----------
 const TONES = [
-  { f: 7.83,
+  { f: 7.83, cover: 'tracks/covers/7.83.webp',
     name: { el: 'Συντονισμός Schumann — ο παλμός της Γης', de: 'Schumann-Resonanz — der Puls der Erde', en: 'Schumann resonance — the pulse of the Earth' },
     desc: {
       el: 'Ανάμεσα στο έδαφος και την ιονόσφαιρα, οι κεραυνοί όλου του πλανήτη κρατούν ζωντανό έναν αδιάκοπο ηλεκτρομαγνητικό κυματισμό· ο βασικός του τόνος είναι περίπου στα 7,83 Hz. Γι\' αυτό πολλοί τον λένε «παλμό της Γης» και τον επιλέγουν για αργή, βαθιά χαλάρωση.',
       de: 'Zwischen Erdboden und Ionosphäre halten die Blitze des ganzen Planeten eine stetige elektromagnetische Schwingung in Gang; ihr Grundton liegt bei etwa 7,83 Hz. Deshalb nennen viele sie den »Puls der Erde« und wählen sie für langsames, tiefes Entspannen.',
       en: 'Between the ground and the ionosphere, lightning all over the planet keeps a constant electromagnetic ripple going; its fundamental sits at about 7.83 Hz. That is why many call it "the pulse of the Earth" and choose it for slow, deep relaxation.' },
     yt: '7.83 Hz Schumann resonance healing sleep music' },
-  { f: 40,
+  { f: 40, cover: 'tracks/covers/40.webp',
     name: { el: 'Κύματα γάμμα — ο ρυθμός των 40 Hz', de: 'Gamma-Wellen — der 40-Hz-Rhythmus', en: 'Gamma waves — the 40 Hz rhythm' },
     desc: {
       el: 'Ο εγκέφαλος έχει τον δικό του ρυθμό γάμμα, γύρω στα 40 Hz. Ένας ήχος που πάλλεται 40 φορές το δευτερόλεπτο μπορεί να τον «παρασύρει»: στο ηλεκτροεγκεφαλογράφημα φαίνεται τότε μια απόκριση ακριβώς στα 40 Hz (auditory steady-state response). Τι σημαίνει αυτό για τη συγκέντρωση και τη μνήμη το ερευνούν ακόμη οι επιστήμονες.',
       de: 'Das Gehirn hat einen eigenen Gamma-Rhythmus um 40 Hz. Ein Klang, der 40-mal pro Sekunde pulsiert, kann ihn mitziehen: Im EEG zeigt sich dann eine Antwort genau bei 40 Hz (auditory steady-state response). Was das für Konzentration und Gedächtnis bedeutet, wird noch erforscht.',
       en: 'The brain has its own gamma rhythm around 40 Hz. A sound that pulses 40 times a second can pull it along: an EEG then shows a response at exactly 40 Hz (the auditory steady-state response). What this means for focus and memory is still being researched.' },
     yt: '40 Hz gamma waves focus study concentration music' },
-  { f: 111,
+  { f: 111, cover: 'tracks/covers/111.webp',
     name: { el: 'Η ιερή συχνότητα των αρχαίων ναών', de: 'Die heilige Frequenz der alten Tempel', en: 'The sacred frequency of ancient temples' },
     desc: {
       el: 'Ακουστικές μετρήσεις στο Υπόγειο Ιερό της Μάλτας (περ. 3600 π.Χ.) και σε νεολιθικούς θολωτούς τάφους της Ιρλανδίας βρήκαν έντονο αντήχημα γύρω στα 110–112 Hz — περίπου εκεί που φτάνει μια βαθιά αντρική φωνή. Από εκεί και το όνομα «συχνότητα των ναών». Ένας χαμηλός, ζεστός τόνος για αργό διαλογισμό.',
       de: 'Akustische Messungen im Hypogäum von Malta (um 3600 v. Chr.) und in jungsteinzeitlichen Ganggräbern Irlands fanden eine kräftige Resonanz um 110–112 Hz — ungefähr dort, wo eine tiefe Männerstimme liegt. Daher der Name »Tempelfrequenz«. Ein tiefer, warmer Ton für ruhige Meditation.',
       en: 'Acoustic measurements in Malta\'s Hypogeum (c. 3600 BC) and in Neolithic passage tombs in Ireland found a strong resonance around 110–112 Hz — roughly where a deep male voice sits. Hence the name "temple frequency". A low, warm tone for slow meditation.' },
     yt: '111 Hz healing frequency deep meditation music' },
-  { f: 136.1,
+  { f: 136.1, cover: 'tracks/covers/136.1.webp',
     name: { el: 'ΟΜ — ο τόνος της Γης', de: 'OM — der Ton der Erde', en: 'OM — the tone of the Earth' },
     desc: {
       el: 'Το 1978 ο Hans Cousto «μετέφρασε» σε ήχο την περιφορά της Γης γύρω από τον Ήλιο: ανέβασε τον ρυθμό ενός έτους 32 οκτάβες, ώσπου έγινε ακουστός. Έτσι προέκυψαν τα 136,1 Hz, ο τόνος «ΟΜ» σε πολλά τιβετιανά μπολ και διαπασών για γιόγκα. Παραδοσιακά συνδέεται με το τσάκρα της καρδιάς.',
       de: '1978 hat Hans Cousto den Umlauf der Erde um die Sonne in Klang »übersetzt«: Er hat den Jahresrhythmus um 32 Oktaven nach oben verschoben, bis er hörbar wurde. So entstanden die 136,1 Hz, auf die heute viele Klangschalen und Yoga-Stimmgabeln als »OM«-Ton gestimmt sind. Traditionell wird er mit dem Herzchakra verbunden.',
       en: 'In 1978 Hans Cousto "translated" the Earth\'s orbit around the Sun into sound: he raised the yearly rhythm by 32 octaves until it became audible. The result was 136.1 Hz, the "OM" tone of many singing bowls and yoga tuning forks. Traditionally it is linked to the heart chakra.' },
     yt: '136.1 Hz OM chant meditation music' },
-  { f: 174,
+  { f: 174, cover: 'tracks/covers/174.webp',
     name: { el: 'Γαλήνη & αίσθηση ασφάλειας', de: 'Ruhe & Geborgenheit', en: 'Calm & a sense of safety' },
     desc: {
       el: 'Ο χαμηλότερος τόνος της σύγχρονης λίστας Solfeggio, που τον συνδέει με την αίσθηση ασφάλειας και το «άφημα». Βαθύς και απαλός· ταιριάζει στο τέλος μιας κουραστικής μέρας ή λίγο πριν τον ύπνο.',
       de: 'Der tiefste Ton der modernen Solfeggio-Liste, die ihn mit Geborgenheit und Loslassen verbindet. Tief und weich — passend zum Ende eines anstrengenden Tages oder kurz vor dem Schlafengehen.',
       en: 'The lowest tone of the modern Solfeggio list, which links it to a sense of safety and letting go. Deep and soft — a good fit for the end of a long day or just before sleep.' },
     yt: '174 Hz pain relief healing music' },
-  { f: 285,
+  { f: 285, cover: 'tracks/covers/285.webp',
     name: { el: 'Ανανέωση & ενέργεια', de: 'Erneuerung & Energie', en: 'Renewal & energy' },
     desc: {
       el: 'Στη λίστα Solfeggio είναι ο τόνος της ανανέωσης, ένα νέο ξεκίνημα για σώμα και μυαλό. Καθαρός και ήσυχος — για ένα σύντομο διάλειμμα, όταν θέλεις να πάρεις ανάσα και να ξαναβρείς δυνάμεις.',
       de: 'In der Solfeggio-Liste ist er der Ton der Erneuerung, ein Neustart für Körper und Kopf. Klar und ruhig — für eine kurze Pause, wenn du durchatmen und neue Kraft sammeln willst.',
       en: 'In the Solfeggio list it is the tone of renewal, a fresh start for body and mind. Clear and quiet — for a short break when you want to catch your breath and recharge.' },
     yt: '285 Hz tissue healing regeneration music' },
-  { f: 396,
+  { f: 396, cover: 'tracks/covers/396.webp',
     name: { el: 'Θάρρος & σταθερότητα — Ut', de: 'Mut & Stabilität — Ut', en: 'Courage & stability — Ut' },
     desc: {
       el: 'Ο πρώτος τόνος της κλίμακας Solfeggio. Η παράδοση τον συνδέει με το τσάκρα της ρίζας και με το να αφήνεις πίσω σου φόβο και ενοχές. Σταθερός, γειωμένος ήχος — καλό σημείο για να ξεκινήσεις.',
       de: 'Der erste Ton der Solfeggio-Skala. Die Überlieferung verbindet ihn mit dem Wurzelchakra und damit, Angst und Schuld hinter sich zu lassen. Ein stabiler, geerdeter Klang — ein guter Einstieg.',
       en: 'The first tone of the Solfeggio scale. Tradition links it to the root chakra and to leaving fear and guilt behind. A steady, grounded sound — a good place to start.' },
     yt: '396 Hz release fear guilt healing music' },
-  { f: 417,
+  { f: 417, cover: 'tracks/covers/417.webp',
     name: { el: 'Αλλαγή & νέα ξεκινήματα — Re', de: 'Wandel & Neuanfänge — Re', en: 'Change & new beginnings — Re' },
     desc: {
       el: 'Το Re είναι ο τόνος της αλλαγής: στην παράδοση σημαίνει να ξεκαθαρίσεις τα παλιά και να κάνεις χώρο για κάτι καινούργιο. Συνδέεται με το ιερό τσάκρα και τη δημιουργικότητα.',
       de: 'Re ist der Ton des Wandels: In der Überlieferung steht er dafür, Altes aufzuräumen und Platz für Neues zu schaffen. Er wird mit dem Sakralchakra und mit Kreativität verbunden.',
       en: 'Re is the tone of change: in the tradition it stands for clearing out the old and making room for something new. It is associated with the sacral chakra and with creativity.' },
     yt: '417 Hz cleanse negativity facilitate change music' },
-  { f: 432,
+  { f: 432, cover: 'tracks/covers/432.webp',
     name: { el: 'Λα = 432 Hz — το κούρδισμα του Βέρντι', de: 'A = 432 Hz — die Verdi-Stimmung', en: 'A = 432 Hz — Verdi tuning' },
     desc: {
       el: 'Μια εναλλακτική στο καθιερωμένο Λα = 440 Hz, που συχνά τη λένε «κούρδισμα του Βέρντι», επειδή ο συνθέτης υποστήριζε ένα χαμηλότερο Λα. Όλες οι νότες ακούγονται περίπου 32 cents πιο χαμηλά· πολλοί τη βρίσκουν πιο ζεστή και απαλή — θέμα γούστου.{app432}',
       de: 'Eine Alternative zum üblichen A = 440 Hz, oft »Verdi-Stimmung« genannt, weil sich der Komponist für ein tieferes A eingesetzt hat. Alle Töne klingen etwa 32 Cent tiefer; viele empfinden das als wärmer und weicher — Geschmackssache.{app432}',
       en: 'An alternative to the standard A = 440 Hz, often called "Verdi tuning" because the composer argued for a lower A. Every note sounds about 32 cents lower; many people find it warmer and softer — a matter of taste.{app432}' },
     yt: '432 Hz healing melodies relaxing music' },
-  { f: 528,
+  { f: 528, cover: 'tracks/covers/528.webp',
     name: { el: 'Αγάπη & αρμονία — Mi', de: 'Liebe & Harmonie — Mi', en: 'Love & harmony — Mi' },
     desc: {
       el: 'Η πιο γνωστή συχνότητα της λίστας Solfeggio· οι θαυμαστές της την αποκαλούν «τόνο των θαυμάτων» και τη συνδέουν με την αγάπη και την αρμονία. Φωτεινός, γλυκός ήχος, που η παράδοση τον αντιστοιχεί στο τσάκρα του ηλιακού πλέγματος.',
       de: 'Die bekannteste Frequenz der Solfeggio-Liste; ihre Fans nennen sie den »Ton der Wunder« und verbinden sie mit Liebe und Harmonie. Ein heller, süßer Klang, den die Überlieferung dem Solarplexuschakra zuordnet.',
       en: 'The best-known frequency of the Solfeggio list; its fans call it the "miracle tone" and link it to love and harmony. A bright, sweet sound that tradition assigns to the solar plexus chakra.' },
     yt: '528 Hz love DNA repair miracle healing music' },
-  { f: 639,
+  { f: 639, cover: 'tracks/covers/639.webp',
     name: { el: 'Σχέσεις & επικοινωνία — Fa', de: 'Beziehungen & Kommunikation — Fa', en: 'Relationships & communication — Fa' },
     desc: {
       el: 'Ο τόνος της καρδιάς: στην παράδοση εκφράζει την αρμονία στις σχέσεις, την κατανόηση και τη συγχώρεση. Ωραία συντροφιά όταν θέλεις να ξανασυνδεθείς με κάποιον — ή με τον εαυτό σου.',
       de: 'Der Ton des Herzens: In der Überlieferung steht er für Harmonie in Beziehungen, für Verständnis und Vergebung. Ein schöner Begleiter, wenn du dich wieder mit jemandem verbinden willst — oder mit dir selbst.',
       en: 'The tone of the heart: in the tradition it stands for harmony in relationships, understanding and forgiveness. Good company when you want to reconnect with someone — or with yourself.' },
     yt: '639 Hz relationships love connection healing music' },
-  { f: 741,
+  { f: 741, cover: 'tracks/covers/741.webp',
     name: { el: 'Καθαρότητα & έκφραση — Sol', de: 'Klarheit & Ausdruck — Sol', en: 'Clarity & expression — Sol' },
     desc: {
       el: 'Κατά την παράδοση, ο τόνος της καθαρότητας και της αυθεντικής έκφρασης, δεμένος με το τσάκρα του λαιμού — τη φωνή σου. Ζωηρός, ξύπνιος ήχος για ώρες δημιουργικής δουλειάς.',
       de: 'Der Überlieferung nach der Ton von Klarheit und echtem Ausdruck, verbunden mit dem Halschakra — deiner Stimme. Ein lebhafter, wacher Klang für kreative Stunden.',
       en: 'In the tradition, the tone of clarity and authentic expression, tied to the throat chakra — your voice. A lively, wakeful sound for creative hours.' },
     yt: '741 Hz detox cleanse aura healing music' },
-  { f: 852,
+  { f: 852, cover: 'tracks/covers/852.webp',
     name: { el: 'Διαίσθηση & εσωτερική φωνή — La', de: 'Intuition & innere Stimme — La', en: 'Intuition & the inner voice — La' },
     desc: {
       el: 'Συνδέεται με το τσάκρα του τρίτου ματιού και με την «εσωτερική φωνή». Ψηλός και αέρινος· πολλοί τον διαλέγουν για ήσυχο διαλογισμό και στιγμές αυτογνωσίας.',
       de: 'Er wird mit dem Chakra des dritten Auges und der »inneren Stimme« verbunden. Hoch und luftig — viele wählen ihn für stille Meditation und Momente der Selbstbesinnung.',
       en: 'It is associated with the third-eye chakra and the "inner voice". High and airy — many choose it for quiet meditation and moments of reflection.' },
     yt: '852 Hz awaken intuition third eye music' },
-  { f: 963,
+  { f: 963, cover: 'tracks/covers/963.webp',
     name: { el: 'Η «συχνότητα των θεών» — Si', de: 'Die »Frequenz der Götter« — Si', en: 'The "frequency of the gods" — Si' },
     desc: {
       el: 'Ο ψηλότερος τόνος της κλίμακας, με το παρατσούκλι «συχνότητα των θεών». Οι πνευματικές παραδόσεις τον συνδέουν με το τσάκρα της κορώνας και την αίσθηση ενότητας με το σύμπαν. Φωτεινός και ευρύχωρος — για τα τελευταία λεπτά ενός διαλογισμού.',
@@ -433,7 +439,9 @@ function renderTones() {
     // Below 20 Hz the pure oscillator tone is additionally below the hearing range.
     const phones = (t.f < 60 ? `<span class="phones">${T('need_phones')}</span>` : '')
       + (t.f < 20 ? `<span class="phones subaudible">${T('subaudible_note')}</span>` : '');
-    el.innerHTML = `<div class="freq">${t.f}<small>Hz</small></div>
+    // Covers are decorative (empty alt), small and dimmed: the text stays the calm focus.
+    // Fixed width/height avoid layout shift; lazy loading keeps the first paint light.
+    el.innerHTML = `<div class="side"><img class="cover" src="${t.cover}" alt="" width="86" height="86" loading="lazy" decoding="async"><div class="freq">${t.f}<small>Hz</small></div></div>
       <div class="info"><b>${t.name[LANG]}</b>${phones}<small>${t.desc[LANG].replace('{app432}', T('app432'))}</small></div>
       <div class="acts">
         <button class="mus${musOn ? ' on' : ''}" data-f="${t.f}">${T(musOn ? 'music_stop' : 'music_btn').replace('{f}', t.f)}</button>
@@ -451,6 +459,8 @@ function renderTones() {
       if (!osc) startTone(); else syncUI();
     };
     el.querySelector('.mus').onclick = () => toggleMusic(t.f, el.querySelector('.mus'));
+    const cover = el.querySelector('.cover');
+    cover.onerror = () => cover.classList.add('missing');   // e.g. offline and never viewed
     list.appendChild(el);
   });
   syncUI();
@@ -469,6 +479,7 @@ function stopMusic() {
   document.querySelectorAll('.tonecard .mus').forEach(b => {
     b.classList.remove('on'); b.textContent = T('music_btn').replace('{f}', b.dataset.f);
   });
+  updateMediaSession();
 }
 function toggleMusic(f, btn) {
   clearPendingHeal();
@@ -479,9 +490,64 @@ function toggleMusic(f, btn) {
   stopSongPlayer();
   music = new Audio(APP.trackUrl(f));
   music.loop = true;
-  music.play().catch(() => {});
+  music.addEventListener('play', updateMediaSession);
+  music.addEventListener('pause', updateMediaSession);
+  music.addEventListener('ended', updateMediaSession);
+  const m = music;
+  m.addEventListener('error', () => {
+    if (music !== m) return;   // stopMusic() empties src, which also fires 'error'
+    stopMusic();
+    toast(T(navigator.onLine === false ? 'music_offline' : 'music_failed'), 5000);
+  });
+  music.play().catch(() => {});   // load failures are reported by the 'error' listener
   musicF = f;
   btn.classList.add('on'); btn.textContent = T('music_stop').replace('{f}', f);
+  updateMediaSession();
+}
+
+function updateMediaSession() {
+  const session = navigator.mediaSession;
+  if (!session) return;
+  if (!music || musicF === null) {
+    session.metadata = null;
+    session.playbackState = 'none';
+    return;
+  }
+  const tone = TONES.find(item => item.f === musicF);
+  if (tone && typeof MediaMetadata === 'function') {
+    session.metadata = new MediaMetadata({
+      title: `${tone.name[LANG]} (${tone.f} Hz)`,
+      artist: '432Hz Studio',
+      album: T('tab_heal'),
+      artwork: [
+        { src: new URL(tone.cover, document.baseURI).href, sizes: '512x512', type: 'image/webp' },
+      ],
+    });
+  }
+  session.playbackState = music.paused ? 'paused' : 'playing';
+}
+
+function stepMediaTrack(direction) {
+  if (!music || musicF === null) return;
+  const index = TONES.findIndex(item => item.f === musicF);
+  const next = TONES[(index + direction + TONES.length) % TONES.length];
+  const button = document.querySelector(`.tonecard .mus[data-f="${next.f}"]`);
+  if (button) toggleMusic(next.f, button);
+}
+
+function installMediaSession() {
+  const session = navigator.mediaSession;
+  if (!session || typeof session.setActionHandler !== 'function') return;
+  const actions = {
+    play: () => { if (music) music.play().catch(() => {}); },
+    pause: () => { if (music) music.pause(); },
+    previoustrack: () => stepMediaTrack(-1),
+    nexttrack: () => stepMediaTrack(1),
+  };
+  for (const [action, handler] of Object.entries(actions)) {
+    try { session.setActionHandler(action, handler); } catch (e) { /* action unsupported */ }
+  }
+  document.addEventListener('visibilitychange', updateMediaSession);
 }
 
 // ---------- συντονισμός: κοινός για την πλάκα και τη σταγόνα ----------
@@ -2197,12 +2263,12 @@ function setSleep(minutes) {
 
 // ---------- ειδοποίηση & κοινή χρήση ----------
 let toastTimer = null;
-function toast(msg) {
+function toast(msg, ms = 2000) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.classList.remove('hidden');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.add('hidden'), 2000);
+  toastTimer = setTimeout(() => el.classList.add('hidden'), ms);
 }
 
 async function doShare() {
@@ -2291,6 +2357,8 @@ function applyLang(l) {
   renderFavs();
   renderSleep();
   renderTuner();
+  document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
+  updateMediaSession();
 }
 
 // ---------- σύνδεση χειριστών ----------
@@ -2409,6 +2477,7 @@ function startApp(cfg) {
   I18N = {};
   for (const l of ['el', 'de', 'en']) I18N[l] = Object.assign({}, SHARED_I18N[l], (cfg.i18n || {})[l]);
   if (!I18N[LANG]) LANG = 'el';
+  installMediaSession();
   wire();
   applyUrlState();
   applyLang(LANG);
