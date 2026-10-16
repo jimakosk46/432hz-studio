@@ -8,6 +8,22 @@
 <link rel="icon" href="icon192.png">
 <link rel="apple-touch-icon" href="icon192.png">
 <meta name="theme-color" content="#0a0618">
+<meta name="description" content="Frequencies &amp; tone generator — FFT-verified tracks">
+<meta property="og:type" content="website">
+<meta property="og:title" content="432Hz Studio">
+<meta property="og:description" content="Συχνότητες, γεννήτρια τόνων και κουρδιστήρι στα 432 Hz — μουσική ελεγμένη με FFT, και offline.">
+<meta property="og:locale" content="el_GR">
+<meta property="og:url" content="https://jimakosk46.github.io/432hz-studio/">
+<meta property="og:image" content="https://jimakosk46.github.io/432hz-studio/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jimakosk46.github.io/432hz-studio/og-image.jpg">
+<!-- iOS launch screens (only used from the Home Screen). 1179×2556: iPhone 14 Pro/15/15 Pro/16;
+     1170×2532: iPhone 12/13/14. Other devices fall back to the plain theme colour. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-startup-image" href="splash-1179x2556.jpg" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="splash-1170x2532.jpg" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="stylesheet" href="app.css">
 <style>
 .tab {
@@ -252,6 +268,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
 </div>
 
 <script src="app.js"></script>
+<script src="offline.js"></script>
 <script>
 // ---------- κείμενα ειδικά αυτής της εφαρμογής ----------
 const I18N_APP = {
@@ -262,6 +279,22 @@ const I18N_APP = {
     live_note: "Το τραγούδι παίζει ζωντανά κουρδισμένο στη συχνότητα-στόχο (κλασική μέθοδος: ~1,8% πιο αργό, φυσικός ήχος χωρίς time-stretching).",
     install_hint: "Συμβουλή: μενού browser → «Προσθήκη στην αρχική οθόνη» για να γίνει κανονικό app (δουλεύει και χωρίς internet).",
     app432: "",
+    offline_title: "Λήψεις για offline",
+    offline_summary: "Επίλεξε κομμάτια ένα-ένα · η ροή παραμένει η προεπιλογή",
+    offline_download: "Λήψη",
+    offline_cancel: "Ακύρωση",
+    offline_remove: "Αφαίρεση",
+    offline_available: "Διαθέσιμο offline",
+    offline_downloading: "Λήψη σε εξέλιξη",
+    offline_failed: "Η λήψη απέτυχε",
+    offline_cancelled: "Η λήψη ακυρώθηκε",
+    offline_storage_estimate: "Χώρος: {used} από {quota} (εκτίμηση)",
+    offline_storage_unknown: "Δεν είναι διαθέσιμη εκτίμηση χώρου",
+    offline_persist: "Διατήρηση λήψεων",
+    offline_storage_protected: "Ο browser παραχώρησε μόνιμη αποθήκευση.",
+    offline_storage_granted: "Ενεργοποιήθηκε μόνιμη αποθήκευση.",
+    offline_storage_denied: "Ο browser δεν παραχώρησε μόνιμη αποθήκευση.",
+    offline_storage_note: "Σε iPhone και iPad, το Safari μπορεί να διαγράψει δεδομένα ιστοτόπων όταν ο χώρος είναι περιορισμένος. Οι offline λήψεις μπορεί να χαθούν· κράτα ελεύθερο χώρο και συνδέσου ξανά αν λείπει κάποιο κομμάτι.",
   },
   de: {
     subtitle: "Frequenzen & Tongenerator",
@@ -270,6 +303,22 @@ const I18N_APP = {
     live_note: "Der Song spielt live auf die Zielfrequenz gestimmt (klassische Methode: ~1,8% langsamer, natürlicher Klang ohne Time-Stretching).",
     install_hint: "Tipp: Browser-Menü → „Zum Startbildschirm hinzufügen\" — dann funktioniert es wie eine App (auch offline).",
     app432: "",
+    offline_title: "Offline-Downloads",
+    offline_summary: "Einzelne Titel auswählen · Streaming bleibt der Standard",
+    offline_download: "Herunterladen",
+    offline_cancel: "Abbrechen",
+    offline_remove: "Entfernen",
+    offline_available: "Offline verfügbar",
+    offline_downloading: "Wird heruntergeladen",
+    offline_failed: "Download fehlgeschlagen",
+    offline_cancelled: "Download abgebrochen",
+    offline_storage_estimate: "Speichernutzung: {used} von {quota} (Schätzung)",
+    offline_storage_unknown: "Speichernutzung nicht verfügbar",
+    offline_persist: "Downloads behalten",
+    offline_storage_protected: "Der Browser hat dauerhaften Speicher gewährt.",
+    offline_storage_granted: "Dauerhafter Speicher wurde gewährt.",
+    offline_storage_denied: "Der Browser hat keinen dauerhaften Speicher gewährt.",
+    offline_storage_note: "Auf iPhone und iPad kann Safari Websitedaten bei knappem Speicherplatz entfernen. Offline-Downloads können verschwinden; halte freien Speicherplatz bereit und verbinde dich erneut, falls ein Titel fehlt.",
   },
   en: {
     subtitle: "Frequencies & tone generator",
@@ -278,6 +327,22 @@ const I18N_APP = {
     live_note: "The song plays live tuned to the target frequency (classic method: ~1.8% slower, natural sound without time-stretching).",
     install_hint: "Tip: browser menu → \"Add to Home screen\" to use it like a real app (works offline too).",
     app432: "",
+    offline_title: "Offline downloads",
+    offline_summary: "Choose individual tracks · streaming stays the default",
+    offline_download: "Download",
+    offline_cancel: "Cancel",
+    offline_remove: "Remove",
+    offline_available: "Available offline",
+    offline_downloading: "Downloading",
+    offline_failed: "Download failed",
+    offline_cancelled: "Download cancelled",
+    offline_storage_estimate: "Storage used: {used} of {quota} (estimate)",
+    offline_storage_unknown: "Storage estimate unavailable",
+    offline_persist: "Keep downloads",
+    offline_storage_protected: "The browser has granted persistent storage.",
+    offline_storage_granted: "Persistent storage granted.",
+    offline_storage_denied: "The browser did not grant persistent storage.",
+    offline_storage_note: "On iPhone and iPad, Safari may remove site data when storage is low. Offline downloads can disappear; keep free space and reconnect if a track is missing.",
   },
 };
 
@@ -328,6 +393,7 @@ startApp({
   trackUrl: f => 'tracks/' + encodeURIComponent(f) + '.mp3',
   stopSongPlayer,
 });
+PwaOffline.mountOfflineControls({ root: document, tones: TONES, translate: T, getLanguage: () => LANG });
 
 // ---------- PWA offline ----------
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
