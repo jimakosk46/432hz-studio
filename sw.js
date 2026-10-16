@@ -1,12 +1,12 @@
 // 432Hz Studio PWA — app shell and user-selected offline tracks.
-const APP_CACHE = 'hz432-app-v54';
+const APP_CACHE = 'hz432-app-v55';
 const APP_CACHE_PREFIX = 'hz432-app-v';
 const LEGACY_APP_CACHE = /^hz432-v\d+$/;
 const TRACK_CACHE = 'hz432-tracks-v1';
 // Tone-card covers are never precached: each is cached the first time it is shown.
 const COVER_CACHE = 'hz432-covers-v1';
 const APP_ASSETS = [
-  './', './index.html', './app.css', './app.js', './offline.js',
+  './', './index.html', './app.css', './app.js', './offline.js', './tuning_lab.js',
   './manifest.webmanifest', './icon192.png', './icon512.png',
 ];
 
@@ -109,7 +109,7 @@ self.addEventListener('fetch', event => {
   }
 
   const isAppAsset = request.mode === 'navigate'
-    || /\/(?:index\.html|app\.js|app\.css|offline\.js)$/.test(url.pathname);
+    || /\/(?:index\.html|app\.js|app\.css|offline\.js|tuning_lab\.js)$/.test(url.pathname);
   event.respondWith(caches.open(APP_CACHE).then(async cache => {
     if (isAppAsset) {
       try {
