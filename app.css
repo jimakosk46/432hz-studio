@@ -89,6 +89,7 @@ input[type=number] {
 .btn:hover { filter: brightness(1.1); }
 .btn:disabled { filter: grayscale(.8); cursor: wait; }
 /* --- Tone generator --- */
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   .freq-display { text-align: center; margin: 6px 0 14px; }
 .freq-display input {
     width: 200px; font-size: 2.2rem; text-align: center; font-weight: 600;
@@ -107,7 +108,8 @@ select {
 .btn.stop { background: linear-gradient(135deg, #ff7ba1, #d8447c); color: #33051a; }
 .btn.ghost { background: var(--panel2); color: var(--text); border: 1px solid var(--border); }
 /* --- healing tones list --- */
-  .tones { display: grid; gap: 12px; }
+  .tones { display: grid; gap: 12px; min-width:0; }
+.tones > *, .tonecard, .tonecard .content { min-width:0; }
 .tone-copy-note {
   color: var(--muted);
   font-size: .82rem;
@@ -135,9 +137,11 @@ select {
 .tonecard .cover.missing { visibility: hidden; }
 .tonecard:has(.mus.on) .cover { filter: saturate(.9) brightness(.95); }
 .tonecard .info { flex: 1; }
+.tonecard .info { min-width: 0; overflow-wrap: anywhere; }
 .tonecard .info b { display: block; margin-bottom: 3px; }
 .tonecard .info small { color: var(--muted); line-height: 1.45; }
 .tonecard .acts { display: flex; flex-direction: column; gap: 8px; min-width: 132px; }
+#tonelist { width: 100%; min-width: 0; }
 .tonecard .pl, .tonecard .mus, .tonecard .yt {
     padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
     cursor: pointer; font-size: .88rem; white-space: nowrap; text-align: center;
@@ -160,7 +164,7 @@ select {
     .tonecard .cover { width: 72px; height: 72px; }
     .tonecard .freq { min-width: 72px; }
     .tonecard .acts { flex-direction: row; width: 100%; min-width: 0; }
-    .tonecard .acts > * { flex: 1; }
+    .tonecard .acts > * { flex: 1; min-width: 0; overflow-wrap: anywhere; }
   }
 
 /* --- αγαπημένα & μπάρα ενεργειών --- */
@@ -253,7 +257,7 @@ select {
     font-size: .9rem; line-height: 1.35;
   }
 .course b { display: block; color: var(--text); font-size: 1.05rem; }
-.course small { display: block; font-size: .7rem; opacity: .75; }
+.course small { display: block; font-size: .7rem; }
 .course.oct { border-color: #6b5527; }
 .course.on { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(255,199,107,.25); }
 

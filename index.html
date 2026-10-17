@@ -82,17 +82,18 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
   <div id="toast" class="hidden"></div>
   <!-- /shared:top -->
 
+  <main id="main-content">
   <!-- ===================== LIVE 432Hz PLAYER ===================== -->
   <div class="card" id="panel-conv">
-    <div id="drop">
-      <span class="big">🎧</span>
-      <span data-i18n="drop_text"></span>
-      <div style="font-size:.8rem;margin-top:6px">MP3, WAV, FLAC, M4A, OGG…</div>
-      <div id="fileName"></div>
+    <div id="drop" role="button" tabindex="0" aria-controls="file" aria-labelledby="dropLabel dropFormats">
+      <span class="big" aria-hidden="true">🎧</span>
+      <span id="dropLabel" data-i18n="drop_text"></span>
+      <div id="dropFormats" style="font-size:.8rem;margin-top:6px">MP3, WAV, FLAC, M4A, OGG…</div>
+      <div id="fileName" aria-live="polite" aria-hidden="true"></div>
     </div>
     <input type="file" id="file" accept="audio/*" style="display:none">
 
-    <label class="small" data-i18n="target_label"></label>
+    <label class="small" for="target" data-i18n="target_label"></label>
     <div class="freq-row">
       <input type="number" id="target" value="432" min="300" max="500" step="0.1">
       <button class="chip sel" data-f="432">432 Hz</button>
@@ -108,8 +109,10 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
   <!-- ===================== TONE GENERATOR ===================== -->
   <div class="card hidden" id="panel-tone">
     <div class="freq-display">
+      <label class="visually-hidden" for="tfreq" data-i18n="chl_freq"></label>
       <input type="number" id="tfreq" value="432" min="1" max="20000" step="0.1"><span class="hz">Hz</span>
     </div>
+    <label class="visually-hidden" for="tslider" data-i18n="chl_freq"></label>
     <input type="range" id="tslider" min="0" max="1000" value="614">
 
     <div class="presets">
@@ -127,7 +130,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
 
     <div class="row2" style="margin-top:18px">
       <div>
-        <label class="small" data-i18n="waveform"></label>
+        <label class="small" for="wave" data-i18n="waveform"></label>
         <select id="wave">
           <option value="sine" data-i18n="wave_sine"></option>
           <option value="triangle" data-i18n="wave_triangle"></option>
@@ -136,7 +139,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
         </select>
       </div>
       <div>
-        <label class="small" data-i18n="volume"></label>
+        <label class="small" for="vol" data-i18n="volume"></label>
         <input type="range" id="vol" min="0" max="100" value="40" style="margin-top:12px">
       </div>
     </div>
@@ -146,7 +149,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <button class="btn stop hidden" id="stop" data-i18n="stop"></button>
     </div>
 
-    <label class="small" data-i18n="wav_label"></label>
+    <label class="small" for="wavdur" data-i18n="wav_label"></label>
     <div class="freq-row">
       <input type="number" id="wavdur" value="60" min="1" max="600">
       <button class="btn ghost" id="wavdl" style="flex:1;margin-top:0;width:auto" data-i18n="wav_btn"></button>
@@ -200,15 +203,16 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     </div>
     <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
     <div class="small" id="chlRotateHint" style="text-align:center;margin-top:4px;opacity:.65"></div>
-    <label class="small" data-i18n="chl_freq"></label>
+    <label class="small" for="chlFreq" data-i18n="chl_freq"></label>
     <div class="freq-row">
       <input type="number" id="chlFreq" value="432" min="200" max="1000" step="0.1">
       <button class="chip sel" data-f="432">432 Hz</button>
       <button class="chip" data-f="440">440 Hz</button>
       <button class="chip" data-f="528">528 Hz</button>
     </div>
+    <label class="visually-hidden" for="chlSlider" data-i18n="chl_freq"></label>
     <input type="range" id="chlSlider" min="200" max="1000" step="0.5" value="432" style="margin-top:10px">
-    <label class="small"><span id="chlPlateLabel" data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
+    <label class="small" for="chlPlate"><span id="chlPlateLabel" data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
     <input type="range" id="chlPlate" min="90" max="110" step="0.1" value="100">
     <div class="actbar">
       <button class="chip" data-act="fav" data-tab="chladni" data-i18n="act_fav"></button>
@@ -225,7 +229,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <canvas id="cry" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
     </div>
     <div id="cryTitle" style="text-align:center;margin-top:10px;color:var(--accent2);font-size:.95rem;font-weight:600"></div>
-    <label class="small" data-i18n="chl_freq"></label>
+    <label class="small" for="cryFreq" data-i18n="chl_freq"></label>
     <div class="freq-row">
       <input type="number" id="cryFreq" value="432" min="20" max="2000" step="0.1">
       <button class="chip sel" data-f="432">432</button>
@@ -248,7 +252,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <label class="small" data-i18n="tuner_instrument"></label>
     <div class="presets" id="tunerInstruments"></div>
 
-    <label class="small" data-i18n="tuner_ref"></label>
+    <label class="small" for="tunerA4" data-i18n="tuner_ref"></label>
     <div class="freq-row">
       <input type="number" id="tunerA4" value="432" min="390" max="460" step="0.1">
       <button class="chip sel" data-a="432">432 Hz</button>
@@ -280,6 +284,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     </div>
   </div>
   <!-- /shared:panels -->
+  </main>
 
   <footer>432Hz Studio · <span data-i18n="credit"></span><br><span data-i18n="install_hint"></span></footer>
 </div>
@@ -387,6 +392,7 @@ function applyLiveRate() {
 // σταματά το τραγούδι όταν ξεκινά τόνος/θεραπευτικό κομμάτι (ένα πράγμα τη φορά)
 function stopSongPlayer() { if (!liveAudio.paused) liveAudio.pause(); }
 drop.onclick = () => fileInp.click();
+drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInp.click(); } };
 fileInp.onchange = () => {
   const f = fileInp.files[0];
   if (!f) return;

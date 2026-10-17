@@ -240,7 +240,7 @@
           <article class="tl-card tl-custom"><div class="tl-card-head"><span class="tl-step">+</span><h3 data-copy="addInstrument"></h3></div><div class="tl-custom-form"><label><span data-copy="customName"></span><input class="tl-field-input" data-el="customName" maxlength="32"></label><label><span data-copy="strings"></span><input class="tl-field-input" data-el="customStrings" placeholder="82.4, 110, 147, 196, 247, 330"></label></div><button class="tl-btn tl-secondary" type="button" data-action="saveInstrument"></button><button class="tl-remove" type="button" data-action="removeInstrument"></button></article>
           <article class="tl-card tl-summary" data-el="summary" hidden><div class="tl-card-head"><span class="tl-step">✓</span><h3 data-copy="summary"></h3></div><div class="tl-summary-items"><div><span data-copy="elapsed"></span><strong data-el="elapsed">—</strong></div><div><span data-copy="completed"></span><strong data-el="completed">—</strong></div></div></article>
         </div>`;
-      document.querySelector('.wrap').appendChild(panel); this.panel = panel;
+      (document.querySelector('#main-content') || document.querySelector('.wrap')).appendChild(panel); this.panel = panel;
       this.panel.querySelector('[data-el="file"]').setAttribute('aria-label', this.text('pick'));
     },
     el(name) { return this.panel.querySelector(`[data-el="${name}"]`); },
