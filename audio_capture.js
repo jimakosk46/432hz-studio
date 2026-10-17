@@ -14,8 +14,7 @@
         pendingOwner = owner;
         try {
           const acquired = await mediaDevices.getUserMedia(constraints);
-          if (pendingOwner !== owner || token !== generation) {
-            if (pendingOwner === owner) pendingOwner = null;
+          if (token !== generation) {
             acquired.getTracks().forEach(track => track.stop());
             const error = new Error('microphone-request-cancelled');
             error.name = 'AbortError';
@@ -26,12 +25,12 @@
           stream = acquired;
           return acquired;
         } catch (error) {
-          if (pendingOwner === owner) pendingOwner = null;
+          if (token === generation) pendingOwner = null;
           throw error;
         }
       },
       release(owner) {
-        if (pendingOwner === owner) generation++;
+        if (pendingOwner === owner) { generation++; pendingOwner = null; }
         if (activeOwner !== owner) return false;
         const current = stream;
         activeOwner = null;

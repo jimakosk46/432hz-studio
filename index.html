@@ -106,7 +106,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <button class="chip" id="retuneExport" type="button" data-i18n="retune_export" disabled></button>
       <button class="chip hidden" id="retuneCancel" type="button" data-i18n="retune_cancel"></button>
     </div>
-    <progress id="retuneProgress" class="hidden" max="1" value="0" aria-label="WAV conversion progress"></progress>
+    <progress id="retuneProgress" class="hidden" max="1" value="0" aria-labelledby="retuneExport"></progress>
     <div id="retuneStatus" class="small" role="status" aria-live="polite"></div>
     <div class="small" data-i18n="retune_memory" style="margin-top:8px"></div>
     <div class="note" data-i18n="live_note"></div>
@@ -192,34 +192,33 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <div class="actbar">
       <button class="chip" data-act="share" data-i18n="act_share"></button>
     </div>
+    <details class="history-facts" id="historyFacts">
+      <summary data-i18n="history_title"></summary>
+      <div class="history-body">
+        <p data-i18n="history_intro"></p>
+        <h3 data-i18n="history_section_verdi"></h3>
+        <p data-i18n="history_verdi"></p>
+        <h3 data-i18n="history_section_1939"></h3>
+        <p data-i18n="history_1939"></p>
+        <p data-i18n="history_rrg"></p>
+        <h3 data-i18n="history_section_iso"></h3>
+        <p data-i18n="history_iso"></p>
+        <p data-i18n="history_claims"></p>
+        <h3 data-i18n="history_sources"></h3>
+        <ul>
+          <li><a href="https://education.persee.fr/doc/baip_1254-0714_1860_num_11_132_9814" target="_blank" rel="noopener noreferrer" data-i18n="history_source_france"></a></li>
+          <li><a href="https://doi.org/10.1017/S1479409824000375" target="_blank" rel="noopener noreferrer" data-i18n="history_source_verdi"></a></li>
+          <li><a href="https://doi.org/10.1038/143905a0" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nature"></a></li>
+          <li><a href="https://www.worldradiohistory.com/INTERNATIONAL/Funkschau/1939/Funkschau-1939-29.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_funkschau"></a></li>
+          <li><a href="https://doi.org/10.7208/chicago/9780226823270.003.0005" target="_blank" rel="noopener noreferrer" data-i18n="history_source_gribenski"></a></li>
+          <li><a href="https://svs.gsfc.nasa.gov/10891/" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nasa"></a></li>
+          <li><a href="https://cdn.standards.iteh.ai/samples/51/8fc4068ddfcc4f628708d05d0aafd5b2/ISO-R-16-1955.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_r16"></a></li>
+          <li><a href="https://preview.sist.si/sist-preview/3601/3e7b175fdcae4a2aa09f9d0db4ac099d/ISO-16-1975.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16_pdf"></a></li>
+          <li><a href="https://www.iso.org/standard/3601.html" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16"></a></li>
+        </ul>
+      </div>
+    </details>
   </div>
-
-  <details class="card history-facts" id="historyFacts">
-    <summary data-i18n="history_title"></summary>
-    <div class="history-body">
-      <p data-i18n="history_intro"></p>
-      <h3 data-i18n="history_section_verdi"></h3>
-      <p data-i18n="history_verdi"></p>
-      <h3 data-i18n="history_section_1939"></h3>
-      <p data-i18n="history_1939"></p>
-      <p data-i18n="history_rrg"></p>
-      <h3 data-i18n="history_section_iso"></h3>
-      <p data-i18n="history_iso"></p>
-      <p data-i18n="history_claims"></p>
-      <h3 data-i18n="history_sources"></h3>
-      <ul>
-        <li><a href="https://education.persee.fr/doc/baip_1254-0714_1860_num_11_132_9814" target="_blank" rel="noopener noreferrer" data-i18n="history_source_france"></a></li>
-        <li><a href="https://doi.org/10.1017/S1479409824000375" target="_blank" rel="noopener noreferrer" data-i18n="history_source_verdi"></a></li>
-        <li><a href="https://doi.org/10.1038/143905a0" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nature"></a></li>
-        <li><a href="https://www.worldradiohistory.com/INTERNATIONAL/Funkschau/1939/Funkschau-1939-29.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_funkschau"></a></li>
-        <li><a href="https://doi.org/10.7208/chicago/9780226823270.003.0005" target="_blank" rel="noopener noreferrer" data-i18n="history_source_gribenski"></a></li>
-        <li><a href="https://svs.gsfc.nasa.gov/10891/" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nasa"></a></li>
-        <li><a href="https://cdn.standards.iteh.ai/samples/51/8fc4068ddfcc4f628708d05d0aafd5b2/ISO-R-16-1955.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_r16"></a></li>
-        <li><a href="https://preview.sist.si/sist-preview/3601/3e7b175fdcae4a2aa09f9d0db4ac099d/ISO-16-1975.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16_pdf"></a></li>
-        <li><a href="https://www.iso.org/standard/3601.html" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16"></a></li>
-      </ul>
-    </div>
-  </details>
 
   <!-- ===================== CHLADNI PATTERNS ===================== -->
   <div class="card hidden" id="panel-chladni">

@@ -79,7 +79,9 @@
         }, RENDER_INTERVAL_MS);
         this.onState('listening', 0);
       } catch (error) {
+        const cancelled = generation !== this.generation;
         this.stop();
+        if (cancelled) return;
         this.onState('error', error.message);
         throw error;
       }

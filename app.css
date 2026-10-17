@@ -142,7 +142,7 @@ select {
 .tonecard .info small { color: var(--muted); line-height: 1.45; }
 .tonecard .acts { display: flex; flex-direction: column; gap: 8px; min-width: 132px; }
 #tonelist { width: 100%; min-width: 0; }
-.history-facts { margin-top: 18px; }
+.history-facts { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
 .history-facts > summary { cursor: pointer; color: var(--accent); font-weight: 650; font-size: 1.05rem; }
 .history-body { margin-top: 14px; max-width: 78ch; line-height: 1.65; }
 .history-body p { color: var(--muted); margin: 0 0 14px; }
