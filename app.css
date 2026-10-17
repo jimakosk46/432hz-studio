@@ -142,6 +142,14 @@ select {
 .tonecard .info small { color: var(--muted); line-height: 1.45; }
 .tonecard .acts { display: flex; flex-direction: column; gap: 8px; min-width: 132px; }
 #tonelist { width: 100%; min-width: 0; }
+.history-facts { margin-top: 18px; }
+.history-facts > summary { cursor: pointer; color: var(--accent); font-weight: 650; font-size: 1.05rem; }
+.history-body { margin-top: 14px; max-width: 78ch; line-height: 1.65; }
+.history-body p { color: var(--muted); margin: 0 0 14px; }
+.history-body h3 { color: var(--text); font-size: .96rem; margin: 18px 0 6px; }
+.history-body ul { padding-left: 22px; display: grid; gap: 7px; }
+.history-body a { color: var(--accent2); text-underline-offset: 3px; overflow-wrap: anywhere; }
+.history-body a:focus-visible, .history-facts > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 .tonecard .pl, .tonecard .mus, .tonecard .yt {
     padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
     cursor: pointer; font-size: .88rem; white-space: nowrap; text-align: center;
