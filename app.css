@@ -225,6 +225,26 @@ select {
   .offline-progress { grid-row: 3; grid-column: 1 / -1; }
 }
 
+/* --- πρόσφατα & ρυθμίσεις (κλειστό από προεπιλογή: η κεφαλίδα μένει ήσυχη) --- */
+.tools-box { margin: -6px 0 16px; color: var(--muted); font-size: .8rem; }
+.tools-box > summary {
+  width: max-content; max-width: 100%; margin: 0 auto; padding: 4px 10px; border-radius: 999px;
+  cursor: pointer; color: var(--muted); font-size: .78rem; opacity: .85;
+}
+.tools-box > summary:hover { opacity: 1; color: var(--text); }
+.tools-body {
+  margin-top: 8px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel);
+}
+.tools-label { color: var(--muted); font-size: .76rem; margin-bottom: 7px; }
+.recent-list { display: flex; flex-wrap: wrap; gap: 7px; }
+.recent-item { font-size: .76rem; padding: 6px 11px; }
+.tools-empty, .tools-hint { color: var(--muted); font-size: .74rem; line-height: 1.45; }
+.tools-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.tools-actions .chip { font-size: .74rem; padding: 6px 11px; }
+.tools-hint { margin-top: 8px; opacity: .8; }
+.tools-status { min-height: 1.2em; margin-top: 6px; color: var(--accent2); font-size: .76rem; }
+
 /* --- κουρδιστήρι --- */
 .courses { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
 .course {
@@ -373,4 +393,17 @@ select {
   .tl-ab-controls { grid-template-columns:1fr 1fr; }
   .tl-ab-controls [data-action="stop"] { grid-column:1 / -1; }
   .tl-string-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+/* --- προσβασιμότητα: μόνο για πληκτρολόγιο / όσους το ζητούν, η εμφάνιση με ποντίκι μένει ίδια --- */
+/* Τα πεδία κειμένου/αριθμών ΔΕΝ μπαίνουν εδώ: σε αυτά το :focus-visible ισχύει και με κλικ ποντικιού. */
+button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-visible,
+input[type=range]:focus-visible, input[type=radio]:focus-visible, input[type=checkbox]:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
 }
