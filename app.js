@@ -657,6 +657,129 @@ self.onmessage = e => { const d = wavPcm(...e.data); self.postMessage(d, [d.buff
   });
 }
 
+// retune-export:begin
+window.RetuneExport = (() => {
+  const MOBILE_BUDGET = 64 * 1024 * 1024;
+  const CHUNK_FRAMES = 16384;
+  const BYTES_PER_WAV_SAMPLE = 2;
+
+  function outputFrameCount(inputFrames, sampleRate, targetHz) {
+    return Math.round(inputFrames * 440 / targetHz);
+  }
+  function estimatePeakBytes(fileBytes, durationSeconds, sampleRate = 48000, channels = 2, targetHz = 432) {
+    const inputFrames = Math.ceil(durationSeconds * sampleRate);
+    const outputFrames = outputFrameCount(inputFrames, sampleRate, targetHz);
+    const decoded = inputFrames * channels * 4;
+    const wav = outputFrames * channels * BYTES_PER_WAV_SAMPLE;
+    return fileBytes + decoded + wav * 2 + 8 * 1024 * 1024;
+  }
+  function memoryBudgetBytes(deviceMemoryGb) {
+    if (!Number.isFinite(deviceMemoryGb) || deviceMemoryGb <= 0) return MOBILE_BUDGET;
+    return Math.max(MOBILE_BUDGET, Math.min(256 * 1024 * 1024, deviceMemoryGb * 64 * 1024 * 1024));
+  }
+  function abortError() {
+    const error = new Error('The operation was aborted.');
+    error.name = 'AbortError';
+    return error;
+  }
+  function throwIfAborted(signal) { if (signal && signal.aborted) throw abortError(); }
+  function wavHeader(frameCount, channelCount, sampleRate) {
+    const dataBytes = frameCount * channelCount * BYTES_PER_WAV_SAMPLE;
+    if (dataBytes > 0xffffffff - 36) throw new RangeError('WAV exceeds the classic RIFF 4 GiB limit.');
+    const header = new ArrayBuffer(44), view = new DataView(header);
+    const str = (at, value) => { for (let i = 0; i < value.length; i++) view.setUint8(at + i, value.charCodeAt(i)); };
+    str(0, 'RIFF'); view.setUint32(4, dataBytes + 36, true); str(8, 'WAVE');
+    str(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, channelCount, true); view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * channelCount * BYTES_PER_WAV_SAMPLE, true);
+    view.setUint16(32, channelCount * BYTES_PER_WAV_SAMPLE, true); view.setUint16(34, 16, true);
+    str(36, 'data'); view.setUint32(40, dataBytes, true);
+    return header;
+  }
+  async function resampleToWav(audioBuffer, targetHz, { signal, onProgress = () => {}, chunkFrames = CHUNK_FRAMES } = {}) {
+    if (!Number.isFinite(targetHz) || targetHz < 300 || targetHz > 500) throw new RangeError('Target pitch must be between 300 and 500 Hz.');
+    const inputFrames = audioBuffer.length, sampleRate = audioBuffer.sampleRate;
+    const channelCount = audioBuffer.numberOfChannels;
+    const outputFrames = outputFrameCount(inputFrames, sampleRate, targetHz);
+    const dataBytes = outputFrames * channelCount * BYTES_PER_WAV_SAMPLE;
+    if (dataBytes > 0xffffffff - 36) throw new RangeError('WAV exceeds the classic RIFF 4 GiB limit.');
+    const channels = Array.from({ length: channelCount }, (_, i) => audioBuffer.getChannelData(i));
+    const parts = [wavHeader(outputFrames, channelCount, sampleRate)];
+    const step = targetHz / 440;
+    for (let outStart = 0; outStart < outputFrames; outStart += chunkFrames) {
+      throwIfAborted(signal);
+      const count = Math.min(chunkFrames, outputFrames - outStart);
+      const bytes = new Uint8Array(count * channelCount * BYTES_PER_WAV_SAMPLE);
+      const view = new DataView(bytes.buffer);
+      for (let frame = 0; frame < count; frame++) {
+        const src = Math.min(inputFrames - 1, (outStart + frame) * step);
+        const lo = Math.floor(src), hi = Math.min(inputFrames - 1, lo + 1), mix = src - lo;
+        for (let ch = 0; ch < channelCount; ch++) {
+          const sample = channels[ch][lo] * (1 - mix) + channels[ch][hi] * mix;
+          const pcm = Math.max(-32768, Math.min(32767, Math.round(sample * 32767)));
+          view.setInt16((frame * channelCount + ch) * 2, pcm, true);
+        }
+      }
+      parts.push(bytes);
+      onProgress(0.1 + 0.9 * (outStart + count) / outputFrames);
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    throwIfAborted(signal);
+    return new Blob(parts, { type: 'audio/wav' });
+  }
+  async function fileDuration(file, signal) {
+    const url = URL.createObjectURL(file), probe = document.createElement('audio');
+    try {
+      return await new Promise((resolve, reject) => {
+        const clean = () => { probe.removeAttribute('src'); probe.load(); URL.revokeObjectURL(url); };
+        const abort = () => { clean(); reject(abortError()); };
+        probe.onloadedmetadata = () => {
+          const duration = probe.duration;
+          clean();
+          if (signal) signal.removeEventListener('abort', abort);
+          resolve(duration);
+        };
+        probe.onerror = () => { clean(); reject(new Error('metadata-unavailable')); };
+        if (signal) signal.addEventListener('abort', abort, { once: true });
+        probe.src = url;
+      });
+    } catch (error) { URL.revokeObjectURL(url); throw error; }
+  }
+  async function decodeFileToWav(file, targetHz, { signal, onProgress = () => {}, deviceMemoryGb = navigator.deviceMemory } = {}) {
+    throwIfAborted(signal);
+    onProgress(0.02);
+    const duration = await fileDuration(file, signal);
+    if (!Number.isFinite(duration) || duration <= 0) throw new Error('duration-unavailable');
+    const budget = memoryBudgetBytes(deviceMemoryGb);
+    const estimated = estimatePeakBytes(file.size, duration, 48000, 2, targetHz);
+    if (estimated > budget) {
+      const error = new RangeError('estimated-memory-limit');
+      error.estimatedBytes = estimated;
+      throw error;
+    }
+    throwIfAborted(signal);
+    onProgress(0.08);
+    const AudioContextType = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextType) throw new Error('audio-context-unavailable');
+    const audioContext = new AudioContextType();
+    try {
+      const data = await file.arrayBuffer();
+      const decoded = await audioContext.decodeAudioData(data);
+      throwIfAborted(signal);
+      const actualEstimate = estimatePeakBytes(file.size, decoded.length / decoded.sampleRate,
+        decoded.sampleRate, decoded.numberOfChannels, targetHz);
+      if (actualEstimate > budget) {
+        const error = new RangeError('estimated-memory-limit');
+        error.estimatedBytes = actualEstimate;
+        throw error;
+      }
+      return await resampleToWav(decoded, targetHz, { signal, onProgress });
+    } finally { await audioContext.close(); }
+  }
+  return { outputFrameCount, estimatePeakBytes, memoryBudgetBytes, resampleToWav, decodeFileToWav };
+})();
+// retune-export:end
+
 // ---------- Chladni patterns ----------
 const chlCanvas = document.getElementById('chl');
 const chlDropCanvas = document.getElementById('chlDrop');
