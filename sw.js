@@ -1,5 +1,5 @@
 // 432Hz Studio PWA — app shell and user-selected offline tracks.
-const APP_CACHE = 'hz432-app-v57';
+const APP_CACHE = 'hz432-app-v58';
 const APP_CACHE_PREFIX = 'hz432-app-v';
 const LEGACY_APP_CACHE = /^hz432-v\d+$/;
 const TRACK_CACHE = 'hz432-tracks-v1';
@@ -7,7 +7,7 @@ const TRACK_CACHE = 'hz432-tracks-v1';
 const COVER_CACHE = 'hz432-covers-v1';
 const APP_ASSETS = [
   './', './index.html', './app.css', './app.js', './offline.js', './tuning_lab.js', './settings_transfer.js',
-  './manifest.webmanifest', './icon192.png', './icon512.png',
+  './manifest.webmanifest', './icon192.png', './icon512.png', './audio_capture.js', './chladni_live.js',
 ];
 
 self.addEventListener('install', event => {

@@ -40,6 +40,30 @@ const SHARED_I18N = {
     "tab_chl": "Σχήματα ήχου",
     "chl_note": "Προσομοίωση πλάκας Chladni: η «άμμος» μαζεύεται εκεί όπου η πλάκα δεν δονείται. Καθαρό, συμμετρικό σχήμα βγαίνει όταν η συχνότητα πετυχαίνει συντονισμό της πλάκας. Δοκίμασε 432 και 440 — και μετά άλλαξε λίγο το «μέγεθος πλάκας»: κάθε συχνότητα έχει την πλάκα που τη βγάζει πανέμορφη.",
     "chl_freq": "Συχνότητα (Hz)",
+    "chl_mic_start": "🎙 Ζωντανός ήχος", "chl_mic_stop": "■ Κλείσιμο μικροφώνου",
+    "chl_mic_request": "Ζητείται άδεια μικροφώνου…", "chl_mic_listening": "Ακούω · προσομοίωση · φόρτος επεξεργασίας {pct}%",
+    "chl_mic_stopped": "Το μικρόφωνο είναι κλειστό.", "chl_mic_error": "Δεν ήταν δυνατή η έναρξη μικροφώνου.",
+    "chl_simulation": "Προσομοίωση από ήχο μικροφώνου· δεν μετρά πραγματική πλάκα.",
+    "history_title": "432 Hz: ιστορία και στοιχεία",
+    "history_intro": "Το Λα=432 Hz είναι μία εναλλακτική συχνότητα αναφοράς. Σε σύγκριση με τα 440 Hz, μετατοπίζει ομοιόμορφα τη μουσική περίπου 31,77 cents χαμηλότερα· τα διαστήματα μένουν ίδια.",
+    "history_section_verdi": "Από το γαλλικό diapason normal έως τον Βέρντι",
+    "history_verdi": "Η Γαλλία θέσπισε κοινό diapason το 1859· ιστορική έρευνα το προσδιορίζει στα 435 Hz στους 15°C. Ο Βέρντι υποστήριξε χαμηλότερο, σταθερό κούρδισμα και πρόταση A=432 το 1881. Η σημερινή ετικέτα «κούρδισμα Βέρντι» απλοποιεί αυτή την ιστορία και δεν αποδεικνύει ότι όλα τα έργα του γράφτηκαν στα 432 Hz.",
+    "history_section_1939": "Η διεθνής σύσταση του 1939",
+    "history_1939": "Στη διάσκεψη του Λονδίνου τον Μάιο 1939 προτάθηκε το Λα των 440 κύκλων ανά δευτερόλεπτο. Η σύσταση προηγήθηκε κατά δεκαετίες του ISO 16. Σύγχρονη αναφορά αποδίδει την οργάνωση στο British Standards Institution, υπό την αιγίδα της ISA, και την άμεση ώθηση στις ανάγκες της International Broadcasting Union.",
+    "history_rrg": "Γερμανοί τεχνικοί συμμετείχαν στην προετοιμασία: σύγχρονο γερμανικό δημοσίευμα καταγράφει πρόταση της Γερμανικής Ακουστικής Επιτροπής, ενώ μεταγενέστερη αρχειακή μελέτη αναφέρει συμμετοχή εκπροσώπου της Reichs-Rundfunk-Gesellschaft. Οι πηγές που εξετάστηκαν δεν τεκμηριώνουν ότι η RRG μόνη της ζήτησε τη διάσκεψη.",
+    "history_section_iso": "ISO/R 16 (1955) και ISO 16 (1975)",
+    "history_iso": "Το ISO/R 16:1955 ήταν Σύσταση ISO, αποδεκτή από το Συμβούλιο του ISO στη Στοκχόλμη τον Ιούνιο 1955 και εκδοθείσα πρώτη φορά τον Νοέμβριο. Το ISO 16:1975 την αντικατέστησε με τεχνικά ταυτόσημο περιεχόμενο. Άρα η σύσταση του 1939 και το πρότυπο ISO του 1975 είναι διαφορετικά ιστορικά βήματα.",
+    "history_claims": "Τα 432 Hz δεν είναι η συχνότητα συντονισμού Schumann: εκείνη είναι ηλεκτρομαγνητικό φαινόμενο γύρω στα 7,8 Hz. Η αριθμητική ομοιότητα δεν αποδεικνύει επίδραση στη μουσική ή στην υγεία. Δεν υπάρχουν ισχυρές, επαναλαμβανόμενες αποδείξεις για ειδικά θεραπευτικά οφέλη των 432 Hz.",
+    "history_sources": "Πηγές",
+    "history_source_france": "Γαλλικό υπουργικό δελτίο: διάταγμα diapason, 1859",
+    "history_source_verdi": "Ellen Lockhart, αρχειακή μελέτη για τον Βέρντι και το A=432 (2025)",
+    "history_source_nature": "G. W. C. Kaye, σύγχρονη αναφορά της διάσκεψης (Nature, 1939)",
+    "history_source_funkschau": "Funkschau, σύγχρονη γερμανική πρόταση (1939)",
+    "history_source_gribenski": "Fanny Gribenski, αρχειακή ιστορία του διεθνούς κουρδίσματος (2023)",
+    "history_source_nasa": "NASA Goddard: εξήγηση του συντονισμού Schumann",
+    "history_source_r16": "ISO/R 16:1955, σύσταση (ψηφιακό αντίγραφο από iTeh)",
+    "history_source_iso16_pdf": "ISO 16:1975, ψηφιακό κείμενο (SIST)",
+    "history_source_iso16": "ISO 16:1975, επίσημη καταχώριση ISO",
     "chl_plate": "Μέγεθος πλάκας",
     "chl_on": "✨ Συντονισμός στα {f}Hz — καθαρό, συμμετρικό σχήμα!",
     "chl_off": "Εκτός συντονισμού — θολό σχήμα. Κοντινότερος συντονισμός: {f}Hz",
@@ -130,6 +154,30 @@ const SHARED_I18N = {
     "tab_chl": "Klangmuster",
     "chl_note": "Chladni-Platten-Simulation: Der „Sand\" sammelt sich dort, wo die Platte nicht schwingt. Ein klares, symmetrisches Muster entsteht, wenn die Frequenz eine Resonanz der Platte trifft. Probiere 432 und 440 — und ändere dann leicht die Plattengröße: Jede Frequenz hat eine Platte, auf der sie wunderschön aussieht.",
     "chl_freq": "Frequenz (Hz)",
+    "chl_mic_start": "🎙 Live-Audio", "chl_mic_stop": "■ Mikrofon ausschalten",
+    "chl_mic_request": "Mikrofonfreigabe wird angefragt…", "chl_mic_listening": "Hört zu · Simulation · Verarbeitungsaufwand {pct}%",
+    "chl_mic_stopped": "Das Mikrofon ist ausgeschaltet.", "chl_mic_error": "Das Mikrofon konnte nicht gestartet werden.",
+    "chl_simulation": "Simulation mit Mikrofonton; misst keine echte Platte.",
+    "history_title": "432 Hz: Geschichte und Fakten",
+    "history_intro": "A=432 Hz ist eine alternative Referenzfrequenz. Gegenüber 440 Hz verschiebt sie die Musik gleichmäßig um etwa 31,77 Cent nach unten; die Intervalle bleiben gleich.",
+    "history_section_verdi": "Vom französischen diapason normal zu Verdi",
+    "history_verdi": "Frankreich führte 1859 einen einheitlichen diapason ein; historische Forschung ordnet ihn bei 15°C mit 435 Hz ein. Verdi setzte sich für eine niedrigere, stabile Stimmung ein und unterstützte 1881 den Vorschlag A=432. Die heutige Bezeichnung „Verdi-Stimmung“ vereinfacht die Geschichte und beweist nicht, dass alle seine Werke auf 432 Hz komponiert wurden.",
+    "history_section_1939": "Die internationale Empfehlung von 1939",
+    "history_1939": "Die Londoner Konferenz empfahl im Mai 1939 ein A von 440 Schwingungen pro Sekunde. Diese Empfehlung lag Jahrzehnte vor ISO 16. Ein zeitgenössischer Bericht nennt die British Standards Institution als Organisatorin unter der Schirmherrschaft der ISA; den unmittelbaren Anstoß gaben demnach Anforderungen der International Broadcasting Union.",
+    "history_rrg": "Deutsche Fachleute wirkten an den Vorbereitungen mit: Ein zeitgenössischer deutscher Bericht dokumentiert einen Vorschlag des Deutschen Akustischen Ausschusses; eine spätere Archivstudie nennt die Beteiligung eines Vertreters der Reichs-Rundfunk-Gesellschaft. Die geprüften Quellen belegen nicht, dass die RRG allein die Konferenz beantragte.",
+    "history_section_iso": "ISO/R 16 (1955) und ISO 16 (1975)",
+    "history_iso": "ISO/R 16:1955 war eine ISO-Empfehlung. Der ISO-Rat nahm sie im Juni 1955 bei seiner Sitzung in Stockholm an; die erste Ausgabe erschien im November. ISO 16:1975 ersetzte sie mit technisch identischem Inhalt. Die Empfehlung von 1939 und der ISO-Standard von 1975 sind daher getrennte historische Schritte.",
+    "history_claims": "432 Hz ist nicht die Schumann-Resonanz: Diese ist ein elektromagnetisches Phänomen um 7,8 Hz. Die Zahlennähe belegt keine Wirkung auf Musik oder Gesundheit. Starke, wiederholte Belege für besondere Heilwirkungen von 432 Hz liegen nicht vor.",
+    "history_sources": "Quellen",
+    "history_source_france": "Französisches Amtsblatt: Dekret zum diapason, 1859",
+    "history_source_verdi": "Ellen Lockhart, Archivstudie zu Verdi und A=432 (2025)",
+    "history_source_nature": "G. W. C. Kaye, zeitgenössischer Bericht der Konferenz (Nature, 1939)",
+    "history_source_funkschau": "Funkschau, zeitgenössischer deutscher Vorschlag (1939)",
+    "history_source_gribenski": "Fanny Gribenski, Archivgeschichte der internationalen Stimmung (2023)",
+    "history_source_nasa": "NASA Goddard: Erklärung der Schumann-Resonanz",
+    "history_source_r16": "ISO/R 16:1955, Empfehlung (Digitalisat von iTeh)",
+    "history_source_iso16_pdf": "ISO 16:1975, digitaler Text (SIST)",
+    "history_source_iso16": "ISO 16:1975, offizieller ISO-Eintrag",
     "chl_plate": "Plattengröße",
     "chl_on": "✨ Resonanz bei {f}Hz — klares, symmetrisches Muster!",
     "chl_off": "Außerhalb der Resonanz — verschwommenes Muster. Nächste Resonanz: {f}Hz",
@@ -220,6 +268,30 @@ const SHARED_I18N = {
     "tab_chl": "Sound patterns",
     "chl_note": "Chladni plate simulation: the \"sand\" gathers where the plate does not vibrate. A clear, symmetric pattern appears when the frequency hits a resonance of the plate. Try 432 and 440 — then slightly change the plate size: every frequency has a plate that makes it beautiful.",
     "chl_freq": "Frequency (Hz)",
+    "chl_mic_start": "🎙 Live audio", "chl_mic_stop": "■ Turn microphone off",
+    "chl_mic_request": "Requesting microphone permission…", "chl_mic_listening": "Listening · simulation · processing load {pct}%",
+    "chl_mic_stopped": "The microphone is off.", "chl_mic_error": "The microphone could not be started.",
+    "chl_simulation": "Microphone driven simulation; does not measure a real plate.",
+    "history_title": "432 Hz: history and facts",
+    "history_intro": "A=432 Hz is an alternative reference pitch. Compared with 440 Hz, it shifts the music uniformly about 31.77 cents lower; the intervals stay the same.",
+    "history_section_verdi": "From the French diapason normal to Verdi",
+    "history_verdi": "France established a uniform diapason in 1859; historical scholarship places it at 435 Hz at 15°C. Verdi argued for a lower, stable pitch and supported an A=432 proposal in 1881. The modern label “Verdi tuning” simplifies that history and does not prove that all his music was written at 432 Hz.",
+    "history_section_1939": "The 1939 international recommendation",
+    "history_1939": "The London conference in May 1939 recommended concert A at 440 cycles per second. This preceded ISO 16 by decades. A contemporary report names the British Standards Institution as organizer under ISA auspices and says the immediate impetus came from International Broadcasting Union requirements.",
+    "history_rrg": "German specialists took part in preparations: a contemporary German report records a proposal by the German Acoustical Committee, while later archival scholarship reports that a Reichs-Rundfunk-Gesellschaft representative joined preparatory discussions. The sources reviewed do not establish that the RRG alone requested the conference.",
+    "history_section_iso": "ISO/R 16 (1955) and ISO 16 (1975)",
+    "history_iso": "ISO/R 16:1955 was an ISO Recommendation, accepted by the ISO Council at its Stockholm meeting in June 1955 and first issued in November. ISO 16:1975 replaced it with technically identical content. The 1939 recommendation and the 1975 ISO standard are distinct historical steps.",
+    "history_claims": "432 Hz is not the Schumann resonance: that is an electromagnetic phenomenon around 7.8 Hz. The numerical resemblance does not establish an effect on music or health. Strong, replicated evidence for special healing benefits of 432 Hz is lacking.",
+    "history_sources": "Sources",
+    "history_source_france": "French government bulletin: diapason decree, 1859",
+    "history_source_verdi": "Ellen Lockhart, archival study of Verdi and A=432 (2025)",
+    "history_source_nature": "G. W. C. Kaye, contemporary report of the conference (Nature, 1939)",
+    "history_source_funkschau": "Funkschau, contemporary German proposal (1939)",
+    "history_source_gribenski": "Fanny Gribenski, archival history of international tuning (2023)",
+    "history_source_nasa": "NASA Goddard: Schumann resonance explainer",
+    "history_source_r16": "ISO/R 16:1955, Recommendation (iTeh digital copy)",
+    "history_source_iso16_pdf": "ISO 16:1975, digitized text (SIST)",
+    "history_source_iso16": "ISO 16:1975, official ISO entry",
     "chl_plate": "Plate size",
     "chl_on": "✨ Resonance at {f}Hz — clear symmetric pattern!",
     "chl_off": "Off resonance — blurred pattern. Nearest resonance: {f}Hz",
@@ -657,6 +729,129 @@ self.onmessage = e => { const d = wavPcm(...e.data); self.postMessage(d, [d.buff
   });
 }
 
+// retune-export:begin
+window.RetuneExport = (() => {
+  const MOBILE_BUDGET = 64 * 1024 * 1024;
+  const CHUNK_FRAMES = 16384;
+  const BYTES_PER_WAV_SAMPLE = 2;
+
+  function outputFrameCount(inputFrames, sampleRate, targetHz) {
+    return Math.round(inputFrames * 440 / targetHz);
+  }
+  function estimatePeakBytes(fileBytes, durationSeconds, sampleRate = 48000, channels = 2, targetHz = 432) {
+    const inputFrames = Math.ceil(durationSeconds * sampleRate);
+    const outputFrames = outputFrameCount(inputFrames, sampleRate, targetHz);
+    const decoded = inputFrames * channels * 4;
+    const wav = outputFrames * channels * BYTES_PER_WAV_SAMPLE;
+    return fileBytes + decoded + wav * 2 + 8 * 1024 * 1024;
+  }
+  function memoryBudgetBytes(deviceMemoryGb) {
+    if (!Number.isFinite(deviceMemoryGb) || deviceMemoryGb <= 0) return MOBILE_BUDGET;
+    return Math.max(MOBILE_BUDGET, Math.min(256 * 1024 * 1024, deviceMemoryGb * 64 * 1024 * 1024));
+  }
+  function abortError() {
+    const error = new Error('The operation was aborted.');
+    error.name = 'AbortError';
+    return error;
+  }
+  function throwIfAborted(signal) { if (signal && signal.aborted) throw abortError(); }
+  function wavHeader(frameCount, channelCount, sampleRate) {
+    const dataBytes = frameCount * channelCount * BYTES_PER_WAV_SAMPLE;
+    if (dataBytes > 0xffffffff - 36) throw new RangeError('WAV exceeds the classic RIFF 4 GiB limit.');
+    const header = new ArrayBuffer(44), view = new DataView(header);
+    const str = (at, value) => { for (let i = 0; i < value.length; i++) view.setUint8(at + i, value.charCodeAt(i)); };
+    str(0, 'RIFF'); view.setUint32(4, dataBytes + 36, true); str(8, 'WAVE');
+    str(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, channelCount, true); view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * channelCount * BYTES_PER_WAV_SAMPLE, true);
+    view.setUint16(32, channelCount * BYTES_PER_WAV_SAMPLE, true); view.setUint16(34, 16, true);
+    str(36, 'data'); view.setUint32(40, dataBytes, true);
+    return header;
+  }
+  async function resampleToWav(audioBuffer, targetHz, { signal, onProgress = () => {}, chunkFrames = CHUNK_FRAMES } = {}) {
+    if (!Number.isFinite(targetHz) || targetHz < 300 || targetHz > 500) throw new RangeError('Target pitch must be between 300 and 500 Hz.');
+    const inputFrames = audioBuffer.length, sampleRate = audioBuffer.sampleRate;
+    const channelCount = audioBuffer.numberOfChannels;
+    const outputFrames = outputFrameCount(inputFrames, sampleRate, targetHz);
+    const dataBytes = outputFrames * channelCount * BYTES_PER_WAV_SAMPLE;
+    if (dataBytes > 0xffffffff - 36) throw new RangeError('WAV exceeds the classic RIFF 4 GiB limit.');
+    const channels = Array.from({ length: channelCount }, (_, i) => audioBuffer.getChannelData(i));
+    const parts = [wavHeader(outputFrames, channelCount, sampleRate)];
+    const step = targetHz / 440;
+    for (let outStart = 0; outStart < outputFrames; outStart += chunkFrames) {
+      throwIfAborted(signal);
+      const count = Math.min(chunkFrames, outputFrames - outStart);
+      const bytes = new Uint8Array(count * channelCount * BYTES_PER_WAV_SAMPLE);
+      const view = new DataView(bytes.buffer);
+      for (let frame = 0; frame < count; frame++) {
+        const src = Math.min(inputFrames - 1, (outStart + frame) * step);
+        const lo = Math.floor(src), hi = Math.min(inputFrames - 1, lo + 1), mix = src - lo;
+        for (let ch = 0; ch < channelCount; ch++) {
+          const sample = channels[ch][lo] * (1 - mix) + channels[ch][hi] * mix;
+          const pcm = Math.max(-32768, Math.min(32767, Math.round(sample * 32767)));
+          view.setInt16((frame * channelCount + ch) * 2, pcm, true);
+        }
+      }
+      parts.push(bytes);
+      onProgress(0.1 + 0.9 * (outStart + count) / outputFrames);
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    throwIfAborted(signal);
+    return new Blob(parts, { type: 'audio/wav' });
+  }
+  async function fileDuration(file, signal) {
+    const url = URL.createObjectURL(file), probe = document.createElement('audio');
+    try {
+      return await new Promise((resolve, reject) => {
+        const clean = () => { probe.removeAttribute('src'); probe.load(); URL.revokeObjectURL(url); };
+        const abort = () => { clean(); reject(abortError()); };
+        probe.onloadedmetadata = () => {
+          const duration = probe.duration;
+          clean();
+          if (signal) signal.removeEventListener('abort', abort);
+          resolve(duration);
+        };
+        probe.onerror = () => { clean(); reject(new Error('metadata-unavailable')); };
+        if (signal) signal.addEventListener('abort', abort, { once: true });
+        probe.src = url;
+      });
+    } catch (error) { URL.revokeObjectURL(url); throw error; }
+  }
+  async function decodeFileToWav(file, targetHz, { signal, onProgress = () => {}, deviceMemoryGb = navigator.deviceMemory } = {}) {
+    throwIfAborted(signal);
+    onProgress(0.02);
+    const duration = await fileDuration(file, signal);
+    if (!Number.isFinite(duration) || duration <= 0) throw new Error('duration-unavailable');
+    const budget = memoryBudgetBytes(deviceMemoryGb);
+    const estimated = estimatePeakBytes(file.size, duration, 48000, 2, targetHz);
+    if (estimated > budget) {
+      const error = new RangeError('estimated-memory-limit');
+      error.estimatedBytes = estimated;
+      throw error;
+    }
+    throwIfAborted(signal);
+    onProgress(0.08);
+    const AudioContextType = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextType) throw new Error('audio-context-unavailable');
+    const audioContext = new AudioContextType();
+    try {
+      const data = await file.arrayBuffer();
+      const decoded = await audioContext.decodeAudioData(data);
+      throwIfAborted(signal);
+      const actualEstimate = estimatePeakBytes(file.size, decoded.length / decoded.sampleRate,
+        decoded.sampleRate, decoded.numberOfChannels, targetHz);
+      if (actualEstimate > budget) {
+        const error = new RangeError('estimated-memory-limit');
+        error.estimatedBytes = actualEstimate;
+        throw error;
+      }
+      return await resampleToWav(decoded, targetHz, { signal, onProgress });
+    } finally { await audioContext.close(); }
+  }
+  return { outputFrameCount, estimatePeakBytes, memoryBudgetBytes, resampleToWav, decodeFileToWav };
+})();
+// retune-export:end
+
 // ---------- Chladni patterns ----------
 const chlCanvas = document.getElementById('chl');
 const chlDropCanvas = document.getElementById('chlDrop');
@@ -664,6 +859,17 @@ const chlFreq = document.getElementById('chlFreq');
 const chlSlider = document.getElementById('chlSlider');
 const chlPlate = document.getElementById('chlPlate');
 const chlStatus = document.getElementById('chlStatus');
+let chlLive = null, chlMicUiState = 'stopped', chlMicUiLoad = 0;
+function renderChlMicState() {
+  const status = document.getElementById('chlMicState');
+  if (!status) return;
+  status.textContent = chlMicUiState === 'requesting' ? T('chl_mic_request')
+    : chlMicUiState === 'listening' ? T('chl_mic_listening').replace('{pct}', Math.min(100, Math.round(chlMicUiLoad * 100)))
+    : chlMicUiState === 'error' ? T('chl_mic_error') : T('chl_mic_stopped');
+  document.getElementById('chlMicStart').classList.toggle('hidden', chlMicUiState === 'listening' || chlMicUiState === 'requesting');
+  document.getElementById('chlMicStop').classList.toggle('hidden', chlMicUiState !== 'listening' && chlMicUiState !== 'requesting');
+}
+window.stopChladniLive = () => { if (chlLive) chlLive.stop(); };
 // Τρόποι ταλάντωσης τετράγωνης πλάκας (m,n) με το άθροισμα m²+n² που ορίζει τη συχνότητα.
 // Όρια των πεδίων συχνότητας — ίδια με τα min/max στο HTML.
 const CHL_FREQ_RANGE = [200, 1000], CRY_FREQ_RANGE = [20, 2000];
@@ -1850,14 +2056,16 @@ async function startMic() {
   // περιμένουμε την άδεια ξεκινά δεύτερη ροή, η πρώτη μένει ορφανή με τον χρονιστή
   // της, και το μικρόφωνο συνεχίζει να ηχογραφεί ενώ ο χρήστης νομίζει ότι το έκλεισε.
   if (micStream || micStarting) return;
+  window.stopChladniLive?.();
+  window.TuningLab?.stopCapture?.();
   micStarting = true;
   try {
   const box = document.getElementById('micError');
   box.classList.add('hidden');
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { micFail('mic_insecure'); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.AudioCapture?.manager) { micFail('mic_insecure'); return; }
   try {
     // Χωρίς επεξεργασία φωνής: τα φίλτρα ηχούς και θορύβου πειράζουν το ύψος του τόνου.
-    micStream = await navigator.mediaDevices.getUserMedia({
+    micStream = await window.AudioCapture.manager.acquire('tuner', {
       audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
     });
   } catch (e) {
@@ -1905,7 +2113,9 @@ async function startMic() {
 
 function stopMic() {
   clearInterval(micTimer); micTimer = null;
-  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  if (window.AudioCapture?.manager) window.AudioCapture.manager.release('tuner');
+  else if (micStream) micStream.getTracks().forEach(t => t.stop());
+  micStream = null;
   if (micCtx) { micCtx.close().catch(() => {}); micCtx = null; }
   micAnalyser = null; micBuf = null; micByteBuf = null; micSettings = null; pitchHistory = [];
   const btn = document.getElementById('micStart');
@@ -2111,6 +2321,7 @@ function queryToState(search) {
 function showTab(name) {
   if (!TAB_STATE[name]) name = 'conv';
   activeTab = name;
+  if (name !== 'chladni') window.stopChladniLive?.();
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
   TAB_NAMES.forEach(p => document.getElementById('panel-' + p).classList.toggle('hidden', p !== name));
   if (name === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
@@ -2492,6 +2703,7 @@ function applyLang(l) {
   renderRecents();
   renderSleep();
   renderTuner();
+  renderChlMicState();
   document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
   updateMediaSession();
   if (window.TuningLab) window.TuningLab.setLanguage(LANG);
@@ -2545,6 +2757,24 @@ function wire() {
   });
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
   document.getElementById('chlShapeDrop').onclick = () => setChlShape('drop');
+  document.getElementById('chlMicStart').onclick = async () => {
+    if (!window.ChladniLiveModule || chlLive) return;
+    let lastLiveDraw = 0;
+    chlLive = new window.ChladniLiveModule.ChladniLive(frequency => {
+      chlFreq.value = clampNum(frequency, CHL_FREQ_RANGE[0], CHL_FREQ_RANGE[1], +chlFreq.value).toFixed(1);
+      chlSlider.value = chlFreq.value;
+      const now = performance.now();
+      if (now - lastLiveDraw >= 900) { refreshChl(); lastLiveDraw = now; }
+    }, (state, load) => {
+      chlMicUiState = state;
+      if (state === 'listening') chlMicUiLoad = load || 0;
+      renderChlMicState();
+      if (state === 'stopped' || state === 'error') chlLive = null;
+    });
+    try { await chlLive.start(); } catch (error) { /* state callback displays localized status */ }
+  };
+  document.getElementById('chlMicStop').onclick = () => { if (chlLive) chlLive.stop(); };
+  renderChlMicState();
   wireDropCamera();
   cryFreq.oninput = growCrystal;
   cryFreq.onchange = () => {
@@ -2631,7 +2861,7 @@ function startApp(cfg) {
       detectPitch, instruments: INSTRUMENTS, tunings: TUNINGS, noteFreq, noteName,
       instrumentName: key => T('inst_' + key),
       language: LANG, showTab,
-      stopOthers: () => { stopRefTone(); stopMic(); stopTone(); stopMusic(); APP.stopSongPlayer(); },
+      stopOthers: () => { window.stopChladniLive?.(); stopRefTone(); stopMic(); stopTone(); stopMusic(); APP.stopSongPlayer(); },
     });
   }
   wire();

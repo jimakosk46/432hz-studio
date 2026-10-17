@@ -82,17 +82,18 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
   <div id="toast" class="hidden"></div>
   <!-- /shared:top -->
 
+  <main id="main-content">
   <!-- ===================== LIVE 432Hz PLAYER ===================== -->
   <div class="card" id="panel-conv">
-    <div id="drop">
-      <span class="big">🎧</span>
-      <span data-i18n="drop_text"></span>
-      <div style="font-size:.8rem;margin-top:6px">MP3, WAV, FLAC, M4A, OGG…</div>
-      <div id="fileName"></div>
+    <div id="drop" role="button" tabindex="0" aria-controls="file" aria-labelledby="dropLabel dropFormats">
+      <span class="big" aria-hidden="true">🎧</span>
+      <span id="dropLabel" data-i18n="drop_text"></span>
+      <div id="dropFormats" style="font-size:.8rem;margin-top:6px">MP3, WAV, FLAC, M4A, OGG…</div>
+      <div id="fileName" aria-live="polite" aria-hidden="true"></div>
     </div>
     <input type="file" id="file" accept="audio/*" style="display:none">
 
-    <label class="small" data-i18n="target_label"></label>
+    <label class="small" for="target" data-i18n="target_label"></label>
     <div class="freq-row">
       <input type="number" id="target" value="432" min="300" max="500" step="0.1">
       <button class="chip sel" data-f="432">432 Hz</button>
@@ -101,6 +102,13 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     </div>
 
     <audio id="liveAudio" controls class="hidden"></audio>
+    <div class="actbar" style="justify-content:center;margin-top:12px">
+      <button class="chip" id="retuneExport" type="button" data-i18n="retune_export" disabled></button>
+      <button class="chip hidden" id="retuneCancel" type="button" data-i18n="retune_cancel"></button>
+    </div>
+    <progress id="retuneProgress" class="hidden" max="1" value="0" aria-labelledby="retuneExport"></progress>
+    <div id="retuneStatus" class="small" role="status" aria-live="polite"></div>
+    <div class="small" data-i18n="retune_memory" style="margin-top:8px"></div>
     <div class="note" data-i18n="live_note"></div>
   </div>
 
@@ -108,8 +116,10 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
   <!-- ===================== TONE GENERATOR ===================== -->
   <div class="card hidden" id="panel-tone">
     <div class="freq-display">
+      <label class="visually-hidden" for="tfreq" data-i18n="chl_freq"></label>
       <input type="number" id="tfreq" value="432" min="1" max="20000" step="0.1"><span class="hz">Hz</span>
     </div>
+    <label class="visually-hidden" for="tslider" data-i18n="chl_freq"></label>
     <input type="range" id="tslider" min="0" max="1000" value="614">
 
     <div class="presets">
@@ -127,7 +137,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
 
     <div class="row2" style="margin-top:18px">
       <div>
-        <label class="small" data-i18n="waveform"></label>
+        <label class="small" for="wave" data-i18n="waveform"></label>
         <select id="wave">
           <option value="sine" data-i18n="wave_sine"></option>
           <option value="triangle" data-i18n="wave_triangle"></option>
@@ -136,7 +146,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
         </select>
       </div>
       <div>
-        <label class="small" data-i18n="volume"></label>
+        <label class="small" for="vol" data-i18n="volume"></label>
         <input type="range" id="vol" min="0" max="100" value="40" style="margin-top:12px">
       </div>
     </div>
@@ -146,7 +156,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <button class="btn stop hidden" id="stop" data-i18n="stop"></button>
     </div>
 
-    <label class="small" data-i18n="wav_label"></label>
+    <label class="small" for="wavdur" data-i18n="wav_label"></label>
     <div class="freq-row">
       <input type="number" id="wavdur" value="60" min="1" max="600">
       <button class="btn ghost" id="wavdl" style="flex:1;margin-top:0;width:auto" data-i18n="wav_btn"></button>
@@ -182,6 +192,32 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <div class="actbar">
       <button class="chip" data-act="share" data-i18n="act_share"></button>
     </div>
+    <details class="history-facts" id="historyFacts">
+      <summary data-i18n="history_title"></summary>
+      <div class="history-body">
+        <p data-i18n="history_intro"></p>
+        <h3 data-i18n="history_section_verdi"></h3>
+        <p data-i18n="history_verdi"></p>
+        <h3 data-i18n="history_section_1939"></h3>
+        <p data-i18n="history_1939"></p>
+        <p data-i18n="history_rrg"></p>
+        <h3 data-i18n="history_section_iso"></h3>
+        <p data-i18n="history_iso"></p>
+        <p data-i18n="history_claims"></p>
+        <h3 data-i18n="history_sources"></h3>
+        <ul>
+          <li><a href="https://education.persee.fr/doc/baip_1254-0714_1860_num_11_132_9814" target="_blank" rel="noopener noreferrer" data-i18n="history_source_france"></a></li>
+          <li><a href="https://doi.org/10.1017/S1479409824000375" target="_blank" rel="noopener noreferrer" data-i18n="history_source_verdi"></a></li>
+          <li><a href="https://doi.org/10.1038/143905a0" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nature"></a></li>
+          <li><a href="https://www.worldradiohistory.com/INTERNATIONAL/Funkschau/1939/Funkschau-1939-29.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_funkschau"></a></li>
+          <li><a href="https://doi.org/10.7208/chicago/9780226823270.003.0005" target="_blank" rel="noopener noreferrer" data-i18n="history_source_gribenski"></a></li>
+          <li><a href="https://svs.gsfc.nasa.gov/10891/" target="_blank" rel="noopener noreferrer" data-i18n="history_source_nasa"></a></li>
+          <li><a href="https://cdn.standards.iteh.ai/samples/51/8fc4068ddfcc4f628708d05d0aafd5b2/ISO-R-16-1955.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_r16"></a></li>
+          <li><a href="https://preview.sist.si/sist-preview/3601/3e7b175fdcae4a2aa09f9d0db4ac099d/ISO-16-1975.pdf" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16_pdf"></a></li>
+          <li><a href="https://www.iso.org/standard/3601.html" target="_blank" rel="noopener noreferrer" data-i18n="history_source_iso16"></a></li>
+        </ul>
+      </div>
+    </details>
   </div>
 
   <!-- ===================== CHLADNI PATTERNS ===================== -->
@@ -198,17 +234,24 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
       <canvas id="chlDrop" class="hidden" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#120b28"></canvas>
     </div>
+    <div class="actbar" style="justify-content:center;margin-top:10px">
+      <button class="chip" id="chlMicStart" type="button" data-i18n="chl_mic_start"></button>
+      <button class="chip hidden" id="chlMicStop" type="button" data-i18n="chl_mic_stop"></button>
+    </div>
+    <div id="chlMicState" class="small" role="status" aria-live="polite" style="text-align:center;min-height:1.4em;margin-top:5px"></div>
+    <div id="chlSimulationLabel" class="small" data-i18n="chl_simulation" style="text-align:center;margin:5px 0"></div>
     <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
     <div class="small" id="chlRotateHint" style="text-align:center;margin-top:4px;opacity:.65"></div>
-    <label class="small" data-i18n="chl_freq"></label>
+    <label class="small" for="chlFreq" data-i18n="chl_freq"></label>
     <div class="freq-row">
       <input type="number" id="chlFreq" value="432" min="200" max="1000" step="0.1">
       <button class="chip sel" data-f="432">432 Hz</button>
       <button class="chip" data-f="440">440 Hz</button>
       <button class="chip" data-f="528">528 Hz</button>
     </div>
+    <label class="visually-hidden" for="chlSlider" data-i18n="chl_freq"></label>
     <input type="range" id="chlSlider" min="200" max="1000" step="0.5" value="432" style="margin-top:10px">
-    <label class="small"><span id="chlPlateLabel" data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
+    <label class="small" for="chlPlate"><span id="chlPlateLabel" data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
     <input type="range" id="chlPlate" min="90" max="110" step="0.1" value="100">
     <div class="actbar">
       <button class="chip" data-act="fav" data-tab="chladni" data-i18n="act_fav"></button>
@@ -225,7 +268,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <canvas id="cry" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
     </div>
     <div id="cryTitle" style="text-align:center;margin-top:10px;color:var(--accent2);font-size:.95rem;font-weight:600"></div>
-    <label class="small" data-i18n="chl_freq"></label>
+    <label class="small" for="cryFreq" data-i18n="chl_freq"></label>
     <div class="freq-row">
       <input type="number" id="cryFreq" value="432" min="20" max="2000" step="0.1">
       <button class="chip sel" data-f="432">432</button>
@@ -248,7 +291,7 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <label class="small" data-i18n="tuner_instrument"></label>
     <div class="presets" id="tunerInstruments"></div>
 
-    <label class="small" data-i18n="tuner_ref"></label>
+    <label class="small" for="tunerA4" data-i18n="tuner_ref"></label>
     <div class="freq-row">
       <input type="number" id="tunerA4" value="432" min="390" max="460" step="0.1">
       <button class="chip sel" data-a="432">432 Hz</button>
@@ -280,10 +323,13 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     </div>
   </div>
   <!-- /shared:panels -->
+  </main>
 
   <footer>432Hz Studio · <span data-i18n="credit"></span><br><span data-i18n="install_hint"></span></footer>
 </div>
 
+<script src="audio_capture.js"></script>
+<script src="chladni_live.js"></script>
 <script src="app.js"></script>
 <script src="tuning_lab.js"></script>
 <script src="settings_transfer.js"></script>
@@ -296,6 +342,10 @@ const I18N_APP = {
     tab_conv: "Τραγούδι στα 432Hz",
     drop_text: "Διάλεξε ένα τραγούδι από το κινητό σου",
     live_note: "Το τραγούδι παίζει ζωντανά κουρδισμένο στη συχνότητα-στόχο (κλασική μέθοδος: ~1,8% πιο αργό, φυσικός ήχος χωρίς time-stretching).",
+    retune_export: "💾 Αποθήκευση κουρδισμένου WAV", retune_cancel: "Ακύρωση",
+    retune_cancel_pending: "Η αποκωδικοποίηση δεν διακόπτεται από τον browser· η ακύρωση θα εφαρμοστεί μόλις ολοκληρωθεί.",
+    retune_memory: "Η μετατροπή γίνεται στη συσκευή. Χρειάζεται μνήμη για τον αποκωδικοποιημένο ήχο και το WAV. Πολύ μεγάλα αρχεία μπορεί να ξεπεράσουν τα όρια του κινητού. Σε iOS Safari δεν υπάρχει σταθερό όριο μνήμης και η καρτέλα μπορεί να κλείσει.",
+    retune_progress: "Μετατροπή WAV · {pct}%", retune_decoding: "Αποκωδικοποίηση ήχου…", retune_cancelled: "Η μετατροπή ακυρώθηκε.", retune_done: "Το αρχείο WAV αποθηκεύτηκε.", retune_too_large: "Το αρχείο εκτιμάται ότι χρειάζεται {size} μνήμη. Δοκίμασε μικρότερο κομμάτι.", retune_failed: "Η μετατροπή απέτυχε. Το αρχείο ίσως δεν υποστηρίζεται.",
     install_hint: "Συμβουλή: μενού browser → «Προσθήκη στην αρχική οθόνη» για να γίνει κανονικό app. Η μουσική δουλεύει χωρίς internet μόνο αν την κατεβάσεις στις «Λήψεις για offline».",
     app432: "",
     offline_title: "Λήψεις για offline",
@@ -320,6 +370,10 @@ const I18N_APP = {
     tab_conv: "Song in 432Hz",
     drop_text: "Wähle einen Song von deinem Handy",
     live_note: "Der Song spielt live auf die Zielfrequenz gestimmt (klassische Methode: ~1,8% langsamer, natürlicher Klang ohne Time-Stretching).",
+    retune_export: "💾 Gestimmte WAV-Datei speichern", retune_cancel: "Abbrechen",
+    retune_cancel_pending: "Der Browser kann das Dekodieren nicht unterbrechen. Der Abbruch wird danach ausgeführt.",
+    retune_memory: "Die Umwandlung läuft auf diesem Gerät und benötigt Speicher für dekodiertes Audio und die WAV-Datei. Sehr große Dateien können das Gerätelimit überschreiten. Für iOS Safari gibt es keine feste Speichergrenze; der Tab kann geschlossen werden.",
+    retune_progress: "WAV-Umwandlung · {pct}%", retune_decoding: "Audio wird dekodiert…", retune_cancelled: "Die Umwandlung wurde abgebrochen.", retune_done: "Die WAV-Datei wurde gespeichert.", retune_too_large: "Die Datei benötigt voraussichtlich {size} Speicher. Bitte einen kürzeren Titel wählen.", retune_failed: "Die Umwandlung ist fehlgeschlagen. Das Dateiformat wird möglicherweise nicht unterstützt.",
     install_hint: "Tipp: Browser-Menü → „Zum Startbildschirm hinzufügen\" — dann funktioniert es wie eine App. Musik läuft offline nur, wenn du sie unter „Offline-Downloads\" heruntergeladen hast.",
     app432: "",
     offline_title: "Offline-Downloads",
@@ -344,6 +398,10 @@ const I18N_APP = {
     tab_conv: "Song at 432Hz",
     drop_text: "Choose a song from your phone",
     live_note: "The song plays live tuned to the target frequency (classic method: ~1.8% slower, natural sound without time-stretching).",
+    retune_export: "💾 Save retuned WAV", retune_cancel: "Cancel",
+    retune_cancel_pending: "The browser cannot interrupt decoding; cancellation will run as soon as decoding finishes.",
+    retune_memory: "Conversion runs on this device and needs memory for decoded audio and the WAV file. Very large files may exceed the device limit. iOS Safari has no fixed memory ceiling, and it may close the tab.",
+    retune_progress: "Converting WAV · {pct}%", retune_decoding: "Decoding audio…", retune_cancelled: "Conversion cancelled.", retune_done: "The WAV file was saved.", retune_too_large: "This file is estimated to need {size} of memory. Try a shorter song.", retune_failed: "Conversion failed. The file format may not be supported.",
     install_hint: "Tip: browser menu → \"Add to Home screen\" to use it like a real app. Music plays offline only if you download it under \"Offline downloads\".",
     app432: "",
     offline_title: "Offline downloads",
@@ -370,6 +428,11 @@ const drop = document.getElementById('drop'), fileInp = document.getElementById(
 const fileName = document.getElementById('fileName');
 const liveAudio = document.getElementById('liveAudio');
 const targetInp = document.getElementById('target');
+const retuneExportBtn = document.getElementById('retuneExport');
+const retuneCancelBtn = document.getElementById('retuneCancel');
+const retuneProgress = document.getElementById('retuneProgress');
+const retuneStatus = document.getElementById('retuneStatus');
+let retuneController = null;
 let liveUrl = null;
 
 function liveRate() {
@@ -387,6 +450,7 @@ function applyLiveRate() {
 // σταματά το τραγούδι όταν ξεκινά τόνος/θεραπευτικό κομμάτι (ένα πράγμα τη φορά)
 function stopSongPlayer() { if (!liveAudio.paused) liveAudio.pause(); }
 drop.onclick = () => fileInp.click();
+drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInp.click(); } };
 fileInp.onchange = () => {
   const f = fileInp.files[0];
   if (!f) return;
@@ -394,14 +458,55 @@ fileInp.onchange = () => {
   if (liveUrl) URL.revokeObjectURL(liveUrl);
   liveUrl = URL.createObjectURL(f);
   fileName.textContent = '✓ ' + f.name;
+  retuneExportBtn.disabled = false;
+  retuneStatus.textContent = '';
+  retuneProgress.classList.add('hidden');
   liveAudio.src = liveUrl;
   liveAudio.classList.remove('hidden');
   applyLiveRate();
   liveAudio.play().catch(() => {});
 };
+const retuneBytes = n => n < 1024 * 1024 ? Math.ceil(n / 1024) + ' KiB' : (n / 1024 / 1024).toFixed(1) + ' MiB';
+retuneExportBtn.onclick = async () => {
+  const file = fileInp.files && fileInp.files[0];
+  if (!file || retuneController) return;
+  retuneController = new AbortController();
+  const signal = retuneController.signal;
+  retuneExportBtn.disabled = true;
+  retuneCancelBtn.classList.remove('hidden');
+  retuneProgress.classList.remove('hidden');
+  retuneProgress.value = 0;
+  try {
+    const targetHz = Math.min(500, Math.max(300, +targetInp.value || 432));
+    const wav = await window.RetuneExport.decodeFileToWav(file, targetHz, {
+      signal,
+      onProgress(value) {
+        retuneProgress.value = value;
+        retuneProgress.setAttribute('aria-valuetext', Math.round(value * 100) + '%');
+        retuneStatus.textContent = value < 0.1 ? T('retune_decoding') : T('retune_progress').replace('{pct}', Math.round(value * 100));
+      },
+    });
+    const url = URL.createObjectURL(wav), link = document.createElement('a');
+    const base = file.name.replace(/\.[^.]+$/, '').replace(/[\\/:*?"<>|]/g, '_');
+    link.href = url; link.download = `${base}_${targetHz.toFixed(0)}Hz.wav`; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    retuneProgress.value = 1; retuneStatus.textContent = T('retune_done');
+  } catch (error) {
+    retuneStatus.textContent = error.name === 'AbortError' ? T('retune_cancelled')
+      : error.message === 'estimated-memory-limit' ? T('retune_too_large').replace('{size}', retuneBytes(error.estimatedBytes)) : T('retune_failed');
+  } finally {
+    retuneController = null; retuneCancelBtn.classList.add('hidden');
+    retuneExportBtn.disabled = !(fileInp.files && fileInp.files[0]);
+  }
+};
+retuneCancelBtn.onclick = () => {
+  if (!retuneController) return;
+  if (retuneProgress.value < 0.1) retuneStatus.textContent = T('retune_cancel_pending');
+  retuneController.abort();
+};
 ['ratechange', 'play', 'loadedmetadata'].forEach(ev => liveAudio.addEventListener(ev, applyLiveRate));
 targetInp.oninput = applyLiveRate;
-document.querySelectorAll('#panel-conv .chip').forEach(c => c.onclick = () => {
+document.querySelectorAll('#panel-conv .chip[data-f]').forEach(c => c.onclick = () => {
   targetInp.value = c.dataset.f;
   selectChip('#panel-conv .chip', c);
   applyLiveRate();
