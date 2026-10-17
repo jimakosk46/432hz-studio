@@ -322,8 +322,9 @@
       this.starting = true;
       try {
         this.config.stopOthers();
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
-        if (!this.active) { stream.getTracks().forEach(track => track.stop()); return; }
+        if (!root.AudioCapture?.manager) throw new Error('microphone-coordinator-unavailable');
+        const stream = await root.AudioCapture.manager.acquire('tuning-lab-record', { audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+        if (!this.active) { if (root.AudioCapture?.manager) root.AudioCapture.manager.release('tuning-lab-record'); else stream.getTracks().forEach(track => track.stop()); return; }
         this.stream = stream; this.recordingSample = true;
         this.analysisHistory = [];
         const Context = root.AudioContext || root.webkitAudioContext;
@@ -355,9 +356,10 @@
       finally { this.starting = false; }
     },
     stopRecording() {
-      if (!this.stream) return;
+      if (root.AudioCapture?.manager) root.AudioCapture.manager.release('tuning-lab-record');
+      if (!this.stream) { this.recordingSample = false; return; }
       if (this.recordRecorder && this.recordRecorder.state !== 'inactive') this.recordRecorder.stop();
-      this.stream.getTracks().forEach(track => track.stop()); this.stream = null;
+      if (!root.AudioCapture?.manager) this.stream.getTracks().forEach(track => track.stop()); this.stream = null;
       this.recordingSample = false;
       this.disconnectAudioCallback();
       this.setLanguage(this.lang);
@@ -476,12 +478,13 @@
       this.starting = true;
       try {
         this.config.stopOthers();
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
-        if (!this.active || this.panel.querySelector('[data-screen="practice"]').hidden) { stream.getTracks().forEach(track => track.stop()); return; }
+        if (!root.AudioCapture?.manager) throw new Error('microphone-coordinator-unavailable');
+        const stream = await root.AudioCapture.manager.acquire('tuning-lab-practice', { audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+        if (!this.active || this.panel.querySelector('[data-screen="practice"]').hidden) { if (root.AudioCapture?.manager) root.AudioCapture.manager.release('tuning-lab-practice'); else stream.getTracks().forEach(track => track.stop()); return; }
         this.stream = stream;
         const Context = root.AudioContext || root.webkitAudioContext;
         this.context = this.context || new Context(); await this.context.resume();
-        if (!this.active || this.panel.querySelector('[data-screen="practice"]').hidden || this.stream !== stream) { stream.getTracks().forEach(track => track.stop()); this.stopPractice(); return; }
+        if (!this.active || this.panel.querySelector('[data-screen="practice"]').hidden || this.stream !== stream) { this.stopPractice(); return; }
         this.practice.instrument = this.el('instrument').value; this.practice.index = 0; this.practice.completed = new Set(); this.practice.frames = 0; this.practice.started = performance.now(); this.practice.running = true;
         this.el('summary').hidden = true; this.status('practiceStatus', null);
         this.setLanguage(this.lang); this.renderStrings(); this.connectAudioCallback(stream, samples => this.practiceFrame(samples));
@@ -537,9 +540,11 @@
     },
     stopPractice() {
       if (this.practice && this.practice.running) this.practice.running = false;
-      if (this.stream) this.stream.getTracks().forEach(track => track.stop());
+      if (root.AudioCapture?.manager) root.AudioCapture.manager.release('tuning-lab-practice');
+      else if (this.stream) this.stream.getTracks().forEach(track => track.stop());
       this.stream = null; this.disconnectAudioCallback();
     },
+    stopCapture() { this.stopRecording(); this.stopPractice(); },
     renderStringsAndView() { this.renderStrings(); this.renderGoal(); },
     renderLab() { this.setLanguage(this.lang); this.updateProfileControls(); },
   };

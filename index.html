@@ -208,6 +208,12 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
       <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
       <canvas id="chlDrop" class="hidden" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#120b28"></canvas>
     </div>
+    <div class="actbar" style="justify-content:center;margin-top:10px">
+      <button class="chip" id="chlMicStart" type="button" data-i18n="chl_mic_start"></button>
+      <button class="chip hidden" id="chlMicStop" type="button" data-i18n="chl_mic_stop"></button>
+    </div>
+    <div id="chlMicState" class="small" role="status" aria-live="polite" style="text-align:center;min-height:1.4em;margin-top:5px"></div>
+    <div id="chlSimulationLabel" class="small" data-i18n="chl_simulation" style="text-align:center;margin:5px 0"></div>
     <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
     <div class="small" id="chlRotateHint" style="text-align:center;margin-top:4px;opacity:.65"></div>
     <label class="small" for="chlFreq" data-i18n="chl_freq"></label>
@@ -296,6 +302,8 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
   <footer>432Hz Studio · <span data-i18n="credit"></span><br><span data-i18n="install_hint"></span></footer>
 </div>
 
+<script src="audio_capture.js"></script>
+<script src="chladni_live.js"></script>
 <script src="app.js"></script>
 <script src="tuning_lab.js"></script>
 <script src="settings_transfer.js"></script>

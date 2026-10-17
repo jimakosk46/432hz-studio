@@ -40,6 +40,10 @@ const SHARED_I18N = {
     "tab_chl": "Σχήματα ήχου",
     "chl_note": "Προσομοίωση πλάκας Chladni: η «άμμος» μαζεύεται εκεί όπου η πλάκα δεν δονείται. Καθαρό, συμμετρικό σχήμα βγαίνει όταν η συχνότητα πετυχαίνει συντονισμό της πλάκας. Δοκίμασε 432 και 440 — και μετά άλλαξε λίγο το «μέγεθος πλάκας»: κάθε συχνότητα έχει την πλάκα που τη βγάζει πανέμορφη.",
     "chl_freq": "Συχνότητα (Hz)",
+    "chl_mic_start": "🎙 Ζωντανός ήχος", "chl_mic_stop": "■ Σίγαση μικροφώνου",
+    "chl_mic_request": "Ζητείται άδεια μικροφώνου…", "chl_mic_listening": "Ακούω · προσομοίωση · φόρτος επεξεργασίας {pct}%",
+    "chl_mic_stopped": "Το μικρόφωνο είναι κλειστό.", "chl_mic_error": "Δεν ήταν δυνατή η έναρξη μικροφώνου.",
+    "chl_simulation": "Προσομοίωση από ήχο μικροφώνου· δεν μετρά πραγματική πλάκα.",
     "chl_plate": "Μέγεθος πλάκας",
     "chl_on": "✨ Συντονισμός στα {f}Hz — καθαρό, συμμετρικό σχήμα!",
     "chl_off": "Εκτός συντονισμού — θολό σχήμα. Κοντινότερος συντονισμός: {f}Hz",
@@ -130,6 +134,10 @@ const SHARED_I18N = {
     "tab_chl": "Klangmuster",
     "chl_note": "Chladni-Platten-Simulation: Der „Sand\" sammelt sich dort, wo die Platte nicht schwingt. Ein klares, symmetrisches Muster entsteht, wenn die Frequenz eine Resonanz der Platte trifft. Probiere 432 und 440 — und ändere dann leicht die Plattengröße: Jede Frequenz hat eine Platte, auf der sie wunderschön aussieht.",
     "chl_freq": "Frequenz (Hz)",
+    "chl_mic_start": "🎙 Live-Audio", "chl_mic_stop": "■ Mikrofon stummschalten",
+    "chl_mic_request": "Mikrofonfreigabe wird angefragt…", "chl_mic_listening": "Hört zu · Simulation · Verarbeitungsaufwand {pct}%",
+    "chl_mic_stopped": "Das Mikrofon ist ausgeschaltet.", "chl_mic_error": "Das Mikrofon konnte nicht gestartet werden.",
+    "chl_simulation": "Simulation mit Mikrofonton; misst keine echte Platte.",
     "chl_plate": "Plattengröße",
     "chl_on": "✨ Resonanz bei {f}Hz — klares, symmetrisches Muster!",
     "chl_off": "Außerhalb der Resonanz — verschwommenes Muster. Nächste Resonanz: {f}Hz",
@@ -220,6 +228,10 @@ const SHARED_I18N = {
     "tab_chl": "Sound patterns",
     "chl_note": "Chladni plate simulation: the \"sand\" gathers where the plate does not vibrate. A clear, symmetric pattern appears when the frequency hits a resonance of the plate. Try 432 and 440 — then slightly change the plate size: every frequency has a plate that makes it beautiful.",
     "chl_freq": "Frequency (Hz)",
+    "chl_mic_start": "🎙 Live audio", "chl_mic_stop": "■ Mute microphone",
+    "chl_mic_request": "Requesting microphone permission…", "chl_mic_listening": "Listening · simulation · processing load {pct}%",
+    "chl_mic_stopped": "The microphone is off.", "chl_mic_error": "The microphone could not be started.",
+    "chl_simulation": "Microphone driven simulation; does not measure a real plate.",
     "chl_plate": "Plate size",
     "chl_on": "✨ Resonance at {f}Hz — clear symmetric pattern!",
     "chl_off": "Off resonance — blurred pattern. Nearest resonance: {f}Hz",
@@ -787,6 +799,17 @@ const chlFreq = document.getElementById('chlFreq');
 const chlSlider = document.getElementById('chlSlider');
 const chlPlate = document.getElementById('chlPlate');
 const chlStatus = document.getElementById('chlStatus');
+let chlLive = null, chlMicUiState = 'stopped', chlMicUiLoad = 0;
+function renderChlMicState() {
+  const status = document.getElementById('chlMicState');
+  if (!status) return;
+  status.textContent = chlMicUiState === 'requesting' ? T('chl_mic_request')
+    : chlMicUiState === 'listening' ? T('chl_mic_listening').replace('{pct}', Math.min(100, Math.round(chlMicUiLoad * 100)))
+    : chlMicUiState === 'error' ? T('chl_mic_error') : T('chl_mic_stopped');
+  document.getElementById('chlMicStart').classList.toggle('hidden', chlMicUiState === 'listening' || chlMicUiState === 'requesting');
+  document.getElementById('chlMicStop').classList.toggle('hidden', chlMicUiState !== 'listening' && chlMicUiState !== 'requesting');
+}
+window.stopChladniLive = () => { if (chlLive) chlLive.stop(); };
 // Τρόποι ταλάντωσης τετράγωνης πλάκας (m,n) με το άθροισμα m²+n² που ορίζει τη συχνότητα.
 // Όρια των πεδίων συχνότητας — ίδια με τα min/max στο HTML.
 const CHL_FREQ_RANGE = [200, 1000], CRY_FREQ_RANGE = [20, 2000];
@@ -1973,14 +1996,16 @@ async function startMic() {
   // περιμένουμε την άδεια ξεκινά δεύτερη ροή, η πρώτη μένει ορφανή με τον χρονιστή
   // της, και το μικρόφωνο συνεχίζει να ηχογραφεί ενώ ο χρήστης νομίζει ότι το έκλεισε.
   if (micStream || micStarting) return;
+  window.stopChladniLive?.();
+  window.TuningLab?.stopCapture?.();
   micStarting = true;
   try {
   const box = document.getElementById('micError');
   box.classList.add('hidden');
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { micFail('mic_insecure'); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.AudioCapture?.manager) { micFail('mic_insecure'); return; }
   try {
     // Χωρίς επεξεργασία φωνής: τα φίλτρα ηχούς και θορύβου πειράζουν το ύψος του τόνου.
-    micStream = await navigator.mediaDevices.getUserMedia({
+    micStream = await window.AudioCapture.manager.acquire('tuner', {
       audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
     });
   } catch (e) {
@@ -2028,7 +2053,9 @@ async function startMic() {
 
 function stopMic() {
   clearInterval(micTimer); micTimer = null;
-  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  if (window.AudioCapture?.manager) window.AudioCapture.manager.release('tuner');
+  else if (micStream) micStream.getTracks().forEach(t => t.stop());
+  micStream = null;
   if (micCtx) { micCtx.close().catch(() => {}); micCtx = null; }
   micAnalyser = null; micBuf = null; micByteBuf = null; micSettings = null; pitchHistory = [];
   const btn = document.getElementById('micStart');
@@ -2234,6 +2261,7 @@ function queryToState(search) {
 function showTab(name) {
   if (!TAB_STATE[name]) name = 'conv';
   activeTab = name;
+  if (name !== 'chladni') window.stopChladniLive?.();
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
   TAB_NAMES.forEach(p => document.getElementById('panel-' + p).classList.toggle('hidden', p !== name));
   if (name === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
@@ -2615,6 +2643,7 @@ function applyLang(l) {
   renderRecents();
   renderSleep();
   renderTuner();
+  renderChlMicState();
   document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
   updateMediaSession();
   if (window.TuningLab) window.TuningLab.setLanguage(LANG);
@@ -2668,6 +2697,24 @@ function wire() {
   });
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
   document.getElementById('chlShapeDrop').onclick = () => setChlShape('drop');
+  document.getElementById('chlMicStart').onclick = async () => {
+    if (!window.ChladniLiveModule || chlLive) return;
+    let lastLiveDraw = 0;
+    chlLive = new window.ChladniLiveModule.ChladniLive(frequency => {
+      chlFreq.value = clampNum(frequency, CHL_FREQ_RANGE[0], CHL_FREQ_RANGE[1], +chlFreq.value).toFixed(1);
+      chlSlider.value = chlFreq.value;
+      const now = performance.now();
+      if (now - lastLiveDraw >= 900) { refreshChl(); lastLiveDraw = now; }
+    }, (state, load) => {
+      chlMicUiState = state;
+      if (state === 'listening') chlMicUiLoad = load || 0;
+      renderChlMicState();
+      if (state === 'stopped' || state === 'error') chlLive = null;
+    });
+    try { await chlLive.start(); } catch (error) { /* state callback displays localized status */ }
+  };
+  document.getElementById('chlMicStop').onclick = () => { if (chlLive) chlLive.stop(); };
+  renderChlMicState();
   wireDropCamera();
   cryFreq.oninput = growCrystal;
   cryFreq.onchange = () => {
@@ -2754,7 +2801,7 @@ function startApp(cfg) {
       detectPitch, instruments: INSTRUMENTS, tunings: TUNINGS, noteFreq, noteName,
       instrumentName: key => T('inst_' + key),
       language: LANG, showTab,
-      stopOthers: () => { stopRefTone(); stopMic(); stopTone(); stopMusic(); APP.stopSongPlayer(); },
+      stopOthers: () => { window.stopChladniLive?.(); stopRefTone(); stopMic(); stopTone(); stopMusic(); APP.stopSongPlayer(); },
     });
   }
   wire();

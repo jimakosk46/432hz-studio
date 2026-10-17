@@ -7,7 +7,7 @@ const TRACK_CACHE = 'hz432-tracks-v1';
 const COVER_CACHE = 'hz432-covers-v1';
 const APP_ASSETS = [
   './', './index.html', './app.css', './app.js', './offline.js', './tuning_lab.js', './settings_transfer.js',
-  './manifest.webmanifest', './icon192.png', './icon512.png',
+  './manifest.webmanifest', './icon192.png', './icon512.png', './audio_capture.js', './chladni_live.js',
 ];
 
 self.addEventListener('install', event => {
