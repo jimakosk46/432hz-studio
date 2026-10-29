@@ -2565,10 +2565,16 @@ function dropFrequencyText(frequency) {
   return `${decimal} Hz`;
 }
 
+function dropSizeText(mm) {
+  const fixed = Number(mm).toFixed(2);
+  const decimal = LANG === 'de' || LANG === 'el' ? fixed.replace('.', ',') : fixed;
+  return `${decimal} mm`;
+}
+
 function dropStatusText(frame) {
   const { n, fr, crisp, mixed, n2 } = frame;
   document.getElementById('chlPlateVal').textContent =
-    (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
+    dropSizeText(DROP_R0 * (+chlPlate.value / 100) * 1000);
   const status = (crisp > 0.6 ? T('chl_drop_on') : T('chl_drop_off'))
     .replace('{f}', dropFrequencyText(fr)).replace('{n}', n);
   chlStatus.textContent = status + (mixed

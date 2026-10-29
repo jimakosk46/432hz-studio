@@ -1,5 +1,5 @@
 // 432Hz Studio PWA — app shell and user-selected offline tracks.
-const APP_CACHE = 'hz432-app-v76';
+const APP_CACHE = 'hz432-app-v77';
 const APP_CACHE_PREFIX = 'hz432-app-v';
 const LEGACY_APP_CACHE = /^hz432-v\d+$/;
 const TRACK_CACHE = 'hz432-tracks-v1';
