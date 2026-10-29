@@ -21,11 +21,12 @@
 
   // Per-tab schema: [kind, ...limits]. A key that is not listed is an error.
   const NUM = (lo, hi) => ['num', lo, hi];
+  const CLAMP = (lo, hi) => ['clamp', lo, hi];
   const ONE_OF = list => ['enum', list];
   const TAB_SCHEMA = {
     tone: { f: NUM(1, 20000), w: ONE_OF(WAVES) },
     heal: { f: NUM(1, 2000) },
-    chladni: { f: NUM(200, 1000), p: NUM(85, 120), sh: ONE_OF(['plate', 'drop']), yw: NUM(0, 360), pt: NUM(-85, 85) },
+    chladni: { f: NUM(200, 1000), p: NUM(85, 120), sh: ONE_OF(['plate', 'drop']), yw: NUM(0, 360), pt: CLAMP(0, 45), ds: NUM(0.5, 15), dv: NUM(0, 1) },
     crystal: { f: NUM(20, 2000) },
     tuner: { inst: ONE_OF(INSTRUMENTS), a: NUM(390, 460) },
   };
@@ -47,12 +48,12 @@
     for (const [key, rule] of Object.entries(schema)) {
       if (!(key in state)) continue;
       const value = state[key];
-      if (rule[0] === 'num') {
-        if (typeof value !== 'number' || !Number.isFinite(value) || value < rule[1] || value > rule[2]) {
-          fail(`${tab}.${key}: out of range`);
-        }
+      if (rule[0] === 'num' || rule[0] === 'clamp') {
+        if (typeof value !== 'number' || !Number.isFinite(value)) fail(`${tab}.${key}: out of range`);
+        if (rule[0] === 'num' && (value < rule[1] || value > rule[2])) fail(`${tab}.${key}: out of range`);
+        out[key] = rule[0] === 'clamp' ? Math.max(rule[1], Math.min(rule[2], value)) : value;
       } else if (!rule[1].includes(value)) fail(`${tab}.${key}: not allowed`);
-      out[key] = value;
+      else out[key] = value;
     }
     for (const key of REQUIRED[tab]) if (!(key in out)) fail(`${tab}: missing "${key}"`);
     return out;

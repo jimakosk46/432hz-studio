@@ -231,7 +231,11 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
          όλη τη ζωή του. Ο #chl είναι δεσμευμένος σε 2d από την πλάκα Chladni, οπότε η
          σταγόνα σε WebGL2 χρειάζεται δικό της. Δείχνεται ο ένας, κρύβεται ο άλλος. -->
     <div style="text-align:center;margin-top:14px">
-      <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
+      <div id="chlFallbackStack" class="chl-fallback-stack">
+        <canvas id="chl" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#181030"></canvas>
+        <canvas id="chlReflection" class="chl-fallback-overlay hidden" width="300" height="300" aria-hidden="true"></canvas>
+        <canvas id="chlDrop2d" class="chl-fallback-overlay hidden" width="300" height="300" aria-hidden="true"></canvas>
+      </div>
       <canvas id="chlDrop" class="hidden" width="300" height="300" style="width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--border);background:#120b28"></canvas>
     </div>
     <div class="actbar" style="justify-content:center;margin-top:10px">
@@ -242,6 +246,13 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <div id="chlSimulationLabel" class="small" data-i18n="chl_simulation" style="text-align:center;margin:5px 0"></div>
     <div id="chlStatus" style="text-align:center;margin-top:10px;min-height:22px;font-size:.9rem"></div>
     <div class="small" id="chlRotateHint" style="text-align:center;margin-top:4px;opacity:.65"></div>
+    <div id="chlDropControls" class="hidden" style="text-align:center;margin-top:8px">
+      <button class="chip" id="chlDropPlay" type="button" aria-pressed="false" data-i18n="chl_drop_play"></button>
+      <label class="small" for="chlDropSpeed"><span data-i18n="chl_drop_speed"></span>: <b id="chlDropSpeedVal" style="color:var(--accent)"></b></label>
+      <input type="range" id="chlDropSpeed" min="0" max="1000" step="1" value="368">
+      <label class="small" for="chlDropVol" data-i18n="chl_drop_volume"></label>
+      <input type="range" id="chlDropVol" min="0" max="1" step="0.01" value="0.25">
+    </div>
     <label class="small" for="chlFreq" data-i18n="chl_freq"></label>
     <div class="freq-row">
       <input type="number" id="chlFreq" value="432" min="200" max="1000" step="0.1">
@@ -253,6 +264,16 @@ footer { text-align: center; color: #8f83b8; font-size: .8rem; margin-top: 26px;
     <input type="range" id="chlSlider" min="200" max="1000" step="0.5" value="432" style="margin-top:10px">
     <label class="small" for="chlPlate"><span id="chlPlateLabel" data-i18n="chl_plate"></span>: <b id="chlPlateVal" style="color:var(--accent)">100%</b></label>
     <input type="range" id="chlPlate" min="90" max="110" step="0.1" value="100">
+    <details class="history-facts hidden" id="chlDropSources">
+      <summary data-i18n="chl_drop_sources"></summary>
+      <div class="history-body">
+        <ul>
+          <li><a href="https://doi.org/10.1103/PhysRevE.81.046305" target="_blank" rel="noopener noreferrer" data-i18n="chl_drop_source_shen"></a></li>
+          <li><a href="https://arxiv.org/abs/1310.2967" target="_blank" rel="noopener noreferrer" data-i18n="chl_drop_source_ran"></a></li>
+          <li><a href="https://doi.org/10.1088/0256-307X/27/7/076801" target="_blank" rel="noopener noreferrer" data-i18n="chl_drop_source_shen_cpl"></a></li>
+        </ul>
+      </div>
+    </details>
     <div class="actbar">
       <button class="chip" data-act="fav" data-tab="chladni" data-i18n="act_fav"></button>
       <button class="chip" data-act="share" data-i18n="act_share"></button>

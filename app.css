@@ -277,6 +277,9 @@ select {
    σελίδας, δηλαδή η ίδια η δυνατότητα ήταν νεκρή ακριβώς εκεί που χρειάζεται. */
 #chl.rotatable, #chlDrop.rotatable { touch-action: none; cursor: grab; }
 #chl.rotatable:active, #chlDrop.rotatable:active { cursor: grabbing; }
+.chl-fallback-stack { position:relative; display:block; width:100%; max-width:342px; margin:0 auto; }
+.chl-fallback-overlay { position:absolute; inset:0; z-index:1; width:100%; height:100%; border-radius:12px; pointer-events:none; }
+#chlDrop2d { z-index:2; }
 
 .tunernote { font-size: .78rem; }
 .strbtn {

@@ -69,11 +69,22 @@ const SHARED_I18N = {
     "chl_off": "Εκτός συντονισμού — θολό σχήμα. Κοντινότερος συντονισμός: {f}Hz",
     "chl_shape_plate": "Πλάκα",
     "chl_shape_drop": "Σταγόνα νερού",
-    "chl_note_drop": "Φυσική ταλάντωση σταγόνας νερού: το περίγραμμά της παίρνει σχήμα αστεριού με n αιχμές όταν η συχνότητα πετυχαίνει έναν φυσικό τρόπο ταλάντωσης της επιφάνειάς της (τύπος Rayleigh). Δοκίμασε 432 και 440 — και άλλαξε λίγο το «μέγεθος σταγόνας»: κάθε συχνότητα έχει το μέγεθος σταγόνας που τη βγάζει πιο όμορφο αστέρι.",
+    "chl_note_drop": "Ακουστική αιώρηση: υπέρηχοι κρατούν μια σταγόνα νερού στον αέρα και την πλαταίνουν σε δισκάκι. Όταν η ένταση πάλλεται, το χείλος σχηματίζει n λοβούς που αναποδογυρίζουν στη μισή συχνότητα της διέγερσης. Το «2ος, 3ος…» σε τέτοια βίντεο είναι ο αριθμός των λοβών, όχι αρμονική του ήχου. Σε πραγματικό νερό αυτό συμβαίνει σε μερικές δεκάδες Hz (π.χ. ~25 Hz για 2 λοβούς, ~50 Hz για 3–4)· εδώ ο τόνος αντιστοιχίζεται σε μια μικρή σταγόνα και η κίνηση δείχνεται σε αργή κίνηση.",
     "chl_drop_size": "Μέγεθος σταγόνας",
     "chl_drop_rotate": "σύρε πάνω στη σταγόνα για να τη γυρίσεις · διπλό κλικ για επαναφορά",
-    "chl_drop_on": "✨ Συντονισμός στα {f}Hz — καθαρό αστέρι {n} ακτίνων!",
-    "chl_drop_off": "Εκτός συντονισμού — ασταθές σχήμα. Κοντινότερος συντονισμός: {f}Hz ({n} ακτίνες)",
+    "chl_drop_speed": "Ταχύτητα κίνησης",
+    "chl_drop_speed_val": "Αργή κίνηση ×{x}",
+    "chl_drop_speed_lab": "≈ ταχύτητα εργαστηρίου",
+    "chl_drop_volume": "Ένταση τόνου",
+    "chl_drop_play": "▶ Παίξε τον τόνο",
+    "chl_drop_stop": "■ Σταμάτα τον τόνο",
+    "chl_drop_on": "✨ Συντονισμός στα {f} — καθαρό σχήμα με {n} λοβούς!",
+    "chl_drop_off": "Εκτός συντονισμού — ασταθές σχήμα. Κοντινότερος συντονισμός: {f} ({n} λοβοί)",
+    "chl_drop_mixed": "δύο τρόποι μαζί: {n} και {n2} λοβοί",
+    "chl_drop_sources": "Πηγές",
+    "chl_drop_source_shen": "Shen, Xie & Wei (2010), Phys. Rev. E 81, 046305",
+    "chl_drop_source_ran": "Ran, Fredericks & Saylor (2013), πείραμα Clemson",
+    "chl_drop_source_shen_cpl": "Shen, Xie & Wei (2010), Chin. Phys. Lett. 27, 076801",
     "tab_cry": "Κρύσταλλοι",
     "tab_tuner": "Κουρδιστήρι",
     "tuner_note": "Διάλεξε όργανο και συχνότητα αναφοράς, πάτα μια νότα για να την ακούσεις, και κούρδισε με το αυτί. Στα 432 Hz κατεβαίνουν όλες οι χορδές το ίδιο — οι σχέσεις μεταξύ τους δεν αλλάζουν.",
@@ -183,11 +194,22 @@ const SHARED_I18N = {
     "chl_off": "Außerhalb der Resonanz — verschwommenes Muster. Nächste Resonanz: {f}Hz",
     "chl_shape_plate": "Platte",
     "chl_shape_drop": "Wassertropfen",
-    "chl_note_drop": "Physikalische Schwingung eines Wassertropfens: Sein Rand nimmt die Form eines Sterns mit n Spitzen an, wenn die Frequenz eine natürliche Schwingungsart der Oberfläche trifft (Rayleigh-Formel). Probiere 432 und 440 — und ändere dann leicht die Tropfengröße: Jede Frequenz hat eine Tropfengröße, bei der sie den schönsten Stern ergibt.",
+    "chl_note_drop": "Akustische Levitation: Ultraschall hält einen Wassertropfen in der Luft und drückt ihn zu einer flachen Scheibe. Schwankt die Schallintensität, bildet der Rand n Zacken, die mit der halben Anregungsfrequenz umklappen. „2., 3. …“ in solchen Videos ist die Zahl der Zacken, keine Harmonische des Tons. Bei echtem Wasser geschieht das bei einigen zehn Hertz (etwa 25 Hz bei 2 Zacken, 50 Hz bei 3–4); hier wird der Ton einem kleinen Tropfen zugeordnet und die Bewegung in Zeitlupe gezeigt.",
     "chl_drop_size": "Tropfengröße",
     "chl_drop_rotate": "zieh am Tropfen, um ihn zu drehen · Doppelklick setzt zurück",
-    "chl_drop_on": "✨ Resonanz bei {f}Hz — klarer Stern mit {n} Spitzen!",
-    "chl_drop_off": "Außerhalb der Resonanz — instabile Form. Nächste Resonanz: {f}Hz ({n} Spitzen)",
+    "chl_drop_speed": "Bewegungstempo",
+    "chl_drop_speed_val": "Zeitlupe ×{x}",
+    "chl_drop_speed_lab": "≈ Labortempo",
+    "chl_drop_volume": "Lautstärke",
+    "chl_drop_play": "▶ Ton abspielen",
+    "chl_drop_stop": "■ Ton stoppen",
+    "chl_drop_on": "✨ Resonanz bei {f} — klare Form mit {n} Zacken!",
+    "chl_drop_off": "Außerhalb der Resonanz — instabile Form. Nächste Resonanz: {f} ({n} Zacken)",
+    "chl_drop_mixed": "zwei Schwingungsformen zugleich: {n} und {n2} Zacken",
+    "chl_drop_sources": "Quellen",
+    "chl_drop_source_shen": "Shen, Xie & Wei (2010), Phys. Rev. E 81, 046305",
+    "chl_drop_source_ran": "Ran, Fredericks & Saylor (2013), Clemson-Experiment",
+    "chl_drop_source_shen_cpl": "Shen, Xie & Wei (2010), Chin. Phys. Lett. 27, 076801",
     "tab_cry": "Kristalle",
     "tab_tuner": "Stimmgerät",
     "tuner_note": "Wähle Instrument und Referenzfrequenz, tippe eine Note an, um sie zu hören, und stimme nach Gehör. Bei 432 Hz sinken alle Saiten gleich weit — ihre Verhältnisse zueinander bleiben unverändert.",
@@ -297,11 +319,22 @@ const SHARED_I18N = {
     "chl_off": "Off resonance — blurred pattern. Nearest resonance: {f}Hz",
     "chl_shape_plate": "Plate",
     "chl_shape_drop": "Water drop",
-    "chl_note_drop": "The physical oscillation of a water drop: its rim takes the shape of a star with n points when the frequency hits a natural surface oscillation mode (Rayleigh formula). Try 432 and 440 — then slightly change the drop size: every frequency has a drop size that makes it the most beautiful star.",
+    "chl_note_drop": "Acoustic levitation: ultrasound holds a water drop in the air and flattens it into a disc. When the sound intensity pulses, the rim forms n lobes that flip at half the excitation frequency. “2nd, 3rd…” in such videos is the number of lobes, not a harmonic of the sound. In real water this happens at a few tens of hertz (about 25 Hz for 2 lobes, 50 Hz for 3–4); here the tone is mapped to a small drop and the motion is shown in slow motion.",
     "chl_drop_size": "Drop size",
     "chl_drop_rotate": "drag the drop to turn it · double-click to reset",
-    "chl_drop_on": "✨ Resonance at {f}Hz — clear {n}-point star!",
-    "chl_drop_off": "Off resonance — unstable shape. Nearest resonance: {f}Hz ({n} points)",
+    "chl_drop_speed": "Motion speed",
+    "chl_drop_speed_val": "Slow motion ×{x}",
+    "chl_drop_speed_lab": "≈ lab speed",
+    "chl_drop_volume": "Tone volume",
+    "chl_drop_play": "▶ Play tone",
+    "chl_drop_stop": "■ Stop tone",
+    "chl_drop_on": "✨ Resonance at {f} — clear shape with {n} lobes!",
+    "chl_drop_off": "Off resonance — unstable shape. Nearest resonance: {f} ({n} lobes)",
+    "chl_drop_mixed": "two modes at once: {n} and {n2} lobes",
+    "chl_drop_sources": "Sources",
+    "chl_drop_source_shen": "Shen, Xie & Wei (2010), Phys. Rev. E 81, 046305",
+    "chl_drop_source_ran": "Ran, Fredericks & Saylor (2013), Clemson experiment",
+    "chl_drop_source_shen_cpl": "Shen, Xie & Wei (2010), Chin. Phys. Lett. 27, 076801",
     "tab_cry": "Crystals",
     "tab_tuner": "Tuner",
     "tuner_note": "Choose an instrument and a reference pitch, tap a note to hear it, and tune by ear. At 432 Hz every string drops by the same amount — the relationships between them do not change.",
@@ -389,7 +422,51 @@ function selectChip(groupSelector, clicked) {
 
 const tfreq = document.getElementById('tfreq'), tslider = document.getElementById('tslider');
 const volInp = document.getElementById('vol'), waveSel = document.getElementById('wave');
-let ctx = null, osc = null, gain = null;
+let ctx = null, osc = null, gain = null, dropTone = null;
+
+function dropToneTarget() {
+  return Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
+}
+window.dropToneTarget = dropToneTarget;
+function syncDropToneButton() {
+  const button = document.getElementById('chlDropPlay');
+  if (!button) return;
+  button.textContent = T(dropTone ? 'chl_drop_stop' : 'chl_drop_play');
+  button.setAttribute('aria-pressed', String(!!dropTone));
+}
+function rampDropToneParam(param, target) {
+  const now = ctx.currentTime;
+  param.cancelScheduledValues(now);
+  param.setValueAtTime(param.value, now);
+  param.linearRampToValueAtTime(target, now + 0.05);
+}
+function stopDropTone() {
+  if (!dropTone) return;
+  const tone = dropTone;
+  dropTone = null;
+  rampDropToneParam(tone.gain.gain, 0);
+  setTimeout(() => { tone.osc.stop(); tone.osc.disconnect(); tone.gain.disconnect(); }, 200);
+  syncDropToneButton();
+}
+function playDropTone() {
+  if (chlMicUiState === 'listening' || chlMicUiState === 'requesting' || dropTone) return;
+  stopRefTone();
+  stopTone();
+  stopMusic();
+  APP.stopSongPlayer();
+  stopMic();
+  ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+  ctx.resume();
+  const toneOsc = ctx.createOscillator(), toneGain = ctx.createGain();
+  toneOsc.type = 'sine';
+  toneOsc.frequency.setValueAtTime(dropToneTarget(), ctx.currentTime);
+  toneGain.gain.setValueAtTime(0, ctx.currentTime);
+  toneGain.gain.linearRampToValueAtTime(dropToneGain(+chlDropVol.value), ctx.currentTime + 0.05);
+  toneOsc.connect(toneGain).connect(ctx.destination);
+  toneOsc.start();
+  dropTone = { osc: toneOsc, gain: toneGain };
+  syncDropToneButton();
+}
 
 // slider λογαριθμικά 20Hz–2000Hz
 const smin = Math.log(20), smax = Math.log(2000);
@@ -403,6 +480,7 @@ function applyFreq() {
 }
 
 function startTone() {
+  stopDropTone();
   if (osc) return;
   stopSongPlayer();
   stopRefTone();
@@ -418,6 +496,7 @@ function startTone() {
   syncUI();
 }
 function stopTone() {
+  stopDropTone();
   if (!osc) return;
   const o = osc, g = gain; osc = null; gain = null;
   g.gain.setTargetAtTime(0, ctx.currentTime, .03);
@@ -855,10 +934,17 @@ window.RetuneExport = (() => {
 // ---------- Chladni patterns ----------
 const chlCanvas = document.getElementById('chl');
 const chlDropCanvas = document.getElementById('chlDrop');
+const chlReflectionCanvas = document.getElementById('chlReflection');
+const chlDrop2dCanvas = document.getElementById('chlDrop2d');
 const chlFreq = document.getElementById('chlFreq');
 const chlSlider = document.getElementById('chlSlider');
 const chlPlate = document.getElementById('chlPlate');
 const chlStatus = document.getElementById('chlStatus');
+const chlDropControls = document.getElementById('chlDropControls');
+const chlDropSources = document.getElementById('chlDropSources');
+const chlDropSpeed = document.getElementById('chlDropSpeed');
+const chlDropSpeedVal = document.getElementById('chlDropSpeedVal');
+const chlDropVol = document.getElementById('chlDropVol');
 let chlLive = null, chlMicUiState = 'stopped', chlMicUiLoad = 0;
 function renderChlMicState() {
   const status = document.getElementById('chlMicState');
@@ -868,6 +954,9 @@ function renderChlMicState() {
     : chlMicUiState === 'error' ? T('chl_mic_error') : T('chl_mic_stopped');
   document.getElementById('chlMicStart').classList.toggle('hidden', chlMicUiState === 'listening' || chlMicUiState === 'requesting');
   document.getElementById('chlMicStop').classList.toggle('hidden', chlMicUiState !== 'listening' && chlMicUiState !== 'requesting');
+  const dropPlay = document.getElementById('chlDropPlay');
+  if (dropPlay) dropPlay.disabled = chlMicUiState === 'listening' || chlMicUiState === 'requesting';
+  syncDropToneButton();
 }
 window.stopChladniLive = () => { if (chlLive) chlLive.stop(); };
 // Τρόποι ταλάντωσης τετράγωνης πλάκας (m,n) με το άθροισμα m²+n² που ορίζει τη συχνότητα.
@@ -912,6 +1001,7 @@ function drawChladni(canvas) {
   chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
 }
 function refreshChl() {   // η λίστα drop ανανεώνεται μόνη της κάθε frame
+  if (dropTone) rampDropToneParam(dropTone.osc.frequency, dropToneTarget());
   if (chlShape !== 'drop') drawChladni();
   pushUrl();
 }
@@ -939,10 +1029,413 @@ function findDropResonance(f, pct) {
   return { n, fr, crisp };     // n = πόσες αιχμές έχει το αστέρι
 }
 
+// drop-physics:begin
+const DROP_B2 = 0;
+const DROP_A_MAX = 0.30;
+const DROP_OBL_BASE = 0.90, DROP_OBL_VOL = 0.05, DROP_OBL_MAX = 0.95;
+const DROP_TOP_EPS = 0.12;
+const DROP_LAMB_R = 5e-3, DROP_LAMB_NU = 1.0e-6, DROP_LAB_HZ = 15;
+const DROP_TAU_RANGE = [0.25, 1.0];
+const DROP_SPEED_RANGE = [0.5, 15];
+const DROP_SPEED_DEFAULT = 1.75, DROP_VOLUME_DEFAULT = 0.25;
+const DROP_MIX_RATIO = 0.83;
+const DROP_Q = { LOW: 0, MED: 1, HIGH: 2, ULTRA: 3 };
+
+function dropFlip(cycles) {
+  return Math.cos(2 * Math.PI * cycles);
+}
+
+function dropAmp(crisp) {
+  return Math.min(DROP_A_MAX, 0.06 + 0.22 * crisp);
+}
+
+// Apply the shared amplitude budget before evaluating either harmonic.
+function dropModeScale(modes) {
+  let total = 0;
+  for (const mode of modes) total += Math.abs(mode.a);
+  return total > DROP_A_MAX ? DROP_A_MAX / total : 1;
+}
+
+function dropScaleModes(modes) {
+  const scale = dropModeScale(modes);
+  return modes.map(mode => ({ ...mode, a: mode.a * scale }));
+}
+
+function dropStar(theta, modes, b2) {
+  const scale = dropModeScale(modes);
+  let r = 1;
+  for (const mode of modes) {
+    const q = mode.a * scale * mode.c;
+    r += q * Math.cos(mode.n * theta) + b2 * q * q * Math.cos(2 * mode.n * theta);
+  }
+  return r;
+}
+
+function dropOblate(volume, playing) {
+  const value = Number(volume);
+  const v = playing && Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0;
+  return Math.min(DROP_OBL_MAX, DROP_OBL_BASE + DROP_OBL_VOL * v);
+}
+
+function dropTopDisp(rho, theta, mode) {
+  return DROP_TOP_EPS * mode.a * mode.c * Math.pow(rho, mode.n) * Math.cos(mode.n * theta);
+}
+
+function dropLambTau(n, fDisp) {
+  const tauLab = DROP_LAMB_R * DROP_LAMB_R / ((n - 1) * (2 * n + 1) * DROP_LAMB_NU);
+  return Math.max(DROP_TAU_RANGE[0], Math.min(DROP_TAU_RANGE[1], tauLab * DROP_LAB_HZ / dropSpeedClamp(fDisp)));
+}
+
+function dropTrackedAmplitude(mode, tSec, rising) {
+  if (rising && mode.t0 === -Infinity) return mode.a;
+  const decay = Math.exp(-Math.max(0, tSec - mode.t0) / mode.tau);
+  return mode.a * (rising ? 1 - decay : decay);
+}
+
+function dropModeTrack(state, n, a, tSec, fDisp) {
+  const target = Math.max(0, Math.min(DROP_A_MAX, a));
+  let cur = state ? { ...state.cur } : { n, a: target, t0: -Infinity, tau: dropLambTau(n, fDisp) };
+  let old = state && state.old ? { ...state.old } : null;
+  if (cur.n !== n) {
+    let previous = { n: cur.n, a: dropTrackedAmplitude(cur, tSec, true) };
+    if (old) {
+      const oldAmplitude = dropTrackedAmplitude(old, tSec, false);
+      if (oldAmplitude > previous.a) previous = { n: old.n, a: oldAmplitude };
+    }
+    // Both time constants stay fixed until the next mode change.
+    old = { n: previous.n, a: previous.a, t0: tSec, tau: dropLambTau(previous.n, fDisp) };
+    cur = { n, a: target, t0: tSec, tau: dropLambTau(n, fDisp) };
+  } else {
+    cur.a = target;
+  }
+  const modes = [];
+  if (old) {
+    const oldAmplitude = dropTrackedAmplitude(old, tSec, false);
+    if (oldAmplitude < 0.002) old = null;
+    else modes.push({ n: old.n, a: oldAmplitude });
+  }
+  modes.push({ n: cur.n, a: dropTrackedAmplitude(cur, tSec, true) });
+  return { state: { cur, old }, modes };
+}
+
+function dropMixWeight(crisp, a) {
+  return crisp < 0.5 ? 0.5 * (1 - 2 * crisp) * a : 0;
+}
+
+function dropSecondMode(f, modes, n) {
+  let second = null, distance = Infinity;
+  for (const mode of modes) {
+    const delta = Math.abs(f - mode.freq);
+    if (mode.mode !== n && delta < distance) {
+      second = mode.mode;
+      distance = delta;
+    }
+  }
+  return second;
+}
+
+function dropSpeedClamp(v) {
+  const value = v == null || v === '' ? NaN : Number(v);
+  return Number.isFinite(value) ? Math.max(DROP_SPEED_RANGE[0], Math.min(DROP_SPEED_RANGE[1], value)) : DROP_SPEED_DEFAULT;
+}
+
+function dropVolumeClamp(v) {
+  const value = v == null || v === '' ? NaN : Number(v);
+  return Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : DROP_VOLUME_DEFAULT;
+}
+
+function dropToneGain(v) {
+  const volume = dropVolumeClamp(v);
+  return volume * volume * 0.5;
+}
+
+function dropSpeedFromSlider(pos) {
+  const value = Number(pos);
+  if (!Number.isFinite(value)) return DROP_SPEED_DEFAULT;
+  return 0.5 * Math.pow(30, Math.max(0, Math.min(1000, value)) / 1000);
+}
+
+function dropSliderFromSpeed(hz) {
+  return Math.round(1000 * Math.log(dropSpeedClamp(hz) / 0.5) / Math.log(30));
+}
+
+function dropSlowmo(fr, fDisp) {
+  const speed = dropSpeedClamp(fDisp);
+  return { x: Math.round(fr / speed), lab: speed >= DROP_LAB_HZ - 1e-9 };
+}
+
+function dropAdvance(cycles, fDisp, dtSec) {
+  const dt = Math.min(Math.max(dtSec, 0), 0.1);
+  const phase = (cycles + fDisp * dt) % 1;
+  return phase < 0 ? phase + 1 : phase;
+}
+
+function dropQualityFromQuery(search) {
+  const match = (typeof search === 'string' ? search : '').match(/(?:^|[?&])dq=([^&#]*)/);
+  if (!match) return null;
+  const tiers = { low: DROP_Q.LOW, medium: DROP_Q.MED, high: DROP_Q.HIGH, ultra: DROP_Q.ULTRA };
+  return Object.prototype.hasOwnProperty.call(tiers, match[1]) ? tiers[match[1]] : null;
+}
+
+function dropShaderSourceForQuality(source, tier) {
+  const fixed = tier == null ? -1 : tier;
+  if (!Number.isInteger(fixed) || fixed < -1 || fixed > DROP_Q.ULTRA) {
+    throw new RangeError('invalid drop shader quality');
+  }
+  if (!source.startsWith('#version 300 es')) throw new Error('drop shader version header missing');
+  if (fixed !== DROP_Q.LOW) {
+    source = source.replace(
+      /^[ \t]*#if DROP_QUALITY == 0\r?\n[ \t]*\/\/ BE_LOW_SKIP_REFLECTION_TRACE: Low keeps the projected silhouette fallback\r?\n#else\r?\n([\s\S]*?)\r?\n[ \t]*#endif/m,
+      '$1'
+    );
+  }
+  return source.replace('#version 300 es', `#version 300 es\n#define DROP_QUALITY ${fixed}`);
+}
+
+function dropCanvasPx(tier, dpr) {
+  const ratio = Math.max(1, dpr || 1);
+  if (tier === DROP_Q.ULTRA) return Math.min(2048, Math.round(300 * ratio * 1.5));
+  const base = 300 * Math.min(2, ratio);
+  return Math.round(tier === DROP_Q.LOW ? base * 0.75 : base);
+}
+
+function dropQualityInit(nowMs, forcedTier) {
+  const forced = forcedTier != null && Number.isInteger(forcedTier) && forcedTier >= DROP_Q.LOW && forcedTier <= DROP_Q.ULTRA;
+  return {
+    tier: forced ? forcedTier : DROP_Q.HIGH,
+    activeTier: DROP_Q.LOW,
+    forced,
+    autoCompileBlocked: false,
+    windows: [],
+    currentWindow: null,
+    recentFrames: [],
+    refreshMs: null,
+    targetFrameMs: 1000 / 60,
+    nextRenderAt: null,
+    goodSince: null,
+    lastChange: nowMs,
+    cooldownUntil: nowMs,
+    ignoreUntil: nowMs,
+    hidden: false,
+    capProbed: false,
+    capHold: false,
+    capHoldUntil: nowMs,
+    upgradePending: false,
+    trial: null,
+    failedUpgrades: [],
+    holdUntil: nowMs,
+    thermalPauseUntil: nowMs,
+  };
+}
+
+function dropQualityClearWindow(state) {
+  state.windows = [];
+  state.currentWindow = null;
+  state.recentFrames = [];
+  state.nextRenderAt = null;
+  state.goodSince = null;
+}
+
+function dropQualitySwitched(state, tier, nowMs) {
+  const oldTier = state.activeTier;
+  state.activeTier = tier;
+  state.ignoreUntil = nowMs + 1000;
+  state.lastChange = nowMs;
+  dropQualityClearWindow(state);
+  if (state.upgradePending && tier > oldTier) {
+    state.trial = { tier, started: nowMs };
+    state.upgradePending = false;
+  } else if (tier < oldTier) {
+    state.trial = null;
+    state.cooldownUntil = nowMs + 5000;
+  }
+}
+
+function dropQualityVisibility(state, visible, nowMs) {
+  state.hidden = !visible;
+  if (visible) {
+    state.capHold = false;
+    state.capHoldUntil = nowMs;
+  }
+  dropQualityClearWindow(state);
+  state.ignoreUntil = nowMs + 1000;
+  state.goodSince = null;
+  state.nextRenderAt = null;
+  if (visible && state.trial) state.trial.started = nowMs;
+}
+
+function dropQualityFrameDue(state, nowMs) {
+  if (state.nextRenderAt == null) {
+    state.nextRenderAt = nowMs + state.targetFrameMs;
+    return true;
+  }
+  if (nowMs + 0.25 < state.nextRenderAt) return false;
+  state.nextRenderAt = nowMs + state.targetFrameMs;
+  return true;
+}
+
+function dropQualityMedian(values) {
+  if (!values.length) return 0;
+  const sorted = values.slice().sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+}
+
+function dropQualityStep(state, nowMs, frameMs) {
+  if (state.forced || state.autoCompileBlocked || state.hidden) return state.tier;
+  if (!Number.isFinite(frameMs) || frameMs <= 0 || frameMs > 250) {
+    dropQualityClearWindow(state);
+    return state.tier;
+  }
+  if (nowMs < state.ignoreUntil) return state.tier;
+
+  state.recentFrames.push({ end: nowMs, ms: frameMs });
+  while (state.recentFrames.length && state.recentFrames[0].end < nowMs - 30000) state.recentFrames.shift();
+  if (state.recentFrames.length >= 8) {
+    const first = state.recentFrames.slice(0, 8).map(frame => frame.ms);
+    state.refreshMs = dropQualityMedian(first);
+  }
+
+  const refreshHz = state.refreshMs ? 1000 / state.refreshMs : 60;
+  const targetMs = refreshHz >= 110 ? 1000 / 60 : (refreshHz >= 80 ? 1000 / 45 : 1000 / 60);
+  state.targetFrameMs = targetMs;
+  const windowIndex = Math.floor(nowMs / 250);
+  if (!state.currentWindow) state.currentWindow = { index: windowIndex, start: nowMs, slots: 0, missed: 0 };
+  if (windowIndex !== state.currentWindow.index) {
+    const previous = state.currentWindow;
+    if (previous.slots && nowMs - previous.start >= 200) {
+      previous.end = nowMs;
+      previous.bad = previous.missed / previous.slots > 0.15;
+      state.windows.push(previous);
+      if (state.windows.length > 80) state.windows.shift();
+      if (previous.bad) state.goodSince = null;
+      else if (state.goodSince == null) state.goodSince = nowMs;
+    }
+    state.currentWindow = { index: windowIndex, start: nowMs, slots: 0, missed: 0 };
+  }
+
+  const slots = Math.max(1, Math.round(frameMs / targetMs));
+  state.currentWindow.slots += slots;
+  state.currentWindow.missed += Math.max(0, slots - 1);
+  const recent = state.recentFrames.slice(-16).map(frame => frame.ms);
+  if (!state.capProbed && recent.length >= 8) {
+    const median = dropQualityMedian(recent);
+    const jitter = dropQualityMedian(recent.map(value => Math.abs(value - median)));
+    if (median >= 31 && median <= 35 && jitter <= 1.5 && state.tier > DROP_Q.LOW) {
+      state.capProbed = true;
+      state.capHold = true;
+      state.capHoldUntil = nowMs + 10000;
+      state.tier--;
+      state.lastChange = nowMs;
+      dropQualityClearWindow(state);
+      return state.tier;
+    }
+  }
+
+  const completed = state.windows.slice(-8);
+  const badCount = completed.filter(window => window.bad).length;
+  if (state.trial && nowMs - state.trial.started >= 4000) {
+    const trialWindows = state.windows.filter(window => window.start >= state.trial.started + 1000);
+    if (trialWindows.filter(window => window.bad).length >= 2) {
+      state.failedUpgrades = state.failedUpgrades.filter(time => time >= nowMs - 60000);
+      state.failedUpgrades.push(nowMs);
+      state.tier = Math.max(DROP_Q.LOW, state.tier - 1);
+      state.trial = null;
+      state.cooldownUntil = nowMs + 5000;
+      if (state.failedUpgrades.length >= 3) state.holdUntil = nowMs + 60000;
+      return state.tier;
+    }
+    state.trial = null;
+    state.cooldownUntil = nowMs + 10000;
+  }
+  if (state.capHold && nowMs < state.capHoldUntil) return state.tier;
+  if (state.capHold) state.capHold = false;
+  if (badCount >= 6 && state.tier > DROP_Q.LOW && nowMs >= state.cooldownUntil && !state.trial) {
+    state.tier--;
+    state.lastChange = nowMs;
+    state.cooldownUntil = nowMs + 5000;
+    state.trial = null;
+    return state.tier;
+  }
+  const longWindows = state.windows.filter(window => window.end >= nowMs - 20000);
+  if (longWindows.length >= 64) {
+    const early = longWindows.filter(window => window.end < nowMs - 10000);
+    const late = longWindows.filter(window => window.end >= nowMs - 5000);
+    const rate = list => list.length ? list.reduce((sum, window) => sum + window.missed / Math.max(1, window.slots), 0) / list.length : 0;
+    if (early.length >= 16 && late.length >= 16 && rate(late) - rate(early) > 0.20) state.thermalPauseUntil = nowMs + 30000;
+  }
+  if (badCount === 0 && state.goodSince != null && nowMs >= state.cooldownUntil && nowMs >= state.holdUntil
+      && nowMs >= state.thermalPauseUntil && !state.trial && !state.upgradePending
+      && state.tier < DROP_Q.ULTRA && nowMs - state.goodSince >= 8000) {
+    state.tier++;
+    state.upgradePending = true;
+    state.lastChange = nowMs;
+  }
+  return state.tier;
+}
+
+function dropMeshModes(modes, rings, segs, obl, b2) {
+  const verts = [], scale = dropModeScale(modes);
+  for (let i = 0; i <= rings; i++) {
+    const phi = (i / rings) * Math.PI;
+    const sp = Math.sin(phi), cp = Math.cos(phi);
+    const flat = 1 - obl * cp * cp;
+    const lobes = modes.map(mode => Math.pow(sp, mode.n));
+    for (let j = 0; j <= segs; j++) {
+      const th = (j / segs) * Math.PI * 2;
+      let radius = 1;
+      for (let k = 0; k < modes.length; k++) {
+        const mode = modes[k], q = mode.a * scale * mode.c;
+        const angle = mode.n * th - (mode.rot || 0), lobe = lobes[k];
+        const term = q * lobe * Math.cos(angle);
+        radius += term + b2 * q * q * lobe * lobe * Math.cos(2 * angle);
+        if (cp > 0) radius += DROP_TOP_EPS * term * cp;
+      }
+      const r = radius * flat;
+      verts.push({ x: r * sp * Math.cos(th), y: r * cp, z: r * sp * Math.sin(th), r });
+    }
+  }
+  return { verts, rings, segs };
+}
+
+window.DropPhysics = {
+  DROP_B2, DROP_A_MAX, DROP_OBL_BASE, DROP_OBL_VOL, DROP_OBL_MAX, DROP_TOP_EPS,
+  DROP_LAMB_R, DROP_LAMB_NU, DROP_LAB_HZ, DROP_TAU_RANGE, DROP_SPEED_RANGE,
+  DROP_SPEED_DEFAULT, DROP_VOLUME_DEFAULT, DROP_MIX_RATIO, DROP_Q,
+  dropFlip, dropAmp, dropModeScale, dropScaleModes, dropStar, dropOblate, dropTopDisp,
+  dropLambTau, dropModeTrack, dropMixWeight, dropSecondMode, dropSpeedClamp,
+  dropVolumeClamp, dropToneGain, dropSpeedFromSlider, dropSliderFromSpeed, dropSlowmo, dropAdvance,
+  dropMeshModes, dropQualityFromQuery, dropCanvasPx, dropShaderSourceForQuality,
+  dropQualityInit, dropQualityStep, dropQualitySwitched, dropQualityVisibility, dropQualityFrameDue
+};
+// drop-physics:end
+
+const DROP_Q_FORCED = dropQualityFromQuery(location.search);
+const DROP_Q_STARTUP_POLICY = Object.freeze({
+  forced: DROP_Q_FORCED != null,
+  tier: DROP_Q_FORCED == null ? DROP_Q.HIGH : DROP_Q_FORCED,
+});
+let dropQ = dropQualityInit(performance.now(), DROP_Q_FORCED);
+function dropQualityForce(tier) {
+  const activeTier = dropRenderer.activeTier == null ? DROP_Q.LOW : dropRenderer.activeTier;
+  const capProbed = dropQ.capProbed;
+  dropQ = dropQualityInit(performance.now(), tier);
+  dropQ.capProbed = capProbed;
+  dropQ.activeTier = activeTier;
+  dropQ.autoCompileBlocked = dropRenderer.hasParallelCompile === false && !dropQ.forced;
+  dropSizeCanvas();
+  requestDropTier(dropQ.tier, { forced: dropQ.forced });
+  return dropQ.tier;
+}
+
+let dropSpeedHz = DROP_SPEED_DEFAULT;
+let dropCycles = 0, dropCycles2 = 0, dropTimeSec = 0, dropTrack = null;
+
 // ---------- 3D γεωμετρία σταγόνας (sectoral σφαιρική αρμονική Y_n^n) ----------
 // Το πλήθος δακτυλίων ΠΡΕΠΕΙ να είναι ζυγό: το τεστ του ισημερινού διαβάζει τον
 // δακτύλιο rings/2 και θέλει να πέφτει ακριβώς πάνω στο φ=π/2.
 const DROP_RINGS = 28, DROP_SEGS = 64;
+const DROP_FALLBACK_RINGS = 22, DROP_FALLBACK_SEGS = 52;
 
 // ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: οι κορυφές της παραμορφωμένης σφαίρας σε μοναδιαίο χώρο.
 //   r(θ,φ) = [1 + amp · sinⁿ(φ) · cos(nθ − rot)] · (1 − obl · cos²φ)
@@ -954,22 +1447,7 @@ const DROP_RINGS = 28, DROP_SEGS = 64;
 // Η προεπιλογή obl = 0 είναι δέσμευση, όχι ευκολία: κρατάει το εφεδρικό μονοπάτι και
 // τους έλεγχους 1–6 του probe αυτολεξεί ίδιους.
 function dropMesh(n, amp, rot, rings, segs, obl) {
-  rings = rings || DROP_RINGS;
-  segs = segs || DROP_SEGS;
-  obl = obl || 0;
-  const verts = [];
-  for (let i = 0; i <= rings; i++) {
-    const phi = (i / rings) * Math.PI;
-    const sp = Math.sin(phi), cp = Math.cos(phi);
-    const lobe = Math.pow(sp, n);          // sinⁿ(φ): 0 στους πόλους, 1 στον ισημερινό
-    const flat = 1 - obl * cp * cp;        // πεπλάτυσμα: 1 στον ισημερινό, 1−obl στους πόλους
-    for (let j = 0; j <= segs; j++) {
-      const th = (j / segs) * Math.PI * 2;
-      const r = (1 + amp * lobe * Math.cos(n * th - rot)) * flat;
-      verts.push({ x: r * sp * Math.cos(th), y: r * cp, z: r * sp * Math.sin(th), r: r });
-    }
-  }
-  return { verts: verts, rings: rings, segs: segs };
+  return dropMeshModes([{ n, a: amp, c: 1, rot }], rings || DROP_RINGS, segs || DROP_SEGS, obl || 0, 0);
 }
 
 // ΚΑΘΑΡΗ ΣΥΝΑΡΤΗΣΗ: yaw γύρω από τον κατακόρυφο άξονα y, μετά pitch γύρω από τον x.
@@ -988,21 +1466,6 @@ function projectMesh(verts, yaw, pitch) {
   return out;
 }
 
-// ---------- η φυσική της ακουστικής παγίδας, καθαρές συναρτήσεις ----------
-// Πόσο πλατένει η ακουστική πίεση τη σταγόνα. Μια αληθινή αιωρούμενη σταγόνα ΔΕΝ είναι
-// σφαίρα: η πίεση του ήχου τη σπρώχνει από πάνω και από κάτω και τη κάνει δισκάκι.
-const DROP_OBLATE = 0.28;
-// Ο ρυθμός που αναπνέουν οι λοβοί, σε rad/s της φάσης κίνησης (ΟΧΙ της συχνότητας ήχου).
-const DROP_PULSE_W = 1.9;
-
-// ΣΤΑΣΙΜΟ κύμα, όχι τρεχούμενη φάση. Στην πραγματικότητα οι λοβοί μεγαλώνουν, χάνονται
-// περνώντας από τη σφαίρα, και ξαναβγαίνουν — η σταγόνα δεν στριφογυρίζει σαν στερεό.
-// Το κάτω φράγμα 0.35 κρατά το αστέρι αναγνωρίσιμο στο πέρασμα, αλλιώς η καρτέλα δείχνει
-// μια στιγμή σκέτη μπάλα και ο χρήστης νομίζει ότι χάλασε.
-function dropPulse(phase) {
-  return 0.675 + 0.325 * Math.sin(phase * DROP_PULSE_W);
-}
-
 // Το λίκνισμα μέσα στην παγίδα. Δύο ασύμμετρες περίοδοι, ώστε να μη φαίνεται μηχανικό.
 // ΜΗΔΕΝ ΑΚΡΙΒΩΣ στη φάση 0: οι υπογραφές καμβά του golden ζωγραφίζονται στη φάση 0 και
 // πρέπει να είναι επαναλήψιμες στο pixel.
@@ -1010,17 +1473,9 @@ function dropBob(phase) {
   return { x: Math.sin(phase * 0.63) * 0.014, y: Math.sin(phase * 0.91) * 0.022 };
 }
 
-// Η ΚΑΜΕΡΑ — και είναι ΑΛΛΟ ΠΡΑΓΜΑ από το rot της φυσικής. Το rot είναι η φάση του
-// κύματος και τρέχει μόνο του· αυτά εδώ είναι η ματιά του χρήστη και αλλάζουν μόνο
-// όταν σύρει. Η σταγόνα πάλλεται ακόμα κι όταν κανείς δεν την αγγίζει.
-// Η ΠΡΟΕΠΙΛΕΓΜΕΝΗ ΓΩΝΙΑ ΕΙΝΑΙ ΜΕΡΟΣ ΤΟΥ ΑΠΟΤΕΛΕΣΜΑΤΟΣ, ΟΧΙ ΔΙΑΚΟΣΜΗΣΗ.
-// Στις 20 μοίρες κοιτάς τη σταγόνα από ψηλά και οι λοβοί του ισημερινού προβάλλονται
-// σαν δύο «αυτιά» στα πλάγια — μοιάζει με πλάσμα, όχι με σταγόνα. Στις 8 μοίρες
-// βλέπεις ό,τι δείχνουν οι αληθινές φωτογραφίες ακουστικής αιώρησης: πεπλατυσμένο
-// δισκάκι με κυματιστό χείλος. Ο χρήστης μπορεί να γυρίσει όπου θέλει· αυτή είναι
-// απλώς η πρώτη ματιά, και η πρώτη ματιά ήταν ακριβώς το παράπονο.
-const DROP_YAW0 = 22 * Math.PI / 180, DROP_PITCH0 = 8 * Math.PI / 180;
-const DROP_PITCH_MAX = 85 * Math.PI / 180;   // πιο πέρα αναποδογυρίζει και χάνεσαι
+// The contour sweep selected 32°; yaw zero keeps the reference orientation. Drag orbits the full rig.
+const DROP_YAW0 = 0, DROP_PITCH0 = 32 * Math.PI / 180;
+const DROP_PITCH_MIN = 0, DROP_PITCH_MAX = 45 * Math.PI / 180;
 let dropYaw = DROP_YAW0, dropPitch = DROP_PITCH0;
 
 let chlShape = 'plate'; // 'plate' | 'drop'
@@ -1051,57 +1506,125 @@ function dropShade(t) {
 // του — ΑΚΟΜΑ ΚΑΙ ΣΕ ΣΧΟΛΙΟ — κόβει το literal και η σελίδα δεν φορτώνει καθόλου.
 // Τα σχόλια εδώ μέσα χρησιμοποιούν «γωνιακά». Συνέβη στο spike.
 const DROP_FS = `#version 300 es
+#ifndef DROP_QUALITY
+#define DROP_QUALITY -1
+#endif
 precision highp float;
 out vec4 fragColor;
 uniform vec2  uRes;
-uniform float uAmp, uTime, uYaw, uPitch, uStars, uObl, uPulse;
-uniform vec2  uRotCS;   // (cos rot, sin rot) — έτοιμο, ίδιο για όλο το καρέ
-uniform int   uN, uVariant, uDebug;
+uniform float uTime, uYaw, uPitch, uObl, uTop, uFence;
+uniform int   uN[3];
+uniform float uK1[3], uK2[3];
+uniform int   uModes, uKMax, uQuality, uScene, uVariant, uDebug, uAaSamples, uDisableShadow;
 uniform vec2  uBob;
 
 const float PI = 3.14159265;
+const float DROP_SCALE = 0.40;
+const vec2 SCENE_FRAME = vec2(0.0, 0.20);
+const vec3 EMITTER_CENTER = vec3(0.0, 8.0, 0.0);
+// A shallow depth leaves a clean gap above the drop at the 45° orbit limit.
+const vec3 EMITTER_RADII = vec3(3.0, 6.0, 2.0);
+const vec3 REFLECTOR_CENTER = vec3(0.0, 11.7, 0.0);
+const float REFLECTOR_CURVE = 14.0;
+const float REFLECTOR_RADIUS = 3.2;
 
-// ---- το σχήμα: sectoral σφαιρική αρμονική Y_n^n, όπως έχει η εφαρμογή
-//      r(θ,φ) = 1 + amp · pulse · sinⁿ(φ) · cos(nθ − rot)   (θ = atan2(z,x), φ από τον +y)
-// ΝΕΟ 1: το «pulse» είναι ΣΤΑΣΙΜΟ κύμα, από −1 ώς +1. Στην αληθινή αιωρούμενη σταγόνα
-//        οι λοβοί ΑΝΑΠΝΕΟΥΝ μέσα-έξω και περνούν από τη σφαίρα· δεν στριφογυρίζει
-//        σαν στερεό. Η περιστροφή μένει, αλλά αργή, από πάνω.
-// ΝΕΟ 2: το «uObl» πλατένει τη σταγόνα, όπως κάνει η ακουστική πίεση στην παγίδα.
-//        Ο όρος (1 − e·cos²φ) είναι ΑΚΡΙΒΩΣ 1 στον ισημερινό (cos φ = 0), άρα η
-//        ταυτότητα με τον δισδιάστατο τύπο — το τεστ του golden.py — ΔΕΝ πειράζεται.
-// ΧΩΡΙΣ ΚΑΜΙΑ ΥΠΕΡΒΑΤΙΚΗ ΣΥΝΑΡΤΗΣΗ. Η rad() καλείται ~250 φορές ΑΝΑ PIXEL (ιχνηλάτηση
-// εισόδου + εξόδου + κλίση, επί 4 δείγματα), και η παλιά της μορφή έκανε κάθε φορά
-// acos + atan + sin + cos + pow με ΔΕΚΑΔΙΚΟ εκθέτη (= exp(n·log x)). Σε Intel HD 3000
-// αυτό είναι ό,τι ακριβότερο υπάρχει, και ΑΥΤΟ ήταν που δεν άφηνε περιθώριο να γίνει
-// σωστά η ιχνηλάτηση. Και τα τρία φεύγουν με άλγεβρα, ΧΩΡΙΣ αλλαγή στο σχήμα:
-//   sin φ = ρ/L  όπου ρ = |(x,z)|      -> ούτε acos ούτε sin
-//   sinⁿφ        -> n πολλαπλασιασμοί στον ίδιο βρόχο
-//   cos(nθ − rot) = cos nθ · cos rot + sin nθ · sin rot, και τα cos nθ, sin nθ βγαίνουν
-//   από την αναδρομή του Chebyshev πάνω στο (cos θ, sin θ) = (x/ρ, z/ρ) -> ούτε atan
-//   ούτε cos. Το (cos rot, sin rot) έρχεται έτοιμο ως uniform: είναι ίδιο για όλο το καρέ.
+// Geometry probes retain their original framing and omit the apparatus.
+bool sceneEnabled(){ return uScene != 0 && uDebug != 1 && uDebug != 3; }
+float dropScale(){ return sceneEnabled() ? DROP_SCALE : 0.60; }
+vec3 dropCenter(){ return vec3(uBob / dropScale(), 0.0); }
+
+vec2 complexMultiply(vec2 a, vec2 b){
+  return vec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+vec2 complexPower(vec2 value, int exponent){
+  vec2 result = vec2(1.0, 0.0);
+  for (int bit = 0; bit < 4; bit++){
+    if ((exponent & 1) != 0){
+      result = complexMultiply(result, value);
+    }
+    exponent >>= 1;
+    if (exponent == 0) break;
+    value = complexMultiply(value, value);
+  }
+  return result;
+}
+
+// Evaluate only active modes and derive each second harmonic from its first.
 float rad(vec3 p){
   float L    = max(length(p), 1e-6);
   float cphi = clamp(p.y / L, -1.0, 1.0);
   float rho  = max(length(p.xz), 1e-9);
-  float u    = p.x / rho, v = p.z / rho;   // cos θ, sin θ
-  float sphi = rho / L;                    // sin φ, πάντα ≥ 0 — ταυτόσημο με το παλιό
-  float c = 1.0, s = 0.0, lobe = 1.0;
-  for (int i = 0; i < uN; i++){            // uniform όριο: ίδιο για ΟΛΑ τα pixel
-    float c2 = c * u - s * v;              // (cos kθ, sin kθ) -> (cos (k+1)θ, sin (k+1)θ)
-    s = s * u + c * v; c = c2;
-    lobe *= sphi;
+  float u    = p.x / rho, v = p.z / rho;
+  float star = 1.0;
+  for (int i = 0; i < 3; i++){
+    if (i >= uModes) break;
+    int n = uN[i];
+    vec2 harmonic = complexPower(vec2(u, v), n);
+    float powerN = 1.0;
+    for (int j = 0; j < n; j++){
+      powerN *= rho / L;
+    }
+    float term = uK1[i] * powerN * harmonic.x;
+    star += term;
+    // Approximate the vertical top-surface displacement radially, on top only.
+    if (cphi > 0.0) star += uTop * term * cphi;
+    float power2N = powerN * powerN;
+    star += uK2[i] * power2N * complexMultiply(harmonic, harmonic).x;
   }
-  float star = 1.0 + uAmp * uPulse * lobe * (c * uRotCS.x + s * uRotCS.y);
   return star * (1.0 - uObl * cphi * cphi);
 }
 float F(vec3 p){ return length(p) - rad(p); }   // <0 μέσα, >0 έξω
 
 vec3 grad(vec3 p){
   float e = 0.0016;
-  return normalize(vec3(
-    F(p + vec3(e,0,0)) - F(p - vec3(e,0,0)),
-    F(p + vec3(0,e,0)) - F(p - vec3(0,e,0)),
-    F(p + vec3(0,0,e)) - F(p - vec3(0,0,e))));
+  vec3 derivative = vec3(0.0);
+  float positive = 0.0;
+  for (int sampleIndex = 0; sampleIndex < 6; sampleIndex++){
+    vec3 axis = sampleIndex < 2 ? vec3(e,0,0)
+              : sampleIndex < 4 ? vec3(0,e,0)
+                                : vec3(0,0,e);
+    bool plus = (sampleIndex % 2) == 0;
+    vec3 samplePoint = plus ? p + axis : p - axis;
+    float value = F(samplePoint);
+    if (plus) positive = value;
+    else {
+      float difference = positive - value;
+      if (sampleIndex == 1) derivative.x = difference;
+      else if (sampleIndex == 3) derivative.y = difference;
+      else derivative.z = difference;
+    }
+  }
+  return normalize(derivative);
+}
+
+// F is not a signed-distance function; refine only an evaluated inside/outside bracket.
+bool refineDropExit(vec3 origin, vec3 direction, float insideT, float outsideT, out float hitT){
+  float lo = insideT, hi = outsideT;
+  float fLo = 0.0, fHi = 0.0, bestAbs = 0.0;
+  hitT = lo;
+  for (int visit = -2; visit < 12; visit++){
+    float sampleT = visit == -2 ? lo
+                  : visit == -1 ? hi
+                                : 0.5 * (lo + hi);
+    float value = F(origin + direction * sampleT);
+    if (visit == -2){
+      fLo = value;
+      bestAbs = abs(fLo);
+      continue;
+    }
+    if (visit == -1){
+      fHi = value;
+      if (abs(fHi) < bestAbs){ hitT = hi; bestAbs = abs(fHi); }
+      if (fLo > 0.0 || fHi <= 0.0) return false;
+      continue;
+    }
+    float absMid = abs(value);
+    if (absMid < bestAbs){ hitT = sampleT; bestAbs = absMid; }
+    if (absMid <= 0.0005) break;
+    if (value > 0.0){ hi = sampleT; fHi = value; }
+    else { lo = sampleT; fLo = value; }
+  }
+  return bestAbs <= 0.002;
 }
 
 // αντικείμενο -> κάμερα (ΙΔΙΑ σειρά με το projectMesh: yaw γύρω από y, μετά pitch γύρω από x)
@@ -1119,21 +1642,15 @@ mat3 camM(){
   );
 }
 
-float hash(vec2 p){ return fract(sin(dot(p, vec2(41.3, 289.7))) * 43758.5453); }
-
-// το φόντο της εφαρμογής (#1d1440 -> #120b28), προαιρετικά με αστέρια
+// The application's dark purple background, converted from sRGB below.
 vec3 bg(vec2 uv){
   float d = length(uv);
   vec3 c = mix(vec3(0.114,0.078,0.251), vec3(0.071,0.043,0.157), clamp(d/1.45, 0.0, 1.0));
-  if (uStars > 0.5){
-    vec2 g = uv * 7.0, id = floor(g), fr = fract(g) - 0.5;
-    float h = hash(id);
-    if (h > 0.82){
-      vec2 off = (vec2(hash(id + 7.3), hash(id + 13.1)) - 0.5) * 0.7;
-      float s = smoothstep(0.30, 0.0, length(fr - off));
-      float tw = 0.55 + 0.45 * sin(uTime * 1.6 + h * 37.0);
-      c += vec3(0.88,0.86,1.0) * s * 0.85 * tw;
-    }
+  if (sceneEnabled()){
+    vec2 lightUv = (uv - SCENE_FRAME) / vec2(0.76, 0.90);
+    float backlight = exp(-2.2 * dot(lightUv, lightUv));
+    // Specify the backlight in sRGB, so its final maximum stays below 35%.
+    c = mix(c, vec3(0.30, 0.32, 0.34), backlight);
   }
   // ΤΟ ΒΑΣΙΚΟ ΛΑΘΟΣ ΤΗΣ ΠΡΩΤΗΣ ΔΟΚΙΜΗΣ: αυτά τα χρώματα είναι sRGB (κλεμμένα από το
   // CSS της εφαρμογής), και στο τέλος περνούσαν ΞΑΝΑ από γάμμα — δηλαδή δύο φορές.
@@ -1148,6 +1665,7 @@ vec3 bg(vec2 uv){
 // ένα μεγάλο απαλό «παράθυρο» πάνω αριστερά, μια κοφτή κηλίδα μέσα του, κι ένα ψυχρό
 // γέμισμα από κάτω δεξιά που ξεχωρίζει το κάτω χείλος από το φόντο.
 const vec3 KEYDIR = normalize(vec3(-0.42, 0.62, 0.66));
+const vec3 LIGHT_TOP = normalize(vec3(-0.2, 1.0, -0.35));
 vec3 env(vec3 d, vec3 keyCol){
   vec3 L2 = normalize(vec3( 0.58,-0.36, 0.42));
   float kd = max(dot(d, KEYDIR), 0.0);
@@ -1169,87 +1687,279 @@ vec3 env(vec3 d, vec3 keyCol){
              + vec3(0.42,0.62,1.0) * fill + vec3(0.62,0.78,1.0) * spec2;
 }
 
-// Χρωματίζει ΕΝΑ δείγμα και επιστρέφει ΓΡΑΜΜΙΚΟ χρώμα. Η γάμμα μπαίνει μία φορά, στη
-// main(), αφού μέσοι όροι χρωμάτων έχουν νόημα μόνο σε γραμμικό χώρο.
-vec3 shade(vec2 uv){
-  // Το gl_FragCoord.y μετράει ΠΡΟΣ ΤΑ ΠΑΝΩ (0 = κάτω άκρη), σε αντίθεση με τον καμβά 2D.
-  // Άρα το uv είναι ήδη y-πάνω και ταιριάζει με τον χώρο κάμερας. Αν το αναστρέψουμε
-  // «για να μοιάσει με τον 2D», η σταγόνα γυρίζει ανάποδα και το φως έρχεται από κάτω.
-  vec3 base = bg(uv);
+// All rays use world coordinates. Only the drop moves; the rig stays fixed.
+bool dropFence(vec3 ro, vec3 rd, out float nearT, out float farT){
+  vec3 oc = ro - dropCenter();
+  float b = dot(oc, rd);
+  float h = b*b - dot(oc, oc) + uFence*uFence;
+  nearT = 0.0; farT = 0.0;
+  if (h < 0.0) return false;
+  float root = sqrt(max(h, 0.0));
+  nearT = max(0.0, -b - root);
+  farT = -b + root;
+  return farT >= nearT;
+}
 
-  // απαλή άλως, όπως η σημερινή (σε γραμμικό χώρο -> πολύ μικρότερος συντελεστής)
-  base += vec3(1.0,0.60,0.25) * 0.035 * smoothstep(0.95, 0.0, length(uv));
-
-  // ΑΙΩΡΕΙΤΑΙ: λικνίζεται ελαφρά μέσα στην ακουστική παγίδα. Μετακινούμε ΜΟΝΟ τη
-  // σταγόνα, όχι το φόντο — έτσι τη βλέπεις να πλανιέται πάνω από τα αστέρια.
-
-  float R  = 1.0 + uAmp;                         // σφαίρα-φράχτης, κολλητά στην επιφάνεια
-  vec2  q  = (uv - uBob) / 0.60;                 // ακτίνα σταγόνας 1 == 0.60 του μισού πλάτους
-  // ΜΠΛΕ στο debug: σημαδεύει το «σίγουρα έξω». Χωρίς αυτό το τεστ δεν μπορεί να πει
-  // ποιο κόκκινο είναι νόμιμο φόντο ΓΥΡΩ από τη σταγόνα και ποιο είναι τρύπα ΜΕΣΑ της,
-  // γιατί το κόκκινο δεν αγγίζει ποτέ την άκρη του καμβά για να ξεκινήσει η πλημμύρα.
-  if (dot(q,q) > R*R) return (uDebug == 1) ? vec3(0.0, 0.0, 4.0) : base;
-
-  mat3 M  = camM();
-  mat3 Mi = transpose(M);                        // στροφή -> ανάστροφη = αντίστροφη
-
-  float zEnter = sqrt(max(R*R - dot(q,q), 1e-6));
-  vec3 roCam = vec3(q, zEnter);                  // ορθή προβολή, ίδια με την εφαρμογή
-  vec3 rdCam = vec3(0.0, 0.0, -1.0);
-  vec3 ro = Mi * roCam, rd = Mi * rdCam;
-
-  // --- πρώτη επιφάνεια. Ξεκινάμε ΠΑΝΩ στον φράχτη, άρα είμαστε ήδη σχεδόν στο δέρμα.
-  float t = 0.0, tMax = 2.0 * zEnter;
-  bool hit = false;
-  // ΤΟ ΣΦΑΛΜΑ ΠΟΥ ΕΚΟΒΕ ΤΟΥΣ ΛΟΒΟΥΣ, ΚΑΙ ΓΙΑΤΙ ΤΟ ΜΟΝΟΠΑΤΙ ΕΙΝΑΙ ΔΙΠΛΟ.
-  // Το F δεν είναι αληθινή απόσταση — είναι length(p) − rad(p) — και υποτιμά χοντρά την
-  // απόσταση όταν η ακτίνα περνάει ΞΥΣΤΑ. Εκεί ο ιχνηλάτης σέρνεται με βήματα 0.004 και
-  // τα 28 βήματα τελειώνουν ΠΡΙΝ αγγίξει: το pixel γυρίζει φόντο, και με n=5 (432Hz),
-  // όπου η επιφάνεια έχει βαθιά φαράγγια, ο λοβός φαινόταν ΑΠΟΚΟΜΜΕΝΟΣ — «αυτιά».
-  // Με n=2 (240Hz) η επιφάνεια είναι σχεδόν σφαίρα και δεν φαινόταν τίποτα· γι' αυτό
-  // επέζησε. Επαληθεύτηκε βάφοντας κόκκινο την αστοχία (uDebug) — δες dropTraceSig.
-  //
-  // Η ΘΕΡΑΠΕΙΑ ΕΙΝΑΙ ΔΥΟ ΜΟΝΟΠΑΤΙΑ, ΓΙΑΤΙ ΤΟ ΕΝΑ ΔΕΝ ΦΤΑΝΕΙ:
-  //  - σκέτη αύξηση βημάτων (28->96): καθάρισε την εικόνα, ΕΡΙΞΕ τα fps στα 38.
-  //  - σκέτη σάρωση παντού: σταθερό κόστος, αλλά το πληρώνουν ΟΛΑ τα pixel.
-  // Τα ξυστά pixel είναι μειοψηφία: κρατάμε το γρήγορο sphere tracing για όλους και
-  // πληρώνουμε τη σάρωση ΜΟΝΟ όπου αυτό ξέμεινε από βήματα — που είναι, ακριβώς, το
-  // σημάδι ότι σερνόταν. Αν βγήκε από τον φράχτη, η αστοχία είναι ΓΝΗΣΙΑ: δεν ψάχνουμε.
-  bool starved = true;
+bool traceDrop(vec3 ro, vec3 rd, out float t){
+  float tNear, tMax;
+  t = 0.0;
+  if (!dropFence(ro, rd, tNear, tMax)) return false;
+  vec3 localRo = ro - dropCenter();
+  t = tNear;
+  bool hit = false, starved = true;
+  // F is radial displacement, not an exact SDF. Preserve the conservative
+  // primary step and the grazing-ray scan that prevents detached lobes.
   for (int i = 0; i < 28; i++){
-    float d = F(ro + rd*t);
+    float d = F(localRo + rd*t);
     if (d < 0.0009){ hit = true; starved = false; break; }
     t += max(d * 0.40, 0.004);
     if (t > tMax){ starved = false; break; }
   }
   if (!hit && starved){
-    // ΟΜΟΙΟΜΟΡΦΗ ΣΑΡΩΣΗ: δεν σέρνεται ποτέ, γιατί το βήμα δεν εξαρτάται από το F.
-    // Ψάχνει αλλαγή προσήμου και μετά διχοτομεί — 7 διχοτομήσεις = dt/128 ≈ 0.0006,
-    // δηλαδή η ίδια ακρίβεια με το κατώφλι του γρήγορου μονοπατιού.
-    // ΔΕΝ ΣΑΡΩΝΟΥΜΕ ΑΠΟ ΤΗΝ ΑΡΧΗ. Το γρήγορο μονοπάτι έφτασε ήδη ώς το t με βήματα
-    // 0.40·F, και για το εύρος που δέχεται η εφαρμογή (n·amp ≤ ~2) αυτό είναι μέσα στο
-    // όριο Lipschitz της rad, άρα δεν προσπέρασε επιφάνεια. Κρατάμε μικρό περιθώριο
-    // πίσω για τα ακραία n. Έτσι το ίδιο πλήθος δειγμάτων πέφτει σε ΜΙΚΡΟΤΕΡΟ διάστημα:
-    // και φθηνότερο, και πιο ακριβές.
     const int NS = 20;
-    float t0s = max(0.0, t - 0.10);
+    float t0s = max(tNear, t - 0.10);
     float dt = (tMax - t0s) / float(NS), tPrev = t0s;
     for (int i = 1; i <= NS; i++){
       float ti = t0s + float(i) * dt;
-      if (F(ro + rd*ti) < 0.0){
+      if (F(localRo + rd*ti) < 0.0){
         float lo = tPrev, hi = ti;
         for (int k = 0; k < 7; k++){
           float m = 0.5 * (lo + hi);
-          if (F(ro + rd*m) < 0.0) hi = m; else lo = m;
+          if (F(localRo + rd*m) < 0.0) hi = m; else lo = m;
         }
         t = hi; hit = true; break;
       }
       tPrev = ti;
     }
   }
-  if (!hit) return (uDebug == 1) ? vec3(4.0, 0.0, 0.0) : base;
+  return hit;
+}
 
-  vec3 pObj = ro + rd*t;
+bool sphereRoots(vec3 ro, vec3 rd, vec3 center, float radius, out vec2 roots){
+  vec3 oc = ro - center;
+  float b = dot(oc, rd), h = b*b - dot(oc, oc) + radius*radius;
+  roots = vec2(0.0);
+  if (h < 0.0) return false;
+  roots = -b + vec2(-1.0, 1.0) * sqrt(h);
+  return roots.y > 0.001;
+}
+
+bool traceEmitter(vec3 ro, vec3 rd, out float t){
+  t = 1e5;
+  vec3 invR = 1.0 / EMITTER_RADII;
+  vec3 oc = (ro - EMITTER_CENTER) * invR, dir = rd * invR;
+  float a = dot(dir, dir), b = dot(oc, dir), h = b*b - a*(dot(oc,oc)-1.0);
+  if (h < 0.0) return false;
+  vec2 roots = (-b + vec2(-1.0, 1.0) * sqrt(h)) / a;
+  t = roots.x > 0.001 ? roots.x : roots.y;
+  return roots.y > 0.001;
+}
+
+bool traceReflector(vec3 ro, vec3 rd, out float t){
+  vec2 roots;
+  t = 1e5;
+  if (!sphereRoots(ro, rd, REFLECTOR_CENTER, REFLECTOR_CURVE, roots)) return false;
+  for (int i = 0; i < 2; i++){
+    float candidate = i == 0 ? roots.x : roots.y;
+    vec3 p = ro + rd*candidate;
+    if (candidate > 0.001 && p.y < REFLECTOR_CENTER.y &&
+        dot(p.xz, p.xz) <= REFLECTOR_RADIUS*REFLECTOR_RADIUS){
+      t = candidate;
+      return true;
+    }
+  }
+  return false;
+}
+
+float softShadow(vec3 p, vec3 L){
+  float tNear, tFar;
+  // Most reflector rays miss the drop. Reject them before evaluating F.
+  if (!dropFence(p, L, tNear, tFar)) return 1.0;
+  vec3 localP = p - dropCenter();
+  float t = max(tNear, 0.006), res = 1.0;
+  for (int i = 0; i < 24; i++){
+    float d = F(localP + L*t);
+    if (d < 0.0009) return 0.0;
+    res = min(res, 8.0 * 0.5 * d / max(t, 0.006));
+    // This is the same conservative non-SDF step as traceDrop.
+    t += max(d * 0.40, 0.004);
+    if (t > tFar) break;
+  }
+  return clamp(res, 0.0, 1.0);
+}
+
+float dropCaustic(vec3 p, vec3 lightRay){
+  // Approximate the mode-dependent drop with the local sphere radius. The exact
+  // sphere chord keeps this reflector pass bounded without nesting traceDrop here.
+  vec3 center = dropCenter();
+  vec3 L = normalize(lightRay);
+  float along = dot(center - p, L);
+  if (along <= 0.0) return 0.0;
+  vec3 closest = p + L*along;
+  float impact2 = dot(closest-center, closest-center);
+  float R = rad(closest-center);
+  if (impact2 >= R*R) return 0.0;
+  float halfChord = sqrt(max(R*R-impact2, 0.0));
+  vec3 entry = closest + L*halfChord;
+  vec3 nEntry = normalize(entry-center);
+  vec3 inside = refract(-L, nEntry, 1.0/1.333);
+  if (dot(inside, inside) < 0.001) return 0.0;
+  inside = normalize(inside);
+  float exitT = -2.0 * dot(entry-center, inside);
+  if (exitT <= 0.0) return 0.0;
+  vec3 exitPoint = entry + inside*exitT;
+  vec3 nExit = normalize(exitPoint-center);
+  vec3 outRay = refract(inside, -nExit, 1.333);
+  if (dot(outRay, outRay) < 0.001) outRay = reflect(inside, nExit);
+  // The refracted ray travels down to the reflector, opposite the upward light vector.
+  return pow(max(dot(outRay, -L), 0.0), 24.0) * 0.6;
+}
+
+vec3 dropCheap(vec3 p, vec3 rd){
+  mat3 M = camM();
+  vec3 N = grad(p - dropCenter());
+  float ct = max(dot(N, -rd), 0.0);
+  float fres = 0.02 + 0.98 * pow(1.0 - ct, 5.0);
+  vec3 reflected = env(M * reflect(rd, N), vec3(1.0, 0.97, 0.93));
+  vec2 uv = (M*p).xy * DROP_SCALE + SCENE_FRAME;
+  // Keep the reflected drop dark against the lit background behind it.
+  vec3 transmitted = bg(uv) * 0.12 + vec3(0.006, 0.008, 0.010);
+  transmitted = mix(transmitted, vec3(0.02), smoothstep(0.35, 0.95, 1.0-ct));
+  return mix(transmitted, reflected, fres) + vec3(0.035) * pow(1.0-ct, 3.2);
+}
+
+vec3 shadeEmitter(vec3 p, vec3 rd){
+  mat3 M = camM();
+  vec3 N = normalize((p - EMITTER_CENTER) / (EMITTER_RADII * EMITTER_RADII));
+  float diffuse = max(dot(M*N, KEYDIR), 0.0);
+  float rim = pow(1.0 - max(dot(N, -rd), 0.0), 7.0);
+  return vec3(0.03) * (0.025 + 0.12*diffuse) + vec3(0.004, 0.005, 0.007)*rim;
+}
+
+vec3 shadeReflector(vec3 p, vec3 rd, vec2 screenUv){
+  mat3 M = camM();
+  vec3 N = normalize(REFLECTOR_CENTER - p);
+  vec3 L = transpose(M) * KEYDIR;
+  float shadow = uDisableShadow != 0 ? 1.0 : softShadow(p + N*0.006, L);
+  float diffuse = max(dot(N, L), 0.0);
+  vec3 col = vec3(0.018, 0.021, 0.028) * (0.35 + 0.65*diffuse) * (0.45 + 0.55*shadow);
+#if DROP_QUALITY < 0
+  if (uQuality >= 2){
+#elif DROP_QUALITY >= 2
+  {
+#endif
+#if DROP_QUALITY < 0 || DROP_QUALITY >= 2
+    vec3 lightRay = transpose(M) * LIGHT_TOP;
+    float caustic = dropCaustic(p + N*0.006, lightRay);
+#if DROP_QUALITY < 0
+    if (uQuality == 3){
+#elif DROP_QUALITY == 3
+    {
+#endif
+#if DROP_QUALITY < 0 || DROP_QUALITY == 3
+      vec3 tangentLight = normalize(cross(abs(lightRay.y) < 0.95 ? vec3(0,1,0) : vec3(1,0,0), lightRay));
+      vec3 secondLightRay = normalize(lightRay*cos(0.03) + tangentLight*sin(0.03));
+      caustic = 0.5*(caustic + dropCaustic(p + N*0.006,
+        secondLightRay));
+    }
+#endif
+    col += vec3(1.0, 0.88, 0.70) * caustic;
+  }
+#endif
+  vec3 reflected = reflect(rd, N);
+  vec3 tangent = normalize(cross(abs(reflected.y) < 0.95 ? vec3(0,1,0) : vec3(1,0,0), reflected));
+  vec3 bitangent = cross(reflected, tangent);
+#if DROP_QUALITY < 0
+  int count = uQuality <= 0 ? 1 : (uQuality == 1 ? 2 : (uQuality == 2 ? 4 : 8));
+#elif DROP_QUALITY == 0
+  const int count = 1;
+#elif DROP_QUALITY == 1
+  const int count = 2;
+#elif DROP_QUALITY == 2
+  const int count = 4;
+#else
+  const int count = 8;
+#endif
+  vec3 reflection = vec3(0.0);
+  for (int i = 0; i < 8; i++){
+    if (i >= count) break;
+    float angle = float(i)*2.39996323;
+    float radius = count == 1 ? 0.0 : 0.06*sqrt((float(i)+0.5)/float(count));
+    vec3 ray = normalize(reflected + radius*(cos(angle)*tangent + sin(angle)*bitangent));
+    vec3 origin = p + N*0.006;
+    float tNear, tFar, tDrop;
+    float projectedT = max(0.0, dot(dropCenter() - origin, ray));
+    vec2 backgroundUv = (M * (origin + ray * projectedT)).xy * DROP_SCALE + SCENE_FRAME;
+    // Rays that miss the drop still see the backlight at their projected point.
+    // Project its soft dark silhouette over that light so the reflection remains visible
+    // even when the reflected ray narrowly misses the analytical surface.
+    vec2 dropUv = (M * dropCenter()).xy * DROP_SCALE + SCENE_FRAME;
+    vec3 projectedQ = transpose(M) * vec3((backgroundUv - dropUv) / DROP_SCALE, 0.0);
+    float profile = length(projectedQ) - rad(projectedQ);
+    float silhouette = 1.0 - smoothstep(-0.045, 0.075, profile);
+    vec3 sampleCol = mix(bg(backgroundUv), vec3(0.006, 0.008, 0.012), silhouette);
+#if DROP_QUALITY == 0
+    // BE_LOW_SKIP_REFLECTION_TRACE: Low keeps the projected silhouette fallback
+#else
+    // Test the translated analytical fence before running the expensive trace.
+    if (dropFence(origin, ray, tNear, tFar) && traceDrop(origin, ray, tDrop)){
+      sampleCol = dropCheap(origin + ray*tDrop, ray);
+    }
+#endif
+    reflection += sampleCol;
+  }
+  // Keep the reflected drop in the visible reflector area. A shallow bowl can send
+  // most camera rays past the small drop, so project the same backlight through its
+  // analytical silhouette as the stable fallback for those misses.
+  vec2 surfaceUv = screenUv;
+  vec2 dropUv = (M * dropCenter()).xy * DROP_SCALE + SCENE_FRAME;
+  vec2 imageCenter = dropUv - vec2(0.0, 0.70 * cos(uPitch));
+  vec2 imageUv = dropUv + (surfaceUv - imageCenter);
+  vec3 imageQ = transpose(M) * vec3((imageUv - dropUv) / DROP_SCALE, 0.0);
+  float imageProfile = length(imageQ) - rad(imageQ);
+  float imageMask = 1.0 - smoothstep(-0.055, 0.085, imageProfile);
+  vec3 projectedImage = mix(bg(imageUv), vec3(0.006, 0.008, 0.012), imageMask);
+  return col + 0.15 * reflection / float(count) + 0.95 * projectedImage;
+}
+
+// Χρωματίζει ΕΝΑ δείγμα και επιστρέφει ΓΡΑΜΜΙΚΟ χρώμα. Η γάμμα μπαίνει μία φορά, στη
+// main(), αφού μέσοι όροι χρωμάτων έχουν νόημα μόνο σε γραμμικό χώρο.
+vec3 shade(vec2 uv){
+  bool scene = sceneEnabled();
+  vec3 base = bg(uv);
+  if (!scene) base += vec3(1.0,0.60,0.25) * 0.035 * smoothstep(0.95, 0.0, length(uv));
+  mat3 M = camM(), Mi = transpose(M);
+  vec2 framing = scene ? SCENE_FRAME : vec2(0.0);
+  // Orbit one world-space ray around the entire apparatus, not just the drop.
+  vec3 ro = Mi * vec3((uv - framing) / dropScale(), 10.0);
+  vec3 rd = Mi * vec3(0.0, 0.0, -1.0);
+  float nearest = 1e5, candidate, tNear, tFar, t = 0.0;
+  int material = 0;
+  if (scene){
+    if (traceEmitter(ro, rd, candidate)){ nearest = candidate; material = 1; }
+    if (traceReflector(ro, rd, candidate) && candidate < nearest){ nearest = candidate; material = 2; }
+  }
+  bool inFence = dropFence(ro, rd, tNear, tFar);
+  bool hit = false;
+  if (inFence && tNear < nearest) hit = traceDrop(ro, rd, t);
+  if (hit && t < nearest){ nearest = t; material = 3; }
+  if (uDebug == 2){
+    if (material == 1) return vec3(1.0, 0.0, 0.0);
+    if (material == 2) return vec3(0.0, 1.0, 0.0);
+    if (material == 3) return vec3(1.0, 1.0, 0.0);
+    return vec3(0.0, 0.0, 1.0);
+  }
+  if (uDebug == 1 || uDebug == 3){
+    if (!inFence) return vec3(0.0, 0.0, 4.0);
+    if (!hit) return vec3(4.0, 0.0, 0.0);
+    // First-surface silhouette probes intentionally do not inspect the exit.
+    if (uDebug == 3) return vec3(1.0);
+  }
+  if (material == 0) return base;
+  vec3 pWorld = ro + rd*nearest;
+  if (material == 1) return shadeEmitter(pWorld, rd);
+  if (material == 2) return shadeReflector(pWorld, rd, uv);
+  vec3 pObj = pWorld - dropCenter();
   vec3 nObj = grad(pObj);
   vec3 N = normalize(M * nObj);
   vec3 V = vec3(0.0, 0.0, 1.0);                  // ορθή προβολή -> ο θεατής είναι πάντα +z
@@ -1273,6 +1983,18 @@ vec3 shade(vec2 uv){
   float fres = 0.02 + 0.98 * pow(1.0 - ct, 5.0);
 
   vec3 reflCol = env(reflect(-V, N), keyCol);
+#if DROP_QUALITY < 0
+  if (uQuality == 3){
+#elif DROP_QUALITY == 3
+  {
+#endif
+#if DROP_QUALITY < 0 || DROP_QUALITY == 3
+    vec3 mirrorRay = Mi * reflect(-V, N);
+    float emitterT;
+    if (traceEmitter(pWorld + mirrorRay*0.006, mirrorRay, emitterT))
+      reflCol = shadeEmitter(pWorld + mirrorRay*emitterT, mirrorRay);
+  }
+#endif
 
   // --- δεύτερη επιφάνεια: η σταγόνα δουλεύει ως ΦΑΚΟΣ, το πίσω μέρος γυρίζει ανάποδα
   vec3 rIn = refract(-V, N, 1.0/1.333);
@@ -1287,54 +2009,95 @@ vec3 shade(vec2 uv){
   // Η ΕΞΟΔΟΣ ΕΙΧΕ ΤΟ ΙΔΙΟ ΣΦΑΛΜΑ, ΔΕΥΤΕΡΗ ΦΟΡΑ. Το παλιό σχόλιο έλεγε ότι «μεγαλύτερο
   // βήμα» έλυσε την εξάντληση· δεν τη έλυσε, τη ΜΕΤΑΚΙΝΗΣΕ σε άλλες γωνίες, όπου η
   // δέσμη δεν έβγαινε ΠΟΤΕ από το νερό και το pixel έβγαινε σκοτεινή ραφή στο σώμα.
-  bool exited = false, starved2 = true;
+  bool exited = false, starved2 = true, haveInside = false;
+  bool haveExitBracket = false, exitBracket = false, exitUnbracketed = false;
+  bool exitRefinementFailed = false;
+  float lastInsideT = t2, exitOutsideT = t2;
   for (int i = 0; i < 30; i++){
     float d = F(pObj + rInObj*t2);
+    if (d > 0.0){
+      if (haveInside){ exitOutsideT = t2; haveExitBracket = true; }
+      else exitUnbracketed = true;
+      starved2 = false; break;
+    }
     if (d > -0.0009){ exited = true; starved2 = false; break; }
+    lastInsideT = t2; haveInside = true;
     t2 += max(-d * 0.75, 0.008);
     if (t2 > 3.0){ starved2 = false; break; }
   }
   if (!exited && starved2){
     const int NS2 = 24;
-    float dt2 = 2.60 / float(NS2);       // η διάμετρος δεν ξεπερνά το 2(1+amp) ≈ 2.56
+    float dt2 = (2.0 * uFence) / float(NS2); // Bound the exit scan by the enclosing diameter.
     for (int i = 1; i <= NS2; i++){
       float ti = t2 + float(i) * dt2;
-      if (F(pObj + rInObj*ti) > 0.0){
-        float lo = ti - dt2, hi = ti;
-        for (int k = 0; k < 6; k++){
-          float m = 0.5 * (lo + hi);
-          if (F(pObj + rInObj*m) > 0.0) hi = m; else lo = m;
-        }
-        t2 = hi; exited = true; break;
+      float di = F(pObj + rInObj*ti);
+      if (di > 0.0){
+        if (haveInside){ exitOutsideT = ti; haveExitBracket = true; }
+        else exitUnbracketed = true;
+        starved2 = false; break;
       }
+      if (di > -0.0009){ t2 = ti; exited = true; starved2 = false; break; }
+      lastInsideT = ti; haveInside = true;
     }
+  }
+  // Keep the refinement call outside both scans to avoid multiplying shader code inlining.
+  if (!exited && haveExitBracket){
+    float refinedT;
+    if (refineDropExit(pObj, rInObj, lastInsideT, exitOutsideT, refinedT)){
+      t2 = refinedT; exited = true; exitBracket = true;
+    } else exitRefinementFailed = true;
   }
   if (!exited && uDebug == 1) return vec3(0.0, 4.0, 0.0);
   thick = t2;
   vec3 pExitObj = pObj + rInObj*t2;
+  if (uDebug == 4){
+    // Residual categories preserve the normal scene frame and bypass antialias blending.
+    float exitResidual = abs(F(pExitObj));
+    if (!exited){
+      if (exitUnbracketed) return vec3(0.0, 0.0, 4.0);
+      if (exitRefinementFailed) return vec3(4.0, 0.0, 4.0);
+      return vec3(4.0, 4.0, 0.0);
+    }
+    if (isnan(exitResidual) || isinf(exitResidual)) return vec3(4.0, 0.0, 4.0);
+    if (!exitBracket && exitResidual > 0.0009) return vec3(0.0, 0.0, 4.0);
+    return exitResidual <= 0.002 ? vec3(0.0, 4.0, 0.0) : vec3(4.0, 0.0, 0.0);
+  }
   vec3 nExit = normalize(M * grad(pExitObj));
-  vec3 pExitCam = M * pExitObj;
+  vec3 pExitCam = M * (pExitObj + dropCenter());
 
-  // ΟΛΙΚΗ ΕΣΩΤΕΡΙΚΗ ΑΝΑΚΛΑΣΗ. Εκεί που η δέσμη δεν μπορεί να βγει, πριν δειγματοληπτούσαμε
-  // ΠΑΛΙ το φόντο — που είναι σχεδόν μαύρο — και η σταγόνα έβγαζε δύο σκούρες χαρακιές
-  // στα πλάγια που διαβάζονταν ως ΡΩΓΜΕΣ. Στο αληθινό νερό αυτές οι περιοχές είναι ΦΩΤΕΙΝΕΣ:
-  // η δέσμη καθρεφτίζεται μέσα και ξαναβγάζει το περιβάλλον. Το σημειώνουμε και το τιμάμε.
+  // The old abrupt dark TIR boundary looked like cracks. The scene now blends
+  // into a dark rim by incidence angle, continuously across the silhouette.
   bool tir = false;
   vec3 rOut = refract(rIn, -nExit, 1.333);
   if (dot(rOut, rOut) < 0.001 || !exited){ rOut = reflect(rIn, nExit); tir = true; }
 
   // Ο φακός: όσο πιο δυνατό το στράβωμα, τόσο πιο ΞΕΚΑΘΑΡΑ διαβάζεται ως νερό, γιατί
   // βλέπεις το φόντο να κουνιέται μέσα του. Με 0.85 τα αστέρια μόλις μετακινούνταν.
-  // +bob: το σημείο εξόδου είναι στον χώρο της σταγόνας, το φόντο ΔΕΝ λικνίζεται
-  vec2 uvOut = pExitCam.xy * 0.60 + uBob + rOut.xy * 1.70;
-  vec3 refrCol = tir ? env(rOut, keyCol) * 0.55 : bg(uvOut);
+  // The exit point includes the world-space bob; the backlight stays stationary.
+  vec2 uvOut = pExitCam.xy * dropScale() + framing + rOut.xy * 1.70;
+  vec3 refrCol = tir && !scene ? env(rOut, keyCol) * 0.55 : bg(uvOut);
+  if (scene) refrCol = mix(refrCol, vec3(0.02), smoothstep(0.35, 0.95, 1.0-ct));
 
   // Beer–Lambert. Η σταγόνα είναι ΕΝΑ ΧΙΛΙΟΣΤΟ νερό — δεν έχει πού να απορροφήσει.
   // Με 0.55/0.20/0.10 έβγαινε σκούρο μελιτζανί· το νερό σε αυτό το πάχος είναι άχρωμο
   // με ένα ελάχιστο κυανό (τρώει πρώτα το κόκκινο).
   refrCol *= exp(-thick * vec3(0.22, 0.075, 0.035));
-  // καυστική κηλίδα: εκεί που η δέσμη που βγαίνει κοιτάζει προς το φως
   refrCol += keyCol * pow(max(dot(rOut, KEYDIR), 0.0), 22.0) * 0.85;
+#if DROP_QUALITY < 0
+  if (uQuality == 3){
+#elif DROP_QUALITY == 3
+  {
+#endif
+#if DROP_QUALITY < 0 || DROP_QUALITY == 3
+    vec3 rInR = refract(-V, N, 1.0/1.331), rInG = refract(-V, N, 1.0/1.333), rInB = refract(-V, N, 1.0/1.337);
+    vec3 rOutR = refract(rInR, -nExit, 1.331), rOutG = refract(rInG, -nExit, 1.333), rOutB = refract(rInB, -nExit, 1.337);
+    vec3 dR = bg(pExitCam.xy*dropScale()+framing+rOutR.xy*1.70);
+    vec3 dG = bg(pExitCam.xy*dropScale()+framing+rOutG.xy*1.70);
+    vec3 dB = bg(pExitCam.xy*dropScale()+framing+rOutB.xy*1.70);
+    vec3 dispersed = vec3(dR.r,dG.g,dB.b) * exp(-thick*vec3(0.22,0.075,0.035));
+    refrCol = mix(refrCol, dispersed, 0.14);
+  }
+#endif
   // και το φως που «στέκεται» μέσα στο σώμα: χωρίς αυτό η κοιλιά είναι νεκρή τρύπα
   // Ήταν 0.10 και γέμιζε την κοιλιά με ομοιόμορφο γάλα. Κρατάμε ίχνος, μόνο για να
   // μη γίνει νεκρή μαύρη τρύπα εκεί που το πάχος είναι μεγάλο.
@@ -1342,6 +2105,7 @@ vec3 shade(vec2 uv){
 
   vec3 col = mix(refrCol, reflCol, fres);
   col += keyCol * pow(1.0 - ct, 3.2) * 0.20;                 // το φωτισμένο χείλος
+  if (scene) col = mix(col, vec3(0.02), smoothstep(0.62, 0.98, 1.0-ct));
   return max(col, 0.0);
 }
 
@@ -1356,26 +2120,33 @@ void main(){
   // τετραπλάσια pixel από τα 300x300, άρα ο χώρος υπάρχει ΗΔΗ μετρημένος.
   float sc = 0.5 * min(uRes.x, uRes.y);
   vec2 uv0 = (gl_FragCoord.xy - 0.5*uRes) / sc;
-  // ΣΤΟ DEBUG ΕΝΑ ΔΕΙΓΜΑ, ΟΧΙ ΤΕΣΣΕΡΑ. Ο μέσος όρος 4 δειγμάτων ανακατεύει κόκκινο με
-  // νερό και γεννά ενδιάμεσα pixel που το τεστ μετράει λανθασμένα ως «τρύπες» στην
-  // ακμή. Το debug δεν κοιτάζεται με το μάτι — θέλει ΚΑΘΑΡΗ κατηγορία ανά pixel.
-  if (uDebug == 1){ fragColor = vec4(pow(max(shade(uv0), 0.0), vec3(0.4545)), 1.0); return; }
+  // Debug uses one centered sample; regular one-sample AA keeps its rotated-grid offset.
+  bool debug = uDebug != 0;
+  int sampleLimit = debug ? 1 : uAaSamples;
   float e = 1.0 / sc;
   // ΠΡΟΣΑΡΜΟΣΤΙΚΗ ΑΝΤΙΕΞΟΜΑΛΥΝΣΗ. Η σωστή ιχνηλάτηση (βλ. starved) κοστίζει, και 4 δείγματα
   // σε ΚΑΘΕ pixel έριχναν τα fps στα ~42. Τα 2 σκέτα έβγαζαν σκαλοπάτι στην ακμή. Εδώ:
   // 2 διαγώνια δείγματα παντού, και τα άλλα 2 ΜΟΝΟ όπου διαφωνούν — δηλαδή στην ακμή
   // της σταγόνας και στις λάμψεις, εκεί όπου φαίνεται το σκαλοπάτι. Το εσωτερικό και το
   // φόντο είναι ομαλά και τα 2 δείγματα συμφωνούν ήδη.
-  vec3 s0 = shade(uv0 + e*vec2(-0.125,-0.375));
-  vec3 s1 = shade(uv0 + e*vec2( 0.125, 0.375));
-  vec3 acc;
-  vec3 dd = abs(s0 - s1);
-  if (max(dd.r, max(dd.g, dd.b)) > 0.04){
-    acc = (s0 + s1 + shade(uv0 + e*vec2( 0.375,-0.125))
-                   + shade(uv0 + e*vec2(-0.375, 0.125))) * 0.25;
-  } else {
-    acc = (s0 + s1) * 0.5;
+  vec3 acc = vec3(0.0), first = vec3(0.0);
+  int samples = 0;
+  for (int i = 0; i < sampleLimit; i++){
+    vec2 offset = i == 0 ? vec2(-0.125,-0.375)
+               : i == 1 ? vec2( 0.125, 0.375)
+               : i == 2 ? vec2( 0.375,-0.125)
+                        : vec2(-0.375, 0.125);
+    vec2 sampleUv = debug ? uv0 : uv0 + e*offset;
+    vec3 sampleCol = shade(sampleUv);
+    if (i == 0) first = sampleCol;
+    acc += sampleCol;
+    samples++;
+    if (i == 1){
+      vec3 dd = abs(first - sampleCol);
+      if (max(dd.r, max(dd.g, dd.b)) <= 0.04) break;
+    }
   }
+  acc /= float(samples);
   fragColor = vec4(pow(max(acc, 0.0), vec3(0.4545)), 1.0);   // γάμμα, ΜΙΑ φορά
 }`;
 const DROP_VS = `#version 300 es
@@ -1388,7 +2159,7 @@ void main(){
 // Ο καλών αποφασίζει τι κάνει με το null· εδώ δεν ξέρουμε αν υπάρχει εφεδρικό.
 // preserveDrawingBuffer: το readPixels των τεστ και το drawImage των καρτών PNG τρέχουν
 // ΜΕΤΑ τη σύνθεση του καρέ, και χωρίς αυτό βρίσκουν άδειο buffer.
-function dropGLCreate(canvas) {
+async function dropGLCreate(canvas, fixedQuality = null) {
   let gl = null;
   try {
     gl = canvas.getContext('webgl2', {
@@ -1398,62 +2169,284 @@ function dropGLCreate(canvas) {
   } catch (_) { return null; }
   if (!gl) return null;
 
+  const renderer = String(gl.getParameter(gl.RENDERER) || '');
+  const timerExt = /swiftshader|software/i.test(renderer)
+    ? null : gl.getExtension('EXT_disjoint_timer_query_webgl2');
+  let pendingTimer = null;
+
   const sh = (ty, src) => {
     const s = gl.createShader(ty);
     gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.warn('σταγόνα: ο shader δεν μεταγλωττίστηκε:', gl.getShaderInfoLog(s));
-      return null;
-    }
     return s;
   };
-  const vs = sh(gl.VERTEX_SHADER, DROP_VS), fs = sh(gl.FRAGMENT_SHADER, DROP_FS);
+  const fragmentSource = dropShaderSourceForQuality(DROP_FS, fixedQuality);
+  const vs = sh(gl.VERTEX_SHADER, DROP_VS), fs = sh(gl.FRAGMENT_SHADER, fragmentSource);
   if (!vs || !fs) return null;
   const prog = gl.createProgram();
   gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-    console.warn('σταγόνα: ο shader δεν συνδέθηκε:', gl.getProgramInfoLog(prog));
+  const parallel = gl.getExtension('KHR_parallel_shader_compile');
+  if (parallel) {
+    while (!gl.isContextLost() && !gl.getProgramParameter(prog, parallel.COMPLETION_STATUS_KHR)) {
+      await new Promise(requestAnimationFrame);
+    }
+  }
+  if (gl.isContextLost()) return null;
+  if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS) || !gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
+    console.warn('σταγόνα: ο shader δεν μεταγλωττίστηκε:', gl.getShaderInfoLog(!gl.getShaderParameter(vs, gl.COMPILE_STATUS) ? vs : fs));
+    gl.deleteShader(vs); gl.deleteShader(fs); gl.deleteProgram(prog);
     return null;
   }
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.warn('σταγόνα: ο shader δεν συνδέθηκε:', gl.getProgramInfoLog(prog));
+    gl.deleteShader(vs); gl.deleteShader(fs); gl.deleteProgram(prog);
+    return null;
+  }
+  gl.deleteShader(vs); gl.deleteShader(fs);
 
   const U = {};
-  for (const k of ['uRes', 'uAmp', 'uRot', 'uTime', 'uYaw', 'uPitch', 'uStars',
-                   'uObl', 'uPulse', 'uN', 'uVariant', 'uDebug', 'uBob', 'uRotCS']) {
+  for (const k of ['uRes', 'uTime', 'uYaw', 'uPitch', 'uObl', 'uTop', 'uFence',
+                   'uModes', 'uKMax', 'uQuality', 'uScene', 'uVariant', 'uDebug', 'uAaSamples', 'uDisableShadow', 'uBob']) {
     U[k] = gl.getUniformLocation(prog, k);
   }
+  for (const k of ['uN', 'uK1', 'uK2']) U[k] = gl.getUniformLocation(prog, k + '[0]');
+  const ns = new Int32Array(3), k1 = new Float32Array(3), k2 = new Float32Array(3);
+
+  const gpuMs = () => {
+    if (!timerExt || !pendingTimer) return null;
+    if (gl.getParameter(timerExt.GPU_DISJOINT_EXT)) {
+      gl.deleteQuery(pendingTimer);
+      pendingTimer = null;
+      return null;
+    }
+    if (!gl.getQueryParameter(pendingTimer, gl.QUERY_RESULT_AVAILABLE)) return null;
+    const result = gl.getQueryParameter(pendingTimer, gl.QUERY_RESULT) / 1e6;
+    gl.deleteQuery(pendingTimer);
+    pendingTimer = null;
+    return result;
+  };
 
   const draw = p => {
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    // Cap the amplitude sum before computing either harmonic or its bounding sphere.
+    const modes = dropScaleModes(p.modes.slice(0, 3));
+    ns.fill(0); k1.fill(0); k2.fill(0);
+    let kMax = 0, fence = 1;
+    for (let i = 0; i < modes.length; i++) {
+      const mode = modes[i], q = mode.a * mode.c;
+      ns[i] = mode.n;
+      k1[i] = q;
+      k2[i] = p.b2 * q * q;
+      kMax = Math.max(kMax, 2 * mode.n);
+      fence += Math.abs(k1[i]) * (1 + DROP_TOP_EPS) + Math.abs(k2[i]);
+    }
+    const targetWidth = p.targetSize || canvas.width, targetHeight = p.targetSize || canvas.height;
+    gl.viewport(0, 0, targetWidth, targetHeight);
     gl.useProgram(prog);
-    gl.uniform2f(U.uRes, canvas.width, canvas.height);
-    gl.uniform1f(U.uAmp, p.amp);
+    gl.uniform2f(U.uRes, targetWidth, targetHeight);
+    gl.uniform1iv(U.uN, ns);
+    gl.uniform1fv(U.uK1, k1);
+    gl.uniform1fv(U.uK2, k2);
+    gl.uniform1i(U.uModes, modes.length);
+    gl.uniform1i(U.uKMax, kMax);
+    gl.uniform1f(U.uTop, DROP_TOP_EPS);
+    gl.uniform1f(U.uFence, fence);
     gl.uniform1f(U.uObl, p.obl);
-    gl.uniform1f(U.uPulse, p.pulse);
-    gl.uniform2f(U.uRotCS, Math.cos(p.rot), Math.sin(p.rot));
     gl.uniform1f(U.uTime, p.time);
     gl.uniform1f(U.uYaw, p.yaw);
     gl.uniform1f(U.uPitch, p.pitch);
-    gl.uniform1f(U.uStars, 1);
-    gl.uniform1i(U.uN, p.n);
-    gl.uniform1i(U.uVariant, 0);       // 0 = νερό με λευκό φως
+    if (U.uQuality) gl.uniform1i(U.uQuality, p.quality == null ? DROP_Q.HIGH : p.quality);
+    gl.uniform1i(U.uScene, p.scene === false ? 0 : 1);
+    gl.uniform1i(U.uVariant, p.variant || 0); // 0 = νερό με λευκό φως
     // ΜΟΝΟ για τα τεστ: βάφει κόκκινο όπου η ακτίνα δεν βρήκε επιφάνεια και πράσινο
     // όπου δεν βγήκε ποτέ από το νερό. Και τα δύο είναι σφάλματα ιχνηλάτησης που
     // αλλιώς διαβάζονται ως «σχήμα», και κανένα golden hash δεν τα ξεχωρίζει.
-    gl.uniform1i(U.uDebug, p.debug ? 1 : 0);
+    gl.uniform1i(U.uDebug, p.debug === 4 ? 4 : (p.debug === 3 ? 3 : (p.debug === 2 ? 2 : (p.debug ? 1 : 0))));
+    gl.uniform1i(U.uAaSamples, p.debug ? 1 : (p.aaSamples || 4));
+    gl.uniform1i(U.uDisableShadow, p.disableShadow ? 1 : 0);
     gl.uniform2f(U.uBob, p.bob.x, p.bob.y);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+    if (timerExt && !p.skipGpuTimer && !pendingTimer) {
+      const query = gl.createQuery();
+      if (query) {
+        gl.beginQuery(timerExt.TIME_ELAPSED_EXT, query);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+        gl.endQuery(timerExt.TIME_ELAPSED_EXT);
+        pendingTimer = query;
+      } else gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+    } else gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
   };
 
-  return { gl: gl, prog: prog, U: U, draw: draw };
+  return { gl: gl, prog: prog, U: U, draw: draw, gpuMs: gpuMs, hasGpuTimer: !!timerExt,
+    hasParallelCompile: !!parallel,
+    fixedQuality: fixedQuality };
 }
 
-// Η ΕΠΙΛΟΓΗ ΜΟΝΟΠΑΤΙΟΥ ΓΙΝΕΤΑΙ ΜΙΑ ΦΟΡΑ. Αν ρωτούσαμε ανά καρέ, ένα αποτυχημένο
-// getContext θα ξανασχεδιαζόταν 60 φορές το δευτερόλεπτο και θα γέμιζε την κονσόλα.
-// null = δεν υπάρχει WebGL2 εδώ -> πέφτουμε στον παλιό Canvas2D drawDrop.
-// ΠΡΕΠΕΙ να μείνει ΜΕΤΑ τη dropGLCreate (και τις DROP_FS/DROP_VS): αν εκτελούνταν
-// νωρίτερα στο script, η dropGLCreate θα διάβαζε τις πηγές του shader πριν αρχικοποιηθούν
-// (TDZ) και θα έσκαγε το ReferenceError, κόβοντας ολόκληρο το app.js στη μέση.
-const dropRenderer = { impl: dropGLCreate(chlDropCanvas) };
+// Keep the Canvas2D fallback during page load and until the first requested compile is ready.
+const dropRenderer = { impl: null, promise: null, generation: 0, attempted: false,
+  compileStartedAt: null, compileReadyAt: null, tierTimings: new Map(), records: new Map(), activeTier: null,
+  desiredTier: null, compilePromise: null, waiters: new Map(), lowFrameDrawn: false,
+  hasParallelCompile: null, compileHistory: [] };
+let dropPaintReady = null;
+function waitForDropPaint() {
+  if (dropPaintReady) return dropPaintReady;
+  dropPaintReady = new Promise(resolve => {
+    const afterLoad = () => setTimeout(() =>
+      requestAnimationFrame(() => requestAnimationFrame(resolve)), 0);
+    if (document.readyState === 'complete') afterLoad();
+    else window.addEventListener('load', afterLoad, { once: true });
+  });
+  return dropPaintReady;
+}
+function dropResolveWaiters(tier, value) {
+  const waiters = dropRenderer.waiters.get(tier) || [];
+  dropRenderer.waiters.delete(tier);
+  for (const resolve of waiters) resolve(value);
+}
+
+async function dropWarmupRecord(record) {
+  const gl = record.impl.gl;
+  const oldFramebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
+  const oldViewport = gl.getParameter(gl.VIEWPORT);
+  const tex = gl.createTexture(), fbo = gl.createFramebuffer();
+  if (!tex || !fbo) throw new Error('drop warm-up framebuffer allocation failed');
+  let fence = null;
+  try {
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 32, 32, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+      throw new Error('drop warm-up framebuffer incomplete');
+    }
+    record.impl.draw({ modes: [{ n: 5, a: 0.24, c: 1 }], b2: DROP_B2, obl: DROP_OBL_BASE,
+      yaw: DROP_YAW0, pitch: 22 * Math.PI / 180, bob: { x: 0, y: 0 }, time: 0,
+      scene: true, quality: record.tier, aaSamples: 1, targetSize: 32, skipGpuTimer: true });
+    fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+    if (!fence) throw new Error('drop warm-up fence allocation failed');
+    gl.flush();
+    while (!gl.isContextLost()) {
+      const status = gl.clientWaitSync(fence, 0, 0);
+      if (status === gl.ALREADY_SIGNALED || status === gl.CONDITION_SATISFIED) return;
+      if (status === gl.WAIT_FAILED) throw new Error('drop warm-up fence failed');
+      await new Promise(requestAnimationFrame);
+    }
+    throw new Error('WebGL context lost during drop warm-up');
+  } finally {
+    if (fence && !gl.isContextLost()) gl.deleteSync(fence);
+    if (!gl.isContextLost()) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, oldFramebuffer);
+      gl.viewport(oldViewport[0], oldViewport[1], oldViewport[2], oldViewport[3]);
+      gl.bindTexture(gl.TEXTURE_2D, null);
+      gl.deleteFramebuffer(fbo); gl.deleteTexture(tex);
+    }
+  }
+}
+
+function dropActivateTier(tier, generation) {
+  return new Promise(resolve => requestAnimationFrame(() => {
+    if (generation !== dropRenderer.generation) return resolve(null);
+    const record = dropRenderer.records.get(tier);
+    if (!record || record.status !== 'ready' || record.impl.gl.isContextLost()) return resolve(null);
+    if (dropRenderer.desiredTier !== tier) return resolve(null);
+    dropRenderer.impl = record.impl;
+    dropRenderer.activeTier = tier;
+    if (dropRenderer.compileReadyAt == null) dropRenderer.compileReadyAt = performance.now();
+    record.activatedAt = performance.now();
+    dropSizeCanvas();
+    if (typeof dropQualitySwitched === 'function') dropQualitySwitched(dropQ, tier, performance.now());
+    if (chlShape === 'drop') drawDropFrame(dropCycles, dropTimeSec, { quality: tier });
+    if (chlShape === 'drop' && activeTab === 'chladni') setChlShape('drop');
+    dropResolveWaiters(tier, record.impl);
+    resolve(record.impl);
+  }));
+}
+
+function dropCompileDesired(generation) {
+  if (dropRenderer.compilePromise || generation !== dropRenderer.generation) return dropRenderer.compilePromise;
+  const tier = dropRenderer.desiredTier;
+  if (tier == null) return Promise.resolve(null);
+  const cached = dropRenderer.records.get(tier);
+  if (cached && cached.status === 'ready') return dropActivateTier(tier, generation);
+  if (cached && cached.status === 'failed') {
+    dropResolveWaiters(tier, null);
+    return Promise.resolve(null);
+  }
+  dropRenderer.records.set(tier, { tier, status: 'compiling', impl: null });
+  const pending = waitForDropPaint().then(() => {
+    if (generation !== dropRenderer.generation) return null;
+    const record = dropRenderer.records.get(tier);
+    record.startedAt = performance.now();
+    dropRenderer.tierTimings.set(tier, record);
+    if (dropRenderer.compileStartedAt == null) dropRenderer.compileStartedAt = record.startedAt;
+    dropRenderer.compileHistory.push(tier);
+    return dropGLCreate(chlDropCanvas, tier);
+  }).then(async impl => {
+    if (generation !== dropRenderer.generation) return null;
+    if (!impl || impl.gl.isContextLost()) {
+      const record = dropRenderer.records.get(tier);
+      if (record) record.status = 'failed';
+      dropResolveWaiters(tier, null);
+      return null;
+    }
+    dropRenderer.hasParallelCompile = impl.hasParallelCompile;
+    const record = dropRenderer.records.get(tier);
+    record.impl = impl;
+    record.shaderReadyAt = performance.now();
+    record.status = 'warming';
+    await dropWarmupRecord(record);
+    if (generation !== dropRenderer.generation) return null;
+    if (impl.gl.isContextLost()) {
+      record.status = 'failed';
+      dropResolveWaiters(tier, null);
+      return null;
+    }
+    record.status = 'ready';
+    record.readyAt = performance.now();
+    if (dropRenderer.desiredTier === tier) return await dropActivateTier(tier, generation);
+    dropResolveWaiters(tier, null);
+    return impl;
+  }).catch(error => {
+    if (generation !== dropRenderer.generation) return null;
+    console.warn('σταγόνα: tier compile/warm-up failed:', error);
+    const record = dropRenderer.records.get(tier);
+    if (record) record.status = 'failed';
+    dropResolveWaiters(tier, null);
+    return null;
+  }).finally(() => {
+    if (generation !== dropRenderer.generation) return;
+    dropRenderer.compilePromise = null;
+    if (dropRenderer.desiredTier != null && dropRenderer.activeTier !== dropRenderer.desiredTier) {
+      dropCompileDesired(generation);
+    }
+  });
+  dropRenderer.compilePromise = pending;
+  dropRenderer.promise = pending;
+  return pending;
+}
+
+function requestDropTier(tier, options = {}) {
+  if (!Number.isInteger(tier) || tier < DROP_Q.LOW || tier > DROP_Q.ULTRA) return Promise.resolve(null);
+  const generation = dropRenderer.generation || ++dropRenderer.generation;
+  if (dropRenderer.activeTier === tier) return Promise.resolve(dropRenderer.impl);
+  if (tier > DROP_Q.LOW && dropRenderer.hasParallelCompile === false && !options.forced) {
+    return Promise.resolve(dropRenderer.impl);
+  }
+  dropRenderer.desiredTier = tier;
+  const waiting = new Promise(resolve => {
+    const list = dropRenderer.waiters.get(tier) || [];
+    list.push(resolve);
+    dropRenderer.waiters.set(tier, list);
+  });
+  dropCompileDesired(generation);
+  return waiting;
+}
+
+function ensureDropRenderer() {
+  if (dropRenderer.impl) return Promise.resolve(dropRenderer.impl);
+  if (dropRenderer.attempted) return dropRenderer.promise || Promise.resolve(null);
+  dropRenderer.attempted = true;
+  return requestDropTier(DROP_Q.LOW, { forced: true });
+}
 
 // ΑΠΩΛΕΙΑ CONTEXT — ΣΥΜΒΑΙΝΕΙ ΚΑΝΟΝΙΚΑ ΣΕ ΚΙΝΗΤΟ. Ο browser ανακτά τη μνήμη της GPU
 // όταν η καρτέλα πάει στο παρασκήνιο, ο οδηγός κάνει reset, τελειώνει η μνήμη. Χωρίς
@@ -1467,12 +2460,36 @@ const dropRenderer = { impl: dropGLCreate(chlDropCanvas) };
 // να ξαναφορτώσει τη σελίδα με το χέρι.
 chlDropCanvas.addEventListener('webglcontextlost', e => {
   e.preventDefault();
+  dropRenderer.generation++;
+  dropRenderer.promise = null;
+    dropRenderer.compilePromise = null;
+  dropRenderer.attempted = false;
   dropRenderer.impl = null;                        // από δω και πέρα, εφεδρικό
+    dropRenderer.records.clear();
+    dropRenderer.activeTier = null;
+    dropRenderer.desiredTier = null;
+    dropRenderer.lowFrameDrawn = false;
+    dropQualityClearWindow(dropQ);
+    dropQ.capHold = false;
+    dropQ.capHoldUntil = performance.now();
+    dropQ.activeTier = DROP_Q.LOW;
+    dropQ.nextRenderAt = null;
+    for (const tier of dropRenderer.waiters.keys()) dropResolveWaiters(tier, null);
   if (chlShape === 'drop') setChlShape('drop');    // ξαναδιαλέγει καμβά, ξαναρχίζει βρόχο
 });
 chlDropCanvas.addEventListener('webglcontextrestored', () => {
-  dropRenderer.impl = dropGLCreate(chlDropCanvas); // ξαναχτίζουμε shader και uniforms
-  if (chlShape === 'drop') setChlShape('drop');
+  dropRenderer.generation++;
+  dropRenderer.records.clear();
+  dropRenderer.compilePromise = null;
+  dropRenderer.promise = null;
+  dropRenderer.impl = null;
+  dropRenderer.activeTier = null;
+  dropRenderer.desiredTier = null;
+  dropRenderer.attempted = false;
+  if (chlShape === 'drop') ensureDropRenderer();
+});
+document.addEventListener('visibilitychange', () => {
+  dropQualityVisibility(dropQ, !document.hidden, performance.now());
 });
 
 // Ο ΑΠΟΘΗΚΕΥΤΙΚΟΣ ΧΩΡΟΣ ΑΚΟΛΟΥΘΕΙ ΤΗΝ ΟΘΟΝΗ. Χωρίς αυτό ο καμβάς είναι 300px και
@@ -1486,24 +2503,92 @@ function fitCanvasToScreen(canvas) {
   const px = Math.round(300 * dpr);
   if (canvas.width !== px) { canvas.width = canvas.height = px; }
 }
-function dropSizeCanvas() { fitCanvasToScreen(chlDropCanvas); }
+function dropSizeCanvas() {
+  const tier = dropRenderer.activeTier == null ? DROP_Q.LOW : dropRenderer.activeTier;
+  const px = dropCanvasPx(tier, window.devicePixelRatio || 1);
+  if (chlDropCanvas.width !== px || chlDropCanvas.height !== px) chlDropCanvas.width = chlDropCanvas.height = px;
+}
 
 // ΕΝΑ σημείο για τα κείμενα κατάστασης, γιατί τα ΔΥΟ μονοπάτια απόδοσης πρέπει να λένε
 // ΤΟ ΙΔΙΟ ΠΡΑΓΜΑ: ο χρήστης δεν πρέπει να καταλαβαίνει ποιο τρέχει. Διπλασιασμένο, μια
 // αλλαγή μετάφρασης θα γινόταν στο ένα και θα ξεχνιόταν στο άλλο.
-function dropStatusText(n, fr, crisp) {
-  document.getElementById('chlPlateVal').textContent =
-    (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
-  chlStatus.textContent = (crisp > 0.6 ? T('chl_drop_on') : T('chl_drop_off'))
-    .replace('{f}', fr.toFixed(1)).replace('{n}', n);
-  chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
+function renderDropSpeed(fr) {
+  if (fr == null) {
+    const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
+    fr = findDropResonance(f, +chlPlate.value).fr;
+  }
+  const slowmo = dropSlowmo(fr, dropSpeedHz);
+  chlDropSpeedVal.textContent = T('chl_drop_speed_val').replace('{x}', slowmo.x)
+    + (slowmo.lab ? ' · ' + T('chl_drop_speed_lab') : '');
 }
 
-function drawDrop(pulsePhase, canvas, scale) {
+function dropFrameParams(cycles, timeSec, opts = {}) {
+  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
+  const plate = +chlPlate.value;
+  const { n, fr, crisp } = findDropResonance(f, plate);
+  const amplitude = dropAmp(crisp);
+  const modes = [];
+  let n2 = null;
+  if (opts.steady) {
+    modes.push({ n, a: amplitude, c: dropFlip(cycles) });
+  } else {
+    const tracked = dropModeTrack(dropTrack, n, amplitude, timeSec, dropSpeedHz);
+    dropTrack = tracked.state;
+    const c = dropFlip(cycles);
+    for (const mode of tracked.modes) modes.push({ ...mode, c });
+  }
+
+  const radius = DROP_R0 * (plate / 100);
+  const resonances = [];
+  for (let mode = DROP_N_MIN; mode <= DROP_N_MAX; mode++)
+    resonances.push({ mode, freq: dropFn(mode, radius) });
+  n2 = dropSecondMode(f, resonances, n);
+  const mixed = crisp < 0.5 && n2 != null;
+  if (mixed) {
+    modes.push({
+      n: n2,
+      a: dropMixWeight(crisp, amplitude),
+      c: opts.steady ? dropFlip(DROP_MIX_RATIO * cycles) : dropFlip(dropCycles2),
+    });
+  }
+  return {
+    n, fr, crisp, n2: mixed ? n2 : null, mixed,
+    modes: dropScaleModes(modes),
+    obl: dropOblate(dropVolumeClamp(+chlDropVol.value), !!dropTone),
+    bob: dropBob(timeSec),
+  };
+}
+
+function dropFrequencyText(frequency) {
+  const fixed = Number(frequency).toFixed(1);
+  const decimal = LANG === 'de' || LANG === 'el' ? fixed.replace('.', ',') : fixed;
+  return `${decimal} Hz`;
+}
+
+function dropStatusText(frame) {
+  const { n, fr, crisp, mixed, n2 } = frame;
+  document.getElementById('chlPlateVal').textContent =
+    (DROP_R0 * (+chlPlate.value / 100) * 1000).toFixed(2) + 'mm';
+  const status = (crisp > 0.6 ? T('chl_drop_on') : T('chl_drop_off'))
+    .replace('{f}', dropFrequencyText(fr)).replace('{n}', n);
+  chlStatus.textContent = status + (mixed
+    ? ' · ' + T('chl_drop_mixed').replace('{n}', n).replace('{n2}', n2)
+    : '');
+  chlStatus.style.color = crisp > 0.6 ? 'var(--accent)' : 'var(--muted)';
+  renderDropSpeed(fr);
+}
+
+let dropReflectionSprite = null;
+function hideDropFallbackLayers() {
+  chlReflectionCanvas.classList.add('hidden');
+  chlDrop2dCanvas.classList.add('hidden');
+  chlReflectionCanvas.style.filter = 'none';
+}
+
+function drawDrop(frame, canvas, scale) {
   if (!canvas) { canvas = chlCanvas; fitCanvasToScreen(canvas); }
   scale = scale || canvas.width / 300;
-  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
-  const { n, fr, crisp } = findDropResonance(f, +chlPlate.value);
+  const { n, fr, crisp, modes, obl, bob } = frame;
   const g = canvas.getContext('2d');
   g.setTransform(scale, 0, 0, scale, 0, 0);   // όλα τα υπόλοιπα δουλεύουν σε λογικά 300px
   const W = canvas.width / scale, H = canvas.height / scale, cx = W / 2, cy = H / 2;
@@ -1511,21 +2596,31 @@ function drawDrop(pulsePhase, canvas, scale) {
   bg.addColorStop(0, '#1d1440'); bg.addColorStop(1, '#120b28');
   g.fillStyle = bg; g.fillRect(0, 0, W, H);
   const baseR = W * 0.30;
-  // ΙΔΙΑ ΦΥΣΙΚΗ ΜΕ ΤΟ ΜΟΝΟΠΑΤΙ WebGL. Το amp πολλαπλασιασμένο με το dropPulse δίνει
-  // ΑΚΡΙΒΩΣ ό,τι κάνει ο shader: εκείνος γράφει 1 + amp·pulse·lobe·cos(...), εδώ το
-  // dropMesh γράφει 1 + amp·lobe·cos(...) με το pulse ήδη μέσα στο amp. Ταυτόσημο.
-  // Το παλιό (1 + 0.06·sin) ήταν ένα ±6% ανάσασμα — αντικαθίσταται από το στάσιμο κύμα.
-  const amp = (0.06 + 0.22 * crisp) * dropPulse(pulsePhase);
-  const rot = pulsePhase * 0.05;
-  const bob = dropBob(pulsePhase);
 
   // Άλως: ΕΝΑ γέμισμα πριν το πλέγμα. Δεν βάζουμε shadowBlur στις ~900 όψεις —
   // ο καμβάς υπολογίζει τη σκιά ξεχωριστά για καθεμιά και γονατίζει το καρέ.
   const halo = g.createRadialGradient(cx, cy, 4, cx, cy, baseR * 1.45);
   halo.addColorStop(0, 'rgba(255,199,107,.22)'); halo.addColorStop(1, 'rgba(255,199,107,0)');
   g.fillStyle = halo; g.fillRect(0, 0, W, H);
+  const canvasVariant = window.__dropCanvasVariant || 'css-layer';
+  const cssLayers = canvas === chlCanvas && canvasVariant === 'css-layer';
+  if (cssLayers) {
+    for (const layer of [chlReflectionCanvas, chlDrop2dCanvas]) {
+      if (layer.width !== canvas.width || layer.height !== canvas.height) {
+        layer.width = canvas.width; layer.height = canvas.height;
+      }
+      layer.classList.remove('hidden');
+    }
+    chlReflectionCanvas.style.filter = 'blur(4px)';
+  } else if (canvas === chlCanvas) hideDropFallbackLayers();
 
-  const mesh = dropMesh(n, amp, rot, DROP_RINGS, DROP_SEGS, DROP_OBLATE);
+  const fallbackCanvas = canvas === chlCanvas;
+  const mesh = dropMeshModes(
+    modes,
+    fallbackCanvas ? DROP_FALLBACK_RINGS : DROP_RINGS,
+    fallbackCanvas ? DROP_FALLBACK_SEGS : DROP_SEGS,
+    obl, DROP_B2
+  );
   const P = projectMesh(mesh.verts, dropYaw, dropPitch);
   const stride = mesh.segs + 1;
   // Σταθερό φως στον χώρο της κάμερας: πάνω αριστερά και λίγο μπροστά.
@@ -1554,62 +2649,147 @@ function drawDrop(pulsePhase, canvas, scale) {
   }
   faces.sort((p, q) => p.depth - q.depth);   // από πίσω προς τα μπρος
 
+  const paintFaces = (target = g) => {
+    for (let k = 0; k < faces.length; k++) {
+      const fc = faces[k], t = fc.lit;
+      const col = dropShade(t);
+      // −y: ο καμβάς μετράει προς τα κάτω, ο χώρος θέασης προς τα πάνω
+      const x0 = fc.a.x * baseR, y0 = -fc.a.y * baseR, x1 = fc.b.x * baseR, y1 = -fc.b.y * baseR;
+      const x2 = fc.c.x * baseR, y2 = -fc.c.y * baseR, x3 = fc.d.x * baseR, y3 = -fc.d.y * baseR;
+      // Μεγαλώνουμε ΕΛΑΧΙΣΤΑ κάθε όψη γύρω από το κέντρο της, ώστε να ακουμπάει τις
+      // γειτονικές. Χωρίς αυτό το antialiasing αφήνει σκούρες τριχοειδείς χαραμάδες και η
+      // σταγόνα μοιάζει με συρματόπλεγμα. Το έκανε πριν ένα stroke στο ίδιο χρώμα — σωστό
+      // αποτέλεσμα, αλλά κόστιζε τα δύο τρίτα του καρέ (18 fps -> 52 fps χωρίς αυτό στον i3).
+      const mx = (x0 + x1 + x2 + x3) * .25, my = (y0 + y1 + y2 + y3) * .25, E = 1.06;
+      target.beginPath();
+      target.moveTo(mx + (x0 - mx) * E, my + (y0 - my) * E);
+      target.lineTo(mx + (x1 - mx) * E, my + (y1 - my) * E);
+      target.lineTo(mx + (x2 - mx) * E, my + (y2 - my) * E);
+      target.lineTo(mx + (x3 - mx) * E, my + (y3 - my) * E);
+      target.closePath();
+      target.fillStyle = col;
+      target.fill();
+    }
+  };
+
+  // The fallback mirrors the same lit faces used by the primary drop renderer.
+  if (cssLayers) {
+    const reflection = chlReflectionCanvas.getContext('2d');
+    const object = chlDrop2dCanvas.getContext('2d');
+    for (const target of [reflection, object]) {
+      target.setTransform(scale, 0, 0, scale, 0, 0);
+      target.clearRect(0, 0, W, H);
+    }
+    reflection.save();
+    reflection.translate(cx, cy + baseR * 0.9);
+    reflection.scale(1, -0.55);
+    reflection.globalAlpha = 0.35;
+    paintFaces(reflection);
+    reflection.restore();
+    object.save(); object.translate(cx + bob.x * W / 2, cy - bob.y * W / 2);
+    paintFaces(object); object.restore();
+    reflection.setTransform(1, 0, 0, 1, 0, 0);
+    object.setTransform(1, 0, 0, 1, 0, 0);
+  } else if (canvasVariant === 'preblurred' && canvas === chlCanvas) {
+    if (!dropReflectionSprite) dropReflectionSprite = document.createElement('canvas');
+    if (dropReflectionSprite.width !== canvas.width || dropReflectionSprite.height !== canvas.height) {
+      dropReflectionSprite.width = canvas.width; dropReflectionSprite.height = canvas.height;
+    }
+    const sprite = dropReflectionSprite.getContext('2d');
+    sprite.setTransform(scale, 0, 0, scale, 0, 0);
+    sprite.clearRect(0, 0, W, H);
+    sprite.save(); sprite.translate(cx, cy + baseR * 0.9); sprite.scale(1, -0.55);
+    sprite.globalAlpha = 0.35; paintFaces(sprite); sprite.restore();
+    sprite.setTransform(1, 0, 0, 1, 0, 0);
+    g.save();
+    if ('filter' in g) g.filter = 'blur(4px)';
+    g.drawImage(dropReflectionSprite, 0, 0, W, H);
+    g.restore();
+    if ('filter' in g) g.filter = 'none';
+  } else {
+    g.save();
+    g.translate(cx, cy + baseR * 0.9);
+    g.scale(1, -0.55);
+    g.globalAlpha = 0.35;
+    if (canvasVariant !== 'none' && 'filter' in g) g.filter = 'blur(4px)';
+    paintFaces();
+    g.restore();
+    g.globalAlpha = 1;
+    if ('filter' in g) g.filter = 'none';
+  }
+
   // ΜΟΝΑΔΕΣ: το dropBob δίνει μετατόπιση σε μονάδες οθόνης όπου το μισό πλάτος είναι 1
   // (έτσι τη διαβάζει ο shader). Εδώ το μισό πλάτος είναι W/2 pixel, άρα πολλαπλασιάζουμε
   // με W/2. Το −bob.y είναι γιατί ο καμβάς 2D μετράει προς τα κάτω, η φυσική προς τα πάνω.
-  g.save(); g.translate(cx + bob.x * W / 2, cy - bob.y * W / 2);
-  for (let k = 0; k < faces.length; k++) {
-    const fc = faces[k], t = fc.lit;
-    const col = dropShade(t);
-    // −y: ο καμβάς μετράει προς τα κάτω, ο χώρος θέασης προς τα πάνω
-    const x0 = fc.a.x * baseR, y0 = -fc.a.y * baseR, x1 = fc.b.x * baseR, y1 = -fc.b.y * baseR;
-    const x2 = fc.c.x * baseR, y2 = -fc.c.y * baseR, x3 = fc.d.x * baseR, y3 = -fc.d.y * baseR;
-    // Μεγαλώνουμε ΕΛΑΧΙΣΤΑ κάθε όψη γύρω από το κέντρο της, ώστε να ακουμπάει τις
-    // γειτονικές. Χωρίς αυτό το antialiasing αφήνει σκούρες τριχοειδείς χαραμάδες και η
-    // σταγόνα μοιάζει με συρματόπλεγμα. Το έκανε πριν ένα stroke στο ίδιο χρώμα — σωστό
-    // αποτέλεσμα, αλλά κόστιζε τα δύο τρίτα του καρέ (18 fps -> 52 fps χωρίς αυτό στον i3).
-    const mx = (x0 + x1 + x2 + x3) * .25, my = (y0 + y1 + y2 + y3) * .25, E = 1.06;
-    g.beginPath();
-    g.moveTo(mx + (x0 - mx) * E, my + (y0 - my) * E);
-    g.lineTo(mx + (x1 - mx) * E, my + (y1 - my) * E);
-    g.lineTo(mx + (x2 - mx) * E, my + (y2 - my) * E);
-    g.lineTo(mx + (x3 - mx) * E, my + (y3 - my) * E);
-    g.closePath();
-    g.fillStyle = col;
-    g.fill();
+  if (!cssLayers) {
+    g.save(); g.translate(cx + bob.x * W / 2, cy - bob.y * W / 2);
+    paintFaces();
+    g.restore();
   }
-  g.restore();
 
   g.setTransform(1, 0, 0, 1, 0, 0);
   if (canvas !== chlCanvas) return;
-  dropStatusText(n, fr, crisp);
+  dropStatusText(frame);
 }
 
 // Ζωγραφίζει ΕΝΑ καρέ στο μονοπάτι που υπάρχει, και ενημερώνει τα κείμενα κατάστασης.
 // Τα κείμενα είναι ίδια και στα δύο μονοπάτια επίτηδες: ο χρήστης δεν πρέπει να
 // καταλαβαίνει ποιο τρέχει, και τα τρίγλωσσα golden τεστ δεν αλλάζουν.
-function drawDropFrame(phase) {
-  if (!dropRenderer.impl) { drawDrop(phase); return; }
+function drawDropFrame(cycles, timeSec = 0, opts = {}) {
+  const frame = dropFrameParams(cycles, timeSec, opts);
+  if (!dropRenderer.impl) { drawDrop(frame); return; }
   dropSizeCanvas();
-  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
-  const { n, fr, crisp } = findDropResonance(f, +chlPlate.value);
   dropRenderer.impl.draw({
-    n: n,
-    amp: 0.06 + 0.22 * crisp,        // πόσο βαθιά τα αυλάκια — ίδιο με το Canvas2D
-    obl: DROP_OBLATE,
-    pulse: dropPulse(phase),
-    rot: phase * 0.05,
+    ...frame,
+    b2: DROP_B2,
+    quality: opts.quality == null ? dropRenderer.activeTier : opts.quality,
     yaw: dropYaw, pitch: dropPitch,
-    bob: dropBob(phase),
-    time: phase,
+    time: timeSec,
   });
-  dropStatusText(n, fr, crisp);
+  if (dropRenderer.activeTier === DROP_Q.LOW && !dropRenderer.lowFrameDrawn) {
+    dropRenderer.lowFrameDrawn = true;
+    const initialTier = dropQ.tier;
+    if (initialTier > DROP_Q.LOW) {
+      if (dropRenderer.hasParallelCompile === false && !dropQ.forced) {
+        dropQ.tier = DROP_Q.LOW;
+        dropQ.autoCompileBlocked = true;
+      } else {
+        if (!dropQ.forced) dropQ.upgradePending = true;
+        requestDropTier(initialTier, { forced: dropQ.forced });
+      }
+    }
+  }
+  dropStatusText(frame);
 }
 
 function animateDrop() {
-  const t0 = performance.now();
+  let lastNow = null;
   const step = now => {
-    drawDropFrame((now - t0) / 1000);
+    if (document.hidden) {
+      lastNow = null;
+      chlRaf = requestAnimationFrame(step);
+      return;
+    }
+    if (lastNow == null) lastNow = now;
+    const dt = Math.max(0, (now - lastNow) / 1000);
+    lastNow = now;
+    dropCycles = dropAdvance(dropCycles, dropSpeedHz, dt);
+    dropCycles2 = dropAdvance(dropCycles2, DROP_MIX_RATIO * dropSpeedHz, dt);
+    // Keep real elapsed time for transitions and bob; dropAdvance clamps phase dt separately.
+    dropTimeSec += dt;
+    const activeTier = dropRenderer.activeTier;
+    const tier = activeTier === dropQ.tier
+      ? dropQualityStep(dropQ, now, dt * 1000)
+      : dropQ.tier;
+    if (tier !== activeTier && tier !== dropRenderer.desiredTier) {
+      requestDropTier(tier, { forced: dropQ.forced });
+    }
+    if (!dropQualityFrameDue(dropQ, now)) {
+      chlRaf = requestAnimationFrame(step);
+      return;
+    }
+    dropSizeCanvas();
+    drawDropFrame(dropCycles, dropTimeSec, { quality: activeTier });
     chlRaf = requestAnimationFrame(step);
   };
   chlRaf = requestAnimationFrame(step);
@@ -1640,7 +2820,7 @@ function wireDropCamera() {
       // να συνεχίσει να κουνάει μια κάμερα που δεν φαίνεται πουθενά.
       if (!e.buttons || chlShape !== 'drop') { dragging = false; return; }
       dropYaw += (e.clientX - lx) * DRAG;
-      dropPitch = Math.max(-DROP_PITCH_MAX, Math.min(DROP_PITCH_MAX, dropPitch + (e.clientY - ly) * DRAG));
+      dropPitch = Math.max(DROP_PITCH_MIN, Math.min(DROP_PITCH_MAX, dropPitch + (e.clientY - ly) * DRAG));
       lx = e.clientX; ly = e.clientY;
       pushUrl();   // ήδη debounced 300ms, οπότε το σύρσιμο δεν πλημμυρίζει το history
     });
@@ -1660,6 +2840,7 @@ function wireDropCamera() {
 }
 
 function setChlShape(shape) {
+  if (shape === 'plate') stopDropTone();
   chlShape = shape;
   document.getElementById('chlShapePlate').classList.toggle('sel', shape === 'plate');
   document.getElementById('chlShapeDrop').classList.toggle('sel', shape === 'drop');
@@ -1674,13 +2855,17 @@ function setChlShape(shape) {
   // οπότε αν κρύβαμε τον #chl «επειδή είμαστε σε σταγόνα» θα ζωγραφίζαμε σε κρυμμένο
   // καμβά και η καρτέλα θα έμενε άδεια σε κάθε μηχάνημα χωρίς WebGL2.
   const useGL = shape === 'drop' && !!dropRenderer.impl;
+  if (shape !== 'drop' || useGL) hideDropFallbackLayers();
   chlCanvas.classList.toggle('hidden', useGL);
   chlDropCanvas.classList.toggle('hidden', !useGL);
   chlDropCanvas.classList.toggle('rotatable', useGL);
   chlCanvas.classList.toggle('rotatable', shape === 'drop' && !useGL);
   document.getElementById('chlRotateHint').textContent = shape === 'drop' ? T('chl_drop_rotate') : '';
+  chlDropControls.classList.toggle('hidden', shape !== 'drop');
+  chlDropSources.classList.toggle('hidden', shape !== 'drop');
   if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (shape === 'drop') animateDrop(); else drawChladni();
+  if (shape === 'drop' && activeTab === 'chladni') ensureDropRenderer();
   pushUrl();
 }
 
@@ -2051,6 +3236,7 @@ function micFail(key) {
 }
 
 async function startMic() {
+  stopDropTone();
   stopRefTone();
   // Το micStarting μπαίνει ΣΥΓΧΡΟΝΑ, πριν το await: αλλιώς ένα δεύτερο πάτημα όσο
   // περιμένουμε την άδεια ξεκινά δεύτερη ροή, η πρώτη μένει ορφανή με τον χρονιστή
@@ -2254,6 +3440,8 @@ const TAB_STATE = {
       if (chlShape === 'drop') {
         s.yw = Math.round(wrapDeg(dropYaw * 180 / Math.PI));
         s.pt = Math.round(dropPitch * 180 / Math.PI);
+        s.ds = Math.round(dropSpeedHz * 100) / 100;
+        s.dv = Math.round(+chlDropVol.value * 100) / 100;
       }
       return s;
     },
@@ -2266,13 +3454,17 @@ const TAB_STATE = {
         chlSlider.value = chlFreq.value;
       }
       if (s.p != null) chlPlate.value = clampNum(s.p, +chlPlate.min, +chlPlate.max, 100);
+      if (s.ds != null) {
+        dropSpeedHz = dropSpeedClamp(s.ds);
+        chlDropSpeed.value = dropSliderFromSpeed(dropSpeedHz);
+      }
+      if (s.dv != null) chlDropVol.value = dropVolumeClamp(s.dv);
       // Το τύλιγμα δέχεται και χειρόγραφα URL με 400 ή -400 και τα φέρνει στον κύκλο·
       // η clampNum μένει μόνο για να πιάσει το μη αριθμητικό και να δώσει την προεπιλογή.
       if (s.yw != null) dropYaw = wrapDeg(clampNum(s.yw, -1e6, 1e6, DROP_YAW0 * 180 / Math.PI)) * Math.PI / 180;
-      // Το όριο κλίσης ΒΓΑΙΝΕΙ από τη σταθερά της κάμερας, να μη μένει ξεκρέμαστο 85αρι
-      // που θα ξεσυγχρονιζόταν σιωπηλά αν αλλάξει το DROP_PITCH_MAX.
+      const PT_MIN = Math.round(DROP_PITCH_MIN * 180 / Math.PI);
       const PT_MAX = Math.round(DROP_PITCH_MAX * 180 / Math.PI);
-      if (s.pt != null) dropPitch = clampNum(s.pt, -PT_MAX, PT_MAX, DROP_PITCH0 * 180 / Math.PI) * Math.PI / 180;
+      if (s.pt != null) dropPitch = clampNum(s.pt, PT_MIN, PT_MAX, DROP_PITCH0 * 180 / Math.PI) * Math.PI / 180;
       syncChips('#panel-chladni .freq-row .chip[data-f]', +chlFreq.value);
       refreshChl();
     },
@@ -2320,11 +3512,17 @@ function queryToState(search) {
 
 function showTab(name) {
   if (!TAB_STATE[name]) name = 'conv';
+  if (name !== 'chladni') stopDropTone();
   activeTab = name;
   if (name !== 'chladni') window.stopChladniLive?.();
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
   TAB_NAMES.forEach(p => document.getElementById('panel-' + p).classList.toggle('hidden', p !== name));
-  if (name === 'chladni') { if (chlShape === 'drop' && !chlRaf) animateDrop(); }
+  if (name === 'chladni') {
+    if (chlShape === 'drop') {
+      if (!chlRaf) animateDrop();
+      ensureDropRenderer();
+    }
+  }
   else if (chlRaf) { cancelAnimationFrame(chlRaf); chlRaf = null; }
   if (name !== 'tuner') stopRefTone();
   if (name !== 'tuner') stopMic();   // το μικρόφωνο δεν μένει ανοιχτό στο παρασκήνιο
@@ -2382,17 +3580,15 @@ function cardBackground(g) {
 // Η εικόνα της σταγόνας για την κάρτα PNG, σε δικό της καμβά. ΔΕΝ ξαναχρησιμοποιούμε
 // τον καμβά της οθόνης: είναι 300px και τον ζωγραφίζει ο βρόχος rAF ασταμάτητα.
 // Ένα καρέ στα 1080 δεν έχει κόστος — το spike μέτρησε τα 600 μέσα στο vsync.
-// Η ΦΑΣΗ ΤΗΣ ΚΑΡΤΑΣ ΔΕΝ ΕΙΝΑΙ ΜΗΔΕΝ, ΚΑΙ ΕΧΕΙ ΛΟΓΟ. Στη φάση 0 το στάσιμο κύμα δίνει
-// dropPulse(0) = 0.675, δηλαδή το αστέρι βγαίνει 32.5% πιο ΡΗΧΟ. Η κάρτα είναι αυτό που
-// μοιράζεται ο χρήστης — πρέπει να δείχνει το αστέρι στην πιο εκφραστική του στιγμή, όχι
-// σε μια τυχαία. Εδώ το ημίτονο γίνεται 1, άρα dropPulse = 1 ΑΚΡΙΒΩΣ. Σταθερά, άρα
-// ντετερμινιστικό: η ίδια ρύθμιση βγάζει πάντα την ίδια κάρτα.
-const DROP_CARD_PHASE = Math.PI / (2 * DROP_PULSE_W);
-
-function dropArtCanvas(size, phase) {
+// The card shows the deterministic maximum-amplitude frame, with zero bob.
+async function dropArtCanvas(size, snapshot = null) {
   const art = document.createElement('canvas');
   art.width = art.height = size;
-  if (!dropRenderer.impl) { drawDrop(phase, art, size / 300); return art; }
+  const state = snapshot || {
+    frame: dropFrameParams(0, 0, { steady: true }), yaw: dropYaw, pitch: dropPitch,
+  };
+  const renderer = await requestDropTier(DROP_Q.HIGH, { forced: true });
+  if (!renderer) { drawDrop(state.frame, art, size / 300); return art; }
   // ΞΕΧΩΡΙΣΤΟΣ καμβάς για το ίδιο το WebGL context: ΔΕΝ ζωγραφίζουμε στο art που
   // επιστρέφουμε. Το loseContext() παρακάτω σβήνει ΑΜΕΣΩΣ το ζωγραφισμένο περιεχόμενο
   // του καμβά που κρατάει το context — το preserveDrawingBuffer κρατάει το buffer
@@ -2400,14 +3596,11 @@ function dropArtCanvas(size, phase) {
   // καλών θα έβρισκε άδεια εικόνα μόλις προσπαθούσε να τη σχεδιάσει.
   const glCanvas = document.createElement('canvas');
   glCanvas.width = glCanvas.height = size;
-  const R = dropGLCreate(glCanvas);
-  if (!R) { drawDrop(phase, art, size / 300); return art; }
-  const f = Math.min(CHL_FREQ_RANGE[1], Math.max(CHL_FREQ_RANGE[0], +chlFreq.value || 432));
-  const { n, crisp } = findDropResonance(f, +chlPlate.value);
+  const R = await dropGLCreate(glCanvas, DROP_Q.HIGH);
+  if (!R) { drawDrop(state.frame, art, size / 300); return art; }
   R.draw({
-    n: n, amp: 0.06 + 0.22 * crisp, obl: DROP_OBLATE,
-    pulse: dropPulse(phase), rot: phase * 0.05,
-    yaw: dropYaw, pitch: dropPitch, bob: dropBob(phase), time: phase,
+    ...state.frame, b2: DROP_B2, quality: DROP_Q.HIGH,
+    yaw: state.yaw, pitch: state.pitch, bob: { x: 0, y: 0 }, time: 0,
   });
   // Αντιγραφή ΠΡΙΝ την απελευθέρωση: αυτό είναι το «readPixels/drawImage έχει ήδη
   // γίνει πιο πάνω» που κάνει την εικόνα ασφαλή στον καμβά art πριν χάσουμε το context.
@@ -2422,12 +3615,16 @@ function dropArtCanvas(size, phase) {
   return art;
 }
 
-function exportCard() {
+async function exportCard() {
   const tab = activeTab;
   if (tab !== 'chladni' && tab !== 'crystal') return;
+  const s = TAB_STATE[tab].read();
+  const dropSnapshot = chlShape === 'drop' && tab === 'chladni' ? {
+    frame: dropFrameParams(0, 0, { steady: true }), yaw: dropYaw, pitch: dropPitch,
+  } : null;
   let art;
   if (chlShape === 'drop' && tab === 'chladni') {
-    art = dropArtCanvas(CARD_ART, DROP_CARD_PHASE);   // δικός της καμβάς, μπορεί WebGL
+    art = await dropArtCanvas(CARD_ART, dropSnapshot);
   } else {
     art = document.createElement('canvas');
     art.width = art.height = CARD_ART;
@@ -2446,7 +3643,6 @@ function exportCard() {
   g.drawImage(art, 0, 120);
   g.restore();
 
-  const s = TAB_STATE[tab].read();
   g.textAlign = 'center';
   g.fillStyle = '#ffc76b';
   g.font = '600 76px "Segoe UI", system-ui, sans-serif';
@@ -2695,6 +3891,7 @@ function applyLang(l) {
     document.getElementById('chlNote').textContent = T('chl_note_drop');
     document.getElementById('chlPlateLabel').textContent = T('chl_drop_size');
     document.getElementById('chlRotateHint').textContent = T('chl_drop_rotate');
+    renderDropSpeed();
   }
   renderTones();
   if (chlShape !== 'drop') drawChladni();
@@ -2704,6 +3901,7 @@ function applyLang(l) {
   renderSleep();
   renderTuner();
   renderChlMicState();
+  syncDropToneButton();
   document.dispatchEvent(new CustomEvent('432-language-change', { detail: { language: LANG } }));
   updateMediaSession();
   if (window.TuningLab) window.TuningLab.setLanguage(LANG);
@@ -2750,6 +3948,15 @@ function wire() {
     refreshChl();
   };
   chlPlate.oninput = refreshChl;
+  chlDropSpeed.oninput = () => {
+    dropSpeedHz = dropSpeedFromSlider(+chlDropSpeed.value);
+    renderDropSpeed();
+    pushUrl();
+  };
+  chlDropVol.oninput = () => {
+    if (dropTone) rampDropToneParam(dropTone.gain.gain, dropToneGain(+chlDropVol.value));
+    pushUrl();
+  };
   document.querySelectorAll('#panel-chladni .freq-row .chip[data-f]').forEach(c => c.onclick = () => {
     chlFreq.value = c.dataset.f; chlSlider.value = c.dataset.f;
     selectChip('#panel-chladni .freq-row .chip[data-f]', c);
@@ -2757,7 +3964,11 @@ function wire() {
   });
   document.getElementById('chlShapePlate').onclick = () => setChlShape('plate');
   document.getElementById('chlShapeDrop').onclick = () => setChlShape('drop');
+  document.getElementById('chlDropPlay').onclick = () => {
+    if (dropTone) stopDropTone(); else playDropTone();
+  };
   document.getElementById('chlMicStart').onclick = async () => {
+    stopDropTone();
     if (!window.ChladniLiveModule || chlLive) return;
     let lastLiveDraw = 0;
     chlLive = new window.ChladniLiveModule.ChladniLive(frequency => {
